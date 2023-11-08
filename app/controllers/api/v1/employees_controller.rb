@@ -24,7 +24,7 @@ class EmployeesController < ApplicationController
     @employee = Employee.new(employee_params)
 
     if @employee.save
-      render :show, status: :created, location: @employee
+      render json: @employee
     else
       render json: @employee.errors, status: :unprocessable_entity
     end
@@ -44,6 +44,7 @@ class EmployeesController < ApplicationController
   # DELETE /employees/1.json
   def destroy
     @employee.destroy
+    render json: @employee
   end
 
   private
