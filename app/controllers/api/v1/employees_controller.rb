@@ -15,6 +15,7 @@ class EmployeesController < ApplicationController
   # GET /employees/1
   # GET /employees/1.json
   def show
+    render json: @employee
   end
 
   # POST /employees
@@ -33,7 +34,7 @@ class EmployeesController < ApplicationController
   # PATCH/PUT /employees/1.json
   def update
     if @employee.update(employee_params)
-      render :show, status: :ok, location: @employee
+      render json: @employee
     else
       render json: @employee.errors, status: :unprocessable_entity
     end
