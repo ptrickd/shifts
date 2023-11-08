@@ -1,3 +1,6 @@
+module Api
+    module V1
+
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show update destroy ]
 
@@ -5,6 +8,8 @@ class EmployeesController < ApplicationController
   # GET /employees.json
   def index
     @employees = Employee.all
+
+    render json: @employees
   end
 
   # GET /employees/1
@@ -51,3 +56,8 @@ class EmployeesController < ApplicationController
       params.require(:employee).permit(:is_active, :position, :first_name, :last_name, :display_name)
     end
 end
+
+
+    end
+end
+
