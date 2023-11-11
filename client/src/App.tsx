@@ -1,10 +1,11 @@
-import EmployeeCell from "./components/EmployeeCell";
+import Container from "@mui/material/Container";
+import Schedule from "./components/Schedule";
 
 function App() {
   return (
-    <>
-      <EmployeeCell />
-    </>
+    <Container maxWidth={false}>
+      <Schedule />
+    </Container>
   );
 }
 

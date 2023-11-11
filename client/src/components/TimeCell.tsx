@@ -4,13 +4,12 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
 //Types
-
 interface Props {
-  displayName: string;
+  startTime: string;
+  endTime: string;
 }
 
-const EmployeeCell = ({ displayName }: Props) => {
-  // first_name last_name position is_active display_name
+const TimeCell = ({ startTime, endTime }: Props) => {
   return (
     <Container>
       <Box
@@ -20,11 +19,14 @@ const EmployeeCell = ({ displayName }: Props) => {
         }}
       >
         <Typography variant="body1" color="text.primary" align="center">
-          Display Name: {displayName}
+          Start Time: {startTime}
+        </Typography>
+        <Typography variant="body1" color="text.primary" align="center">
+          End Time: {endTime}
         </Typography>
       </Box>
     </Container>
   );
 };
 
-export default EmployeeCell;
+export default TimeCell;

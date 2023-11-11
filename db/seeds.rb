@@ -3,78 +3,86 @@
 #
 Shift.destroy_all
 Employee.destroy_all
+Request.destroy_all
 
-employees = Employee.create([
-    {
+employees =
+  Employee.create(
+    [
+      {
         is_active: true,
-        position: 'Cook',
-        first_name:'Athena',
-        last_name: 'Galindo',
-        display_name: 'Athena'
-    },
-    {
+        position: "Cook",
+        first_name: "Athena",
+        last_name: "Galindo",
+        display_name: "Athena"
+      },
+      {
         is_active: true,
-        position: 'Cook',
-        first_name:'Salvatore',
-        last_name: 'McClain',
-        display_name: 'Salvatore'
-    },
-    {
+        position: "Cook",
+        first_name: "Salvatore",
+        last_name: "McClain",
+        display_name: "Salvatore"
+      },
+      {
         is_active: true,
-        position: 'Cook',
-        first_name:'Marleigh',
-        last_name: 'Barnes',
-        display_name: 'Marleigh'
-    },
-    {
+        position: "Cook",
+        first_name: "Marleigh",
+        last_name: "Barnes",
+        display_name: "Marleigh"
+      },
+      {
         is_active: true,
-        position: 'Cook',
-        first_name:'Damian',
-        last_name: 'Rocha',
-        display_name: 'Damian'
-    },
-    {
+        position: "Cook",
+        first_name: "Damian",
+        last_name: "Rocha",
+        display_name: "Damian"
+      },
+      {
         is_active: true,
-        position: 'Dishwasher',
-        first_name:'Kevin',
-        last_name: 'Gentry',
-        display_name: 'Kevin'
-    },
-    {
+        position: "Dishwasher",
+        first_name: "Kevin",
+        last_name: "Gentry",
+        display_name: "Kevin"
+      },
+      {
         is_active: true,
-        position: 'Dishwasher',
-        first_name:'Amelie',
-        last_name: 'Russo',
-        display_name: 'Amelie'
-    },
-])
+        position: "Dishwasher",
+        first_name: "Amelie",
+        last_name: "Russo",
+        display_name: "Amelie"
+      }
+    ]
+  )
 
-shifts = Shift.create([
-    {
-
+shifts =
+  Shift.create(
+    [
+      {
         date: Time.new(2023, 8, 12),
-        start_time: '11:00:00',
-        end_time: '19:30:00',
+        start_time: "11:00:00",
+        end_time: "19:30:00",
         is_split_shift: false,
         employee: employees.first
-    },
-    {
-
+      },
+      {
         date: Time.new(2023, 8, 13),
-        start_time: '11:00:00',
-        end_time: '19:30:00',
+        start_time: "11:00:00",
+        end_time: "19:30:00",
         is_split_shift: false,
         employee: employees.first
-    } 
-])
+      }
+    ]
+  )
 
- requests = Request.create([
-        category: 'Vacation',
-        date: Time.new(2023, 8, 12),
-        employee: employees.first
-    ])
+requests =
+  Request.create(
+    [
+      category: "Vacation",
+      date: Time.new(2023, 8, 12),
+      employee: employees.first
+    ]
+  )
 
-    # https://1000randomnames.com/
+# https://1000randomnames.com/
 #Georgia Holt
 # Niko Carrillo
 # Kaylani Guerra
