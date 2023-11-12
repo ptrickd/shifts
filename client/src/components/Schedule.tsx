@@ -1,5 +1,5 @@
 //React
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //Material UI
 import Container from "@mui/material/Container";
@@ -11,6 +11,10 @@ import Typography from "@mui/material/Typography";
 import EmployeeCell from "./EmployeeCell";
 import TimeCell from "./TimeCell";
 
+//Types
+interface IEmployee {
+  displayName: string;
+}
 /*
 | Employee Cell | Monday | Tuesday | Wednesday | Thursday |  Friday | Sat | Sund
 
@@ -27,7 +31,13 @@ const Schedule = () => {
   const TOP_ROW = ["Names", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const TODAY = new Date(Date.now());
 
+  //useState
+  const [employees, setEmployees] = useState<IEmployee[] | null>(null);
+
   //useEffect
+  useEffect(() => {
+    if (employees !== null) console.log(employees[1]);
+  }, [employees]);
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(
@@ -37,36 +47,57 @@ const Schedule = () => {
       const data = await response.json();
       console.log(response.ok);
       console.log(data);
+      const formatedEmployeesObject = data.map((employee: any) => {
+        return { displayName: employee.display_name };
+      });
+      setEmployees(formatedEmployeesObject);
     };
     fetchEmployees();
   }, []);
-  const displayTopRow = (array: string[]) => {
-    return array.map((value) => (
-      <Grid item xs={1.5}>
-        <Typography variant="h6" gutterBottom>
-          {value}
-        </Typography>
+  const displayTopRow = (weekDays: string[]) => {
+    return weekDays.map((value, index) => (
+      <Grid item xs={1.5} key={value + index}>
+        {TODAY.getDay() !== index ? (
+          <Typography variant="h6" gutterBottom>
+            {value}
+          </Typography>
+        ) : (
+          <Typography sx={{ color: "red" }} variant="h6" gutterBottom>
+            {value}
+          </Typography>
+        )}
       </Grid>
     ));
   };
+  const displayEmployeeCells = () => {
+    if (employees != null)
+      return employees.map((employee, index) => (
+        <Grid item xs={1.5} key={index}>
+          <Typography variant="h6" gutterBottom>
+            {employee.displayName}
+          </Typography>
+        </Grid>
+      ));
+  };
   return (
     <Container>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={2}>
-          {displayTopRow(TOP_ROW)}
-        </Grid>
-      </Box>
       <Box
         component="div"
         sx={{
+          flexGrow: 1,
           border: "1px solid white",
         }}
       >
-        <EmployeeCell displayName={fakeEmployee.displayName} />
+        <Grid container spacing={2}>
+          {displayTopRow(TOP_ROW)}
+          {displayEmployeeCells()}
+        </Grid>
+
+        {/* <EmployeeCell displayName={fakeEmployee.displayName} />
         <TimeCell
           startTime={fakeEmployee.startTime}
           endTime={fakeEmployee.endTime}
-        />
+        /> */}
       </Box>
     </Container>
   );
