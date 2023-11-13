@@ -57,14 +57,14 @@ shifts =
   Shift.create(
     [
       {
-        date: Time.new(2023, 8, 12),
+        date: Time.now(),
         start_time: "11:00:00",
         end_time: "19:30:00",
         is_split_shift: false,
         employee: employees.first
       },
       {
-        date: Time.new(2023, 8, 13),
+        date: Time.now(),
         start_time: "11:00:00",
         end_time: "19:30:00",
         is_split_shift: false,
@@ -75,11 +75,7 @@ shifts =
 
 requests =
   Request.create(
-    [
-      category: "Vacation",
-      date: Time.new(2023, 8, 12),
-      employee: employees.first
-    ]
+    [category: "Vacation", date: Time.now(), employee: employees.first]
   )
 
 # https://1000randomnames.com/
