@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 
 //Components
 import EmployeeCell from "./EmployeeCell";
-import TimeCell from "./TimeCell";
+// import TimeCell from "./TimeCell";
 
 //Types
 interface IEmployee {
@@ -19,25 +19,37 @@ interface IEmployee {
 | Employee Cell | Monday | Tuesday | Wednesday | Thursday |  Friday | Sat | Sund
 
 */
-
-const fakeEmployee = {
-  displayName: "Athena",
-  startTime: "11:00:00",
-  endTime: "19:30:00",
+//function computing the fist day of the week sunday
+const computeWeekStart = (today: Date) => {
+  const dayWeekInNumber = today.getDay();
+  const dateInNumber = today.getDate();
+  // console.log(today.getDate());
+  if (dayWeekInNumber === 0) {
+    return today;
+  } else {
+    // console.log(dayWeekInNumber);
+    //must return date of the previous sunday
+    //if previous sunday this month
+    if (today.getDate() > 6) {
+      today.setDate(dateInNumber - dayWeekInNumber);
+    }
+    //if previous sunday last month
+    console.log(today.getDate());
+    return today;
+  }
 };
-
 const Schedule = () => {
   //Constants
   const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const TODAY = new Date(Date.now());
-
+  const WEEK_START = computeWeekStart(TODAY);
   //useState
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
 
   //useEffect
-  useEffect(() => {
-    if (employees !== null) console.log(employees[1]);
-  }, [employees]);
+  // useEffect(() => {
+  //   if (employees !== null) console.log(employees[1]);
+  // }, [employees]);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -46,8 +58,8 @@ const Schedule = () => {
       );
 
       const data = await response.json();
-      console.log(response.ok);
-      console.log(data);
+      // console.log(response.ok);
+      // console.log(data);
       const formatedEmployeesObject = data.map((employee: any) => {
         return { displayName: employee.display_name };
       });
@@ -56,7 +68,8 @@ const Schedule = () => {
     fetchEmployees();
   }, []);
   //////////////////////////////////////
-
+  //https://mui.com/material-ui/react-grid#nested-grid
+  //
   const displayTopRow = (weekDays: string[]) => {
     return weekDays.map((value, index) => (
       <Grid item xs={1.5} key={value + index}>
@@ -93,9 +106,7 @@ const Schedule = () => {
       return employees.map((employee, index) => (
         <Grid container item spacing={3}>
           <Grid item xs={1.5} key={index}>
-            <Typography variant="h6" gutterBottom>
-              {employee.displayName}
-            </Typography>
+            <EmployeeCell displayName={employee.displayName} />
           </Grid>
           {displayTimeCells()}
         </Grid>
@@ -105,6 +116,7 @@ const Schedule = () => {
 
   return (
     <Container>
+      <Box component="div">{WEEK_START.toDateString()}</Box>
       <Box
         component="div"
         sx={{
