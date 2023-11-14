@@ -102,7 +102,7 @@ const Schedule = () => {
     for (let numOfCell = 0; numOfCell < 7; numOfCell++) {
       rowOfTimeCells.push(
         // <Grid item xs={1.5} key={numOfCell} zeroMinWidth>
-        <TimeCell startTime="11:00" endTime="13:00" key={numOfCell} />
+        <TimeCell startTime={null} endTime="13:00" key={numOfCell} />
         // </Grid>
       );
     }
