@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 
 //Components
 import EmployeeCell from "./EmployeeCell";
-// import TimeCell from "./TimeCell";
+import TimeCell from "./TimeCell";
 
 //Types
 interface IEmployee {
@@ -72,13 +72,23 @@ const Schedule = () => {
   //
   const displayTopRow = (weekDays: string[]) => {
     return weekDays.map((value, index) => (
-      <Grid item xs={1.5} key={value + index}>
+      <Grid item xs={1.5} key={value + index} zeroMinWidth>
         {TODAY.getDay() + 1 === index ? (
-          <Typography sx={{ color: "red" }} variant="h6" gutterBottom>
+          <Typography
+            sx={{ color: "red", margin: 0, padding: 0 }}
+            variant="h6"
+            gutterBottom
+            align="center"
+          >
             {value}
           </Typography>
         ) : (
-          <Typography variant="h6" gutterBottom>
+          <Typography
+            variant="h6"
+            gutterBottom
+            align="center"
+            sx={{ margin: 0, padding: 0 }}
+          >
             {value}
           </Typography>
         )}
@@ -91,11 +101,9 @@ const Schedule = () => {
     const rowOfTimeCells = [];
     for (let numOfCell = 0; numOfCell < 7; numOfCell++) {
       rowOfTimeCells.push(
-        <Grid item xs={1.5} key={numOfCell}>
-          <Typography variant="h6" gutterBottom>
-            TimeCells
-          </Typography>
-        </Grid>
+        // <Grid item xs={1.5} key={numOfCell} zeroMinWidth>
+        <TimeCell startTime="11:00" endTime="13:00" key={numOfCell} />
+        // </Grid>
       );
     }
     return rowOfTimeCells;
@@ -104,10 +112,15 @@ const Schedule = () => {
   const displayEmployeeCells = () => {
     if (employees != null)
       return employees.map((employee, index) => (
-        <Grid container item spacing={3}>
-          <Grid item xs={1.5} key={index}>
-            <EmployeeCell displayName={employee.displayName} />
-          </Grid>
+        <Grid
+          container
+          item
+          spacing={1}
+          sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
+        >
+          {/* <Grid item xs={1.5} key={index}> */}
+          <EmployeeCell displayName={employee.displayName} key={index} />
+          {/* </Grid> */}
           {displayTimeCells()}
         </Grid>
       ));
@@ -121,22 +134,16 @@ const Schedule = () => {
         component="div"
         sx={{
           flexGrow: 1,
-          border: "1px solid white",
+          border: "1px solid gray",
         }}
       >
         <Grid container spacing={1}>
-          <Grid container item spacing={3}>
+          <Grid container item spacing={1}>
             {displayTopRow(TOP_ROW)}
           </Grid>
 
           {displayEmployeeCells()}
         </Grid>
-
-        {/* <EmployeeCell displayName={fakeEmployee.displayName} />
-        <TimeCell
-          startTime={fakeEmployee.startTime}
-          endTime={fakeEmployee.endTime}
-        /> */}
       </Box>
     </Container>
   );

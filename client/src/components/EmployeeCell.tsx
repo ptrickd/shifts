@@ -1,5 +1,5 @@
 //Material UI
-import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 //Types
@@ -11,18 +11,27 @@ interface Props {
 const EmployeeCell = ({ displayName }: Props) => {
   // first_name last_name position is_active display_name
   return (
-    // <Container>
-    <Box
-      component="div"
-      // sx={{
-      //   border: "1px solid white",
-      // }}
+    <Grid
+      item
+      xs={1.5}
+      zeroMinWidth
+      sx={{
+        margin: 0,
+        padding: 0,
+        flexGrow: 1,
+        border: "1px solid gray",
+      }}
     >
-      <Typography variant="body1" color="text.primary" align="center">
+      <Typography
+        variant="body1"
+        color="text.primary"
+        align="center"
+        // noWrap
+        // sx={{ paddingBottom: 1 }}
+      >
         {displayName}
       </Typography>
-    </Box>
-    // </Container>
+    </Grid>
   );
 };
 
