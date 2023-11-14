@@ -5,6 +5,19 @@ Shift.destroy_all
 Employee.destroy_all
 Request.destroy_all
 
+#Get the date of the beginning of this week
+def week_start
+  today = Time.now()
+  start_week = 0
+  day_in_seconds = 60 * 60 * 24
+  if (today.wday == 0)
+    start_week = today
+  else
+    start_week = today - (today.wday * day_in_seconds)
+  end
+  return start_week
+end
+
 employees =
   Employee.create(
     [
@@ -61,6 +74,7 @@ shifts =
         start_time: "11:00:00",
         end_time: "19:30:00",
         is_split_shift: false,
+        week_start: week_start(),
         employee: employees.first
       },
       {
@@ -68,6 +82,7 @@ shifts =
         start_time: "11:00:00",
         end_time: "19:30:00",
         is_split_shift: false,
+        week_start: week_start(),
         employee: employees.first
       }
     ]

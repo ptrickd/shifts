@@ -59,7 +59,7 @@ const Schedule = () => {
 
       const data = await response.json();
       // console.log(response.ok);
-      // console.log(data);
+      console.log(data);
       const formatedEmployeesObject = data.map((employee: any) => {
         return { displayName: employee.display_name };
       });
