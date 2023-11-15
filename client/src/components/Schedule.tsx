@@ -12,8 +12,36 @@ import EmployeeCell from "./EmployeeCell";
 import TimeCell from "./TimeCell";
 
 //Types
+// interface IResponse {
+//   ok: boolean;
+//   error: boolean;
+// }
+interface IResponseEmployee {
+  isActive: boolean;
+  position: string;
+  first_name: string;
+  last_name: string;
+  display_name: string;
+  created_at: string;
+  updated_at: string;
+}
+interface IResponseShift {
+  employee_id: number;
+  date: string;
+  start_time: string;
+  end_time: string;
+  is_split_shift: boolean;
+  created_at: string;
+  updated_at: string;
+  week_start: string;
+}
 interface IEmployee {
   displayName: string;
+}
+interface IShift {
+  date: string;
+  startTime: string;
+  endTime: string;
 }
 /*
 | Employee Cell | Monday | Tuesday | Wednesday | Thursday |  Friday | Sat | Sund
@@ -23,19 +51,21 @@ interface IEmployee {
 const computeWeekStart = (today: Date) => {
   const dayWeekInNumber = today.getDay();
   const dateInNumber = today.getDate();
-  // console.log(today.getDate());
+
   if (dayWeekInNumber === 0) {
-    return today;
+    //convert to format '2023-11-12'
+    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   } else {
-    // console.log(dayWeekInNumber);
     //must return date of the previous sunday
     //if previous sunday this month
     if (today.getDate() > 6) {
       today.setDate(dateInNumber - dayWeekInNumber);
     }
     //if previous sunday last month
-    console.log(today.getDate());
-    return today;
+
+    //convert to format '2023-11-12'
+
+    return `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   }
 };
 const Schedule = () => {
@@ -45,11 +75,7 @@ const Schedule = () => {
   const WEEK_START = computeWeekStart(TODAY);
   //useState
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
-
-  //useEffect
-  // useEffect(() => {
-  //   if (employees !== null) console.log(employees[1]);
-  // }, [employees]);
+  const [, setShifts] = useState<IShift | null>(null);
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -60,13 +86,34 @@ const Schedule = () => {
       const data = await response.json();
       // console.log(response.ok);
       console.log(data);
-      const formatedEmployeesObject = data.map((employee: any) => {
-        return { displayName: employee.display_name };
-      });
+      const formatedEmployeesObject = data.map(
+        (employee: IResponseEmployee) => {
+          return { displayName: employee.display_name };
+        }
+      );
       setEmployees(formatedEmployeesObject);
     };
+
     fetchEmployees();
   }, []);
+  useEffect(() => {
+    const fetchShifts = async () => {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/shifts/?week_start=${WEEK_START}`
+      );
+      const data = await response.json();
+      console.log(data);
+      const formatedShiftsObject = data.map((shift: IResponseShift) => {
+        return {
+          date: shift.date,
+          startTime: shift.start_time,
+          endTime: shift.end_time,
+        };
+      });
+      setShifts(formatedShiftsObject);
+    };
+    fetchShifts();
+  }, [WEEK_START]);
   //////////////////////////////////////
   //https://mui.com/material-ui/react-grid#nested-grid
   //
@@ -129,7 +176,7 @@ const Schedule = () => {
 
   return (
     <Container>
-      <Box component="div">{WEEK_START.toDateString()}</Box>
+      <Box component="div">{WEEK_START}</Box>
       <Box
         component="div"
         sx={{
