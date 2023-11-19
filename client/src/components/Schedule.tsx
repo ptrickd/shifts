@@ -56,6 +56,7 @@ const Schedule = () => {
         `http://localhost:3000/api/v1/shifts/?week_start=${WEEK_START}`
       );
       const data = await response.json();
+      // console.log(WEEK_START);
       // console.log(data);
       const formatedShiftsObject = data.map((shift: IResponseShift) => {
         return {

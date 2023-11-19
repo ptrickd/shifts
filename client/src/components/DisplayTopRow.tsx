@@ -29,6 +29,16 @@ const DisplayTopRow = ({ weekDays, today }: IProps) => {
           {value}
         </Typography>
       )}
+      {!index ? null : (
+        <Typography
+          variant="h6"
+          gutterBottom
+          align="center"
+          sx={{ margin: 0, padding: 0 }}
+        >
+          {today.getDate() + index - 1}
+        </Typography>
+      )}
     </Grid>
   ));
 };
