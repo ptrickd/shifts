@@ -1,6 +1,7 @@
 //Response from the server when
 //calling Employees#index
 interface IResponseEmployee {
+  id: number;
   isActive: boolean;
   position: string;
   first_name: string;
@@ -22,5 +23,12 @@ interface IResponseShift {
   week_start: string;
 }
 interface IEmployee {
+  id: number;
   displayName: string;
+}
+interface IShift {
+  employeeId: number;
+  date: string;
+  startTime: string;
+  endTime: string;
 }

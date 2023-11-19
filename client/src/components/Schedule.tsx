@@ -13,17 +13,6 @@ import DisplayEmployeeCells from "./DisplayEmployeeCells";
 //Functions
 import { computeWeekStart } from "../utils/date";
 
-//Types
-// interface IResponse {
-//   ok: boolean;
-//   error: boolean;
-// }
-
-interface IShift {
-  date: string;
-  startTime: string;
-  endTime: string;
-}
 /*
 | Employee Cell | Monday | Tuesday | Wednesday | Thursday |  Friday | Sat | Sund
 
@@ -38,7 +27,7 @@ const Schedule = () => {
   //useState
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
   //&&&&&&&& next step: shifts from server
-  const [, setShifts] = useState<IShift | null>(null);
+  const [shifts, setShifts] = useState<IShift[] | null>(null);
 
   //useEffect
   useEffect(() => {
@@ -49,10 +38,10 @@ const Schedule = () => {
 
       const data = await response.json();
       // console.log(response.ok);
-      console.log(data);
+      // console.log(data);
       const formatedEmployeesObject = data.map(
         (employee: IResponseEmployee) => {
-          return { displayName: employee.display_name };
+          return { id: employee.id, displayName: employee.display_name };
         }
       );
       setEmployees(formatedEmployeesObject);
@@ -67,9 +56,10 @@ const Schedule = () => {
         `http://localhost:3000/api/v1/shifts/?week_start=${WEEK_START}`
       );
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const formatedShiftsObject = data.map((shift: IResponseShift) => {
         return {
+          employeeId: shift.employee_id,
           date: shift.date,
           startTime: shift.start_time,
           endTime: shift.end_time,
@@ -79,7 +69,8 @@ const Schedule = () => {
     };
     fetchShifts();
   }, [WEEK_START]);
-  if (employees)
+
+  if (employees && shifts)
     return (
       <Container>
         <Box component="div">{WEEK_START}</Box>
@@ -95,7 +86,11 @@ const Schedule = () => {
               <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
             </Grid>
 
-            <DisplayEmployeeCells employees={employees} />
+            <DisplayEmployeeCells
+              employees={employees}
+              shifts={shifts}
+              weekStart={WEEK_START}
+            />
           </Grid>
         </Box>
       </Container>

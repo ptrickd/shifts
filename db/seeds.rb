@@ -83,15 +83,15 @@ shifts =
         end_time: "19:30:00",
         is_split_shift: false,
         week_start: week_start(),
-        employee: employees.first
+        employee: employees.last
       }
     ]
   )
 
-requests =
-  Request.create(
-    [category: "Vacation", date: Time.now(), employee: employees.first]
-  )
+# requests =
+#   Request.create(
+#     [category: "Vacation", date: Time.now(), employee: employees.first]
+#   )
 
 # https://1000randomnames.com/
 #Georgia Holt
