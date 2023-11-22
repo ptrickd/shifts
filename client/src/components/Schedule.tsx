@@ -9,9 +9,10 @@ import Grid from "@mui/material/Grid";
 //Components
 import DisplayTopRow from "./DisplayTopRow";
 import DisplayEmployeeCells from "./DisplayEmployeeCells";
+import DateNavbar from "./DateNavbar";
 
 //Functions
-import { computeWeekStart } from "../utils/date";
+import { computeWeekStart, computeNewWeekStart } from "../utils/date";
 
 /*
 | Employee Cell | Monday | Tuesday | Wednesday | Thursday |  Friday | Sat | Sund
@@ -22,14 +23,16 @@ const Schedule = () => {
   //Constants
   const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const TODAY = new Date(Date.now());
-  const WEEK_START = computeWeekStart(TODAY);
 
   //useState
+  const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
-  //&&&&&&&& next step: shifts from server
   const [shifts, setShifts] = useState<IShift[] | null>(null);
 
   //useEffect
+  useEffect(() => {
+    console.log(weekStart);
+  }, [weekStart]);
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(
@@ -53,7 +56,7 @@ const Schedule = () => {
   useEffect(() => {
     const fetchShifts = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/v1/shifts/?week_start=${WEEK_START}`
+        `http://localhost:3000/api/v1/shifts/?week_start=${weekStart}`
       );
       const data = await response.json();
       // console.log(WEEK_START);
@@ -69,12 +72,18 @@ const Schedule = () => {
       setShifts(formatedShiftsObject);
     };
     fetchShifts();
-  }, [WEEK_START]);
+  }, [weekStart]);
 
   if (employees && shifts)
     return (
       <Container>
-        <Box component="div">{WEEK_START}</Box>
+        <DateNavbar
+          date={weekStart}
+          newShifts={(direction) =>
+            setWeekStart(computeNewWeekStart(weekStart, direction))
+          }
+        />
+
         <Box
           component="div"
           sx={{
@@ -90,7 +99,7 @@ const Schedule = () => {
             <DisplayEmployeeCells
               employees={employees}
               shifts={shifts}
-              weekStart={WEEK_START}
+              weekStart={weekStart}
             />
           </Grid>
         </Box>
