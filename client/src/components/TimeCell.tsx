@@ -1,16 +1,27 @@
+import { useState } from "react";
+
 //Material UI
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+
+//Components
+import ModalTimeCell from "./ModalTimeCell";
 
 //Types
 interface Props {
+  name: string;
   startTime: string | null;
   endTime: string | null;
 }
 
-const TimeCell = ({ startTime, endTime }: Props) => {
+const TimeCell = ({ name, startTime, endTime }: Props) => {
   let text = <></>;
-  //if no condition are nulls then the employee is off that day
+
+  //useState
+  const [openModal, setOpenModal] = useState(false);
+  const handleChangeShift = () => {};
+  //if conditions are nulls then the employee is off that day
   if (startTime === null || endTime === null) {
     text = (
       <Typography
@@ -59,7 +70,15 @@ const TimeCell = ({ startTime, endTime }: Props) => {
         border: "1px solid gray",
       }}
     >
-      {text}
+      <Box component="span" onClick={() => setOpenModal(true)}>
+        {text}
+      </Box>
+      <ModalTimeCell
+        name={name}
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        handleChangeShift={handleChangeShift}
+      />
     </Grid>
   );
 };

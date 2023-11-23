@@ -3,6 +3,7 @@ import TimeCell from "./TimeCell";
 
 //Types
 interface IProps {
+  name: string;
   shifts: IShift[];
   weekStart: string;
 }
@@ -28,7 +29,7 @@ function findTodayShift(
   console.log(todayShift);
   return todayShift;
 }
-const DisplayTimeCells = ({ shifts, weekStart }: IProps) => {
+const DisplayTimeCells = ({ name, shifts, weekStart }: IProps) => {
   // console.log(shifts);
 
   //sort by date
@@ -39,6 +40,7 @@ const DisplayTimeCells = ({ shifts, weekStart }: IProps) => {
     if (todayShift !== null) {
       rowOfTimeCells.push(
         <TimeCell
+          name={name}
           startTime={todayShift.startTime.substring(11, 16)}
           endTime={todayShift.endTime.substring(11, 16)}
           key={numOfCell}
@@ -46,7 +48,7 @@ const DisplayTimeCells = ({ shifts, weekStart }: IProps) => {
       );
     } else {
       rowOfTimeCells.push(
-        <TimeCell startTime={null} endTime={null} key={numOfCell} />
+        <TimeCell name={name} startTime={null} endTime={null} key={numOfCell} />
       );
     }
   }
