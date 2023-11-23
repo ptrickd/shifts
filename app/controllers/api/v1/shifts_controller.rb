@@ -24,7 +24,7 @@ module Api
         @shift = Shift.new(shift_params)
 
         if @shift.save
-          render :show, status: :created, location: @shift
+          render json: @shift
         else
           render json: @shift.errors, status: :unprocessable_entity
         end
