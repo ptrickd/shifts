@@ -2,7 +2,7 @@ module Api
   module V1
     class ShiftsController < ApplicationController
       before_action :set_shift, only: %i[show update destroy]
-
+      # before_action :print_params, only: %i[create]
       # GET /shifts
       # GET /shifts.json
       def index
@@ -51,6 +51,11 @@ module Api
       # Use callbacks to share common setup or constraints between actions.
       def set_shift
         @shift = Shift.find(params[:id])
+      end
+
+      def print_params
+        Rails.logger.debug "shift_params"
+        Rails.logger.debug shift_params.inspect
       end
 
       # Only allow a list of trusted parameters through.

@@ -13,6 +13,9 @@ import Typography from "@mui/material/Typography";
 //Constants
 import { TIMES } from "../utils/constants";
 
+//Functions
+import { computeWeekStart } from "../utils/date";
+
 //Reducer
 // import { ShiftsReducer } from "../context/Reducer";
 
@@ -39,28 +42,45 @@ interface IData {
 }
 const url = `http://localhost:3000/api/v1/shifts`;
 
+const formatToPOST = (data: IData) => {
+  const weekStart = computeWeekStart(new Date(data.date));
+  return {
+    employee_id: data.employeeId,
+    date: data.date,
+    start_time: `${data.startTime}:00`,
+    end_time: `${data.endTime}:00`,
+    is_split_shift: false,
+    week_start: weekStart,
+  };
+};
 const postShift = async (data: IData) => {
+  console.log(JSON.stringify(formatToPOST(data)));
   const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors", // no-cors, *cors, same-origin
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(formatToPOST(data)),
   });
-  return response.json();
+  console.log(response);
+  console.log(response.statusText);
+
+  return await response.json();
 };
 
 const putShift = async (data: IData) => {
   const response = await fetch(url, {
-    method: "POST", // *GET, POST, PUT, DELETE, etc.
-    mode: "cors",
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
+      Accept: "application/json",
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(formatToPOST(data)),
   });
-  return response.json();
+  console.log(response);
+  //if response.error then do this
+  return await response.json();
 };
 
 const generateMenuItems = (times: string[]) => {
@@ -73,12 +93,12 @@ const updateShifts: (
   endTime: string,
   date: string,
   shifts: IShift[]
-) => void = (employeeId, startTime, endTime, date, shifts) => {
+) => IShift[] = (employeeId, startTime, endTime, date, shifts) => {
   let foundShift: null | IShift = null;
   if (!shifts) throw new Error("shifts undefined");
 
   const newShifts = shifts.map((shift) => {
-    if (shift.employeeId === employeeId && shift.date === "change this later") {
+    if (shift.employeeId === employeeId && shift.date === date) {
       foundShift = {
         ...shift,
         startTime: startTime,
@@ -108,7 +128,7 @@ const updateShifts: (
     putShift(foundShift);
   }
   // fetch;
-  return { shifts: newShifts };
+  return newShifts;
 };
 const ModalTimeCell = ({
   name,
@@ -160,7 +180,14 @@ const ModalTimeCell = ({
     } else {
       setError("");
       if (shifts) {
-        updateShifts(employeeId, startTime, endTime, date, shifts);
+        const updatedShifts = updateShifts(
+          employeeId,
+          currentStartTime,
+          currentEndTime,
+          date,
+          shifts
+        );
+        console.log(updatedShifts);
       }
     }
   };
