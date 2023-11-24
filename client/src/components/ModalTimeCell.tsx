@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 //Material UI
 import Dialog from "@mui/material/Dialog";
@@ -14,29 +14,112 @@ import Typography from "@mui/material/Typography";
 import { TIMES } from "../utils/constants";
 
 //Reducer
-// import { reducer } from "../context/Reducer";
+// import { ShiftsReducer } from "../context/Reducer";
+
+//Context
+import { ShiftsContext } from "../context/Context";
+
 //Types
 interface IProps {
   name: string;
+  employeeId: number;
   open: boolean;
   startTime: string;
   endTime: string;
+  date: string;
   onClose: () => void;
 }
+
+interface IData {
+  id?: number;
+  employeeId: number;
+  date: string;
+  startTime: string;
+  endTime: string;
+}
+const url = `http://localhost:3000/api/v1/shifts`;
+
+const postShift = async (data: IData) => {
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, *cors, same-origin
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+};
+
+const putShift = async (data: IData) => {
+  const response = await fetch(url, {
+    method: "POST", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+};
 
 const generateMenuItems = (times: string[]) => {
   return times.map((time) => <MenuItem value={time}>{time}</MenuItem>);
 };
-const ModalTimeCell = ({ name, open, onClose, startTime, endTime }: IProps) => {
-  //useReducer
-  // const initialState = {
-  //   date: "",
-  //   employeeId: 0,
-  //   startTime: "",
-  //   endTime: "",
-  //   shifts: [],
-  // };
-  // const [state, dispatch] = useReducer(reducer, initialState);
+
+const updateShifts: (
+  employeeId: number,
+  startTime: string,
+  endTime: string,
+  date: string,
+  shifts: IShift[]
+) => void = (employeeId, startTime, endTime, date, shifts) => {
+  let foundShift: null | IShift = null;
+  if (!shifts) throw new Error("shifts undefined");
+
+  const newShifts = shifts.map((shift) => {
+    if (shift.employeeId === employeeId && shift.date === "change this later") {
+      foundShift = {
+        ...shift,
+        startTime: startTime,
+        endTime: endTime,
+      };
+      return foundShift;
+    } else {
+      return { ...shift };
+    }
+  });
+  console.log(newShifts);
+
+  if (!foundShift) {
+    newShifts.push({
+      employeeId: employeeId,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+    });
+    postShift({
+      employeeId: employeeId,
+      startTime: startTime,
+      endTime: endTime,
+      date: date,
+    });
+  } else {
+    putShift(foundShift);
+  }
+  // fetch;
+  return { shifts: newShifts };
+};
+const ModalTimeCell = ({
+  name,
+  employeeId,
+  open,
+  onClose,
+  startTime,
+  endTime,
+  date,
+}: IProps) => {
+  const shifts = useContext(ShiftsContext);
 
   //useState
   const [currentStartTime, setCurrentStartTime] = useState("");
@@ -44,8 +127,6 @@ const ModalTimeCell = ({ name, open, onClose, startTime, endTime }: IProps) => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    console.log(startTime);
-    console.log(endTime);
     setCurrentStartTime(startTime);
     setCurrentEndTime(endTime);
   }, [startTime, endTime]);
@@ -78,6 +159,9 @@ const ModalTimeCell = ({ name, open, onClose, startTime, endTime }: IProps) => {
       setError("Starting time cannot be higher than end time.");
     } else {
       setError("");
+      if (shifts) {
+        updateShifts(employeeId, startTime, endTime, date, shifts);
+      }
     }
   };
 
@@ -115,6 +199,14 @@ const ModalTimeCell = ({ name, open, onClose, startTime, endTime }: IProps) => {
       <Typography color="red">{error}</Typography>
       <Button sx={{ margin: 1 }} variant="outlined" onClick={handleSubmit}>
         OK
+      </Button>
+      <Button
+        sx={{ margin: 1 }}
+        variant="outlined"
+        color="error"
+        onClick={onClose}
+      >
+        Cancel
       </Button>
     </Dialog>
   );

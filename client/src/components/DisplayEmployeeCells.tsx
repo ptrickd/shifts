@@ -33,7 +33,7 @@ const DisplayEmployeeCells = ({ employees, shifts, weekStart }: IProps) => {
         <EmployeeCell displayName={employee.displayName} key={index} />
 
         <DisplayTimeCells
-          name={employee.displayName}
+          employee={employee}
           shifts={sortedShiftsByEmployee(employee.id, shifts)}
           weekStart={weekStart}
         />

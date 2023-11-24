@@ -9,13 +9,15 @@ import Typography from "@mui/material/Typography";
 import ModalTimeCell from "./ModalTimeCell";
 
 //Types
-interface Props {
+interface IProps {
   name: string;
+  employeeId: number;
   startTime: string | null;
   endTime: string | null;
+  date: string;
 }
 
-const TimeCell = ({ name, startTime, endTime }: Props) => {
+const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
   let text = <></>;
 
   //useState
@@ -75,9 +77,11 @@ const TimeCell = ({ name, startTime, endTime }: Props) => {
       </Box>
       <ModalTimeCell
         name={name}
+        employeeId={employeeId}
         open={openModal}
-        startTime={startTime || ""}
-        endTime={endTime || "???"}
+        startTime={startTime || "8:00"}
+        endTime={endTime || "12:00"}
+        date={date}
         onClose={() => setOpenModal(false)}
       />
     </Grid>
