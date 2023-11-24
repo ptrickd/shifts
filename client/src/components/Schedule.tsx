@@ -11,6 +11,9 @@ import DisplayTopRow from "./DisplayTopRow";
 import DisplayEmployeeCells from "./DisplayEmployeeCells";
 import DateNavbar from "./DateNavbar";
 
+//Context
+import { ShiftsContext } from "../context/Context";
+
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
 
@@ -28,6 +31,7 @@ const Schedule = () => {
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
   const [shifts, setShifts] = useState<IShift[] | null>(null);
+  // const [state, setState] = useState<IShift[] | null>(null);
 
   //useEffect
   useEffect(() => {
@@ -76,34 +80,36 @@ const Schedule = () => {
 
   if (employees && shifts)
     return (
-      <Container>
-        <DateNavbar
-          date={weekStart}
-          newShifts={(direction) =>
-            setWeekStart(computeNewWeekStart(weekStart, direction))
-          }
-        />
+      <ShiftsContext.Provider value={shifts}>
+        <Container>
+          <DateNavbar
+            date={weekStart}
+            newShifts={(direction) =>
+              setWeekStart(computeNewWeekStart(weekStart, direction))
+            }
+          />
 
-        <Box
-          component="div"
-          sx={{
-            flexGrow: 1,
-            border: "1px solid gray",
-          }}
-        >
-          <Grid container spacing={1}>
-            <Grid container item spacing={1}>
-              <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
+          <Box
+            component="div"
+            sx={{
+              flexGrow: 1,
+              border: "1px solid gray",
+            }}
+          >
+            <Grid container spacing={1}>
+              <Grid container item spacing={1}>
+                <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
+              </Grid>
+
+              <DisplayEmployeeCells
+                employees={employees}
+                shifts={shifts}
+                weekStart={weekStart}
+              />
             </Grid>
-
-            <DisplayEmployeeCells
-              employees={employees}
-              shifts={shifts}
-              weekStart={weekStart}
-            />
-          </Grid>
-        </Box>
-      </Container>
+          </Box>
+        </Container>
+      </ShiftsContext.Provider>
     );
 };
 

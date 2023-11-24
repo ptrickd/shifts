@@ -20,7 +20,7 @@ const TimeCell = ({ name, startTime, endTime }: Props) => {
 
   //useState
   const [openModal, setOpenModal] = useState(false);
-  const handleChangeShift = () => {};
+
   //if conditions are nulls then the employee is off that day
   if (startTime === null || endTime === null) {
     text = (
@@ -76,8 +76,9 @@ const TimeCell = ({ name, startTime, endTime }: Props) => {
       <ModalTimeCell
         name={name}
         open={openModal}
+        startTime={startTime || ""}
+        endTime={endTime || "???"}
         onClose={() => setOpenModal(false)}
-        handleChangeShift={handleChangeShift}
       />
     </Grid>
   );

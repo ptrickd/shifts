@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //Material UI
 import Dialog from "@mui/material/Dialog";
@@ -12,40 +12,62 @@ import Typography from "@mui/material/Typography";
 
 //Constants
 import { TIMES } from "../utils/constants";
+
+//Reducer
+// import { reducer } from "../context/Reducer";
 //Types
 interface IProps {
   name: string;
   open: boolean;
+  startTime: string;
+  endTime: string;
   onClose: () => void;
-  handleChangeShift: (startTime: string, endTime: string) => void;
 }
 
 const generateMenuItems = (times: string[]) => {
   return times.map((time) => <MenuItem value={time}>{time}</MenuItem>);
 };
-const ModalTimeCell = ({ name, open, onClose, handleChangeShift }: IProps) => {
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+const ModalTimeCell = ({ name, open, onClose, startTime, endTime }: IProps) => {
+  //useReducer
+  // const initialState = {
+  //   date: "",
+  //   employeeId: 0,
+  //   startTime: "",
+  //   endTime: "",
+  //   shifts: [],
+  // };
+  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  //useState
+  const [currentStartTime, setCurrentStartTime] = useState("");
+  const [currentEndTime, setCurrentEndTime] = useState("");
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    console.log(startTime);
+    console.log(endTime);
+    setCurrentStartTime(startTime);
+    setCurrentEndTime(endTime);
+  }, [startTime, endTime]);
+
   const handleStartChange = (event: SelectChangeEvent) => {
-    setStartTime(event.target.value as string);
+    setCurrentStartTime(event.target.value as string);
   };
 
   const handleEndChange = (event: SelectChangeEvent) => {
-    setEndTime(event.target.value as string);
+    setCurrentEndTime(event.target.value as string);
   };
 
   const handleSubmit = () => {
-    const indexStart = startTime.indexOf(":");
-    const indexEnd = endTime.indexOf(":");
+    const indexStart = currentStartTime.indexOf(":");
+    const indexEnd = currentEndTime.indexOf(":");
 
-    const hourStart = startTime.substring(indexStart, -2);
-    const minuteStart = startTime.substring(indexStart + 1);
-    const hourEnd = endTime.substring(indexEnd, -2);
-    const minuteEnd = endTime.substring(indexEnd + 1);
+    const hourStart = currentStartTime.substring(indexStart, -2);
+    const minuteStart = currentStartTime.substring(indexStart + 1);
+    const hourEnd = currentEndTime.substring(indexEnd, -2);
+    const minuteEnd = currentEndTime.substring(indexEnd + 1);
 
-    if (!startTime.length || !endTime.length) {
+    if (!currentStartTime.length || !currentEndTime.length) {
       setError(`Can't leave field empty.`);
     } else if (Number(hourStart) > Number(hourEnd)) {
       setError("Starting time cannot be higher than end time.");
@@ -56,7 +78,6 @@ const ModalTimeCell = ({ name, open, onClose, handleChangeShift }: IProps) => {
       setError("Starting time cannot be higher than end time.");
     } else {
       setError("");
-      handleChangeShift(startTime, endTime);
     }
   };
 
@@ -73,7 +94,7 @@ const ModalTimeCell = ({ name, open, onClose, handleChangeShift }: IProps) => {
           sx={{ margin: 1 }}
           labelId="start-time-label"
           id="start-time-select"
-          value={startTime}
+          value={currentStartTime}
           onChange={handleStartChange}
         >
           {generateMenuItems(TIMES)}
@@ -85,7 +106,7 @@ const ModalTimeCell = ({ name, open, onClose, handleChangeShift }: IProps) => {
           sx={{ margin: 1 }}
           labelId="end-time-label"
           id="end-time-select"
-          value={endTime}
+          value={currentEndTime}
           onChange={handleEndChange}
         >
           {generateMenuItems(TIMES)}
