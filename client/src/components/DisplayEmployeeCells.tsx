@@ -1,3 +1,4 @@
+import { Dispatch } from "react";
 //Material UI
 import Grid from "@mui/material/Grid";
 
@@ -9,6 +10,7 @@ interface IProps {
   employees: IEmployee[];
   shifts: IShift[];
   weekStart: string;
+  shiftDispatch: Dispatch<IAction>;
 }
 
 function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
@@ -21,7 +23,12 @@ function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
   return employeeShifts;
 }
 
-const DisplayEmployeeCells = ({ employees, shifts, weekStart }: IProps) => {
+const DisplayEmployeeCells = ({
+  employees,
+  shifts,
+  weekStart,
+  shiftDispatch,
+}: IProps) => {
   if (employees != null) {
     return employees.map((employee, index) => (
       <Grid
@@ -36,6 +43,7 @@ const DisplayEmployeeCells = ({ employees, shifts, weekStart }: IProps) => {
           employee={employee}
           shifts={sortedShiftsByEmployee(employee.id, shifts)}
           weekStart={weekStart}
+          shiftDispatch={shiftDispatch}
         />
       </Grid>
     ));

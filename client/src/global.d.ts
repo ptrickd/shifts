@@ -32,3 +32,8 @@ interface IShift {
   startTime: string;
   endTime: string;
 }
+
+interface IAction {
+  type: ACTIONS.SET_SHIFTS;
+  payload?: IShift[] | [];
+}

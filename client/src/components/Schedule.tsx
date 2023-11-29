@@ -72,9 +72,7 @@ const Schedule = () => {
     };
     fetchShifts();
   }, [weekStart]);
-  // useEffect(() => {
-  //   shifts.onChange(updatedShifts);
-  // }, [updatedShifts, shifts]);
+
   if (employees && shifts)
     return (
       // <ShiftsContext.Provider value={[]}>
@@ -102,6 +100,7 @@ const Schedule = () => {
               employees={employees}
               shifts={shifts}
               weekStart={weekStart}
+              shiftDispatch={dispatch}
             />
           </Grid>
         </Box>

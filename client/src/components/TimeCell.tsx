@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch } from "react";
 
 //Material UI
 import Grid from "@mui/material/Grid";
@@ -15,9 +15,17 @@ interface IProps {
   startTime: string | null;
   endTime: string | null;
   date: string;
+  shiftDispatch: Dispatch<IAction>;
 }
 
-const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
+const TimeCell = ({
+  name,
+  employeeId,
+  startTime,
+  endTime,
+  date,
+  shiftDispatch,
+}: IProps) => {
   let text = <></>;
 
   //useState
@@ -83,6 +91,7 @@ const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
         endTime={endTime || "12:00"}
         date={date}
         onClose={() => setOpenModal(false)}
+        shiftDispatch={shiftDispatch}
       />
     </Grid>
   );

@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 //Components
 import TimeCell from "./TimeCell";
 
@@ -6,6 +8,7 @@ interface IProps {
   employee: IEmployee;
   shifts: IShift[];
   weekStart: string;
+  shiftDispatch: Dispatch<IAction>;
 }
 
 function findTodayShift(
@@ -29,7 +32,12 @@ function findTodayShift(
   console.log(todayShift);
   return todayShift;
 }
-const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
+const DisplayTimeCells = ({
+  employee,
+  shifts,
+  weekStart,
+  shiftDispatch,
+}: IProps) => {
   // console.log(shifts);
 
   //sort by date
@@ -47,6 +55,7 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
           startTime={todayShift.startTime.substring(11, 16)}
           endTime={todayShift.endTime.substring(11, 16)}
           key={numOfCell}
+          shiftDispatch={shiftDispatch}
         />
       );
     } else {
@@ -60,6 +69,7 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
           startTime={null}
           endTime={null}
           key={numOfCell}
+          shiftDispatch={shiftDispatch}
         />
       );
     }
