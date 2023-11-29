@@ -1,23 +1,21 @@
-interface IAction {
-  type: string;
-}
-interface IState {
-  employeeId: number;
-  date: string;
-  startTime: string;
-  endTime: string;
-  shifts: IShift[] | [];
+export enum ACTIONS {
+  SET_SHIFTS = "SET_SHIFTS",
 }
 
-export function ShiftsReducer(state: IState, action: IAction) {
+interface IAction {
+  type: ACTIONS.SET_SHIFTS;
+  payload?: IShift[] | []; // note the question mark
+}
+
+export function shiftsReducer(shifts: IShift[] | [], action: IAction) {
   switch (action.type) {
-    case "update_shift":
-      console.log(state);
-      console.log(action);
+    case ACTIONS.SET_SHIFTS:
+      if (action.payload) return [...action.payload];
+      else return [...shifts];
 
       break;
 
     default:
-      throw Error("Unknow action.");
+      return [...shifts];
   }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 
 //Material UI
 import Dialog from "@mui/material/Dialog";
@@ -14,13 +14,13 @@ import Typography from "@mui/material/Typography";
 import { TIMES } from "../utils/constants";
 
 //Functions
-import { computeWeekStart } from "../utils/date";
+// import { computeWeekStart } from "../utils/date";
 
 //Reducer
 // import { ShiftsReducer } from "../context/Reducer";
 
 //Context
-import { ShiftsContext } from "../context/Context";
+// import { ShiftsContext } from "../context/Context";
 
 //Types
 interface IProps {
@@ -33,60 +33,60 @@ interface IProps {
   onClose: () => void;
 }
 
-interface IData {
-  id?: number;
-  employeeId: number;
-  date: string;
-  startTime: string;
-  endTime: string;
-}
-const url = `http://localhost:3000/api/v1/shifts`;
+// interface IData {
+//   id?: number;
+//   employeeId: number;
+//   date: string;
+//   startTime: string;
+//   endTime: string;
+// }
+// const url = `http://localhost:3000/api/v1/shifts`;
 
-const formatToPOST = (data: IData) => {
-  const weekStart = computeWeekStart(new Date(data.date));
-  return {
-    employee_id: data.employeeId,
-    date: data.date,
-    start_time: `${data.startTime}:00`,
-    end_time: `${data.endTime}:00`,
-    is_split_shift: false,
-    week_start: weekStart,
-  };
-};
-const postShift = async (data: IData) => {
-  console.log(JSON.stringify(formatToPOST(data)));
-  const response = await fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(formatToPOST(data)),
-  });
-  console.log(response);
-  console.log(response.statusText);
+// const formatToPOST = (data: IData) => {
+//   const weekStart = computeWeekStart(new Date(data.date));
+//   return {
+//     employee_id: data.employeeId,
+//     date: data.date,
+//     start_time: `${data.startTime}:00`,
+//     end_time: `${data.endTime}:00`,
+//     is_split_shift: false,
+//     week_start: weekStart,
+//   };
+// };
+// const postShift = async (data: IData) => {
+//   console.log(JSON.stringify(formatToPOST(data)));
+//   const response = await fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json",
+//     },
+//     body: JSON.stringify(formatToPOST(data)),
+//   });
+//   console.log(response);
+//   console.log(response.statusText);
 
-  return await response.json();
-};
+//   return await response.json();
+// };
 
-const putShift = async (data: IData) => {
-  const response = await fetch(url, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify(formatToPOST(data)),
-  });
-  console.log(response);
-  //if response.error then do this
-  return await response.json();
-};
+// const putShift = async (data: IData) => {
+//   const response = await fetch(url, {
+//     method: "PUT",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json",
+//     },
+//     body: JSON.stringify(formatToPOST(data)),
+//   });
+//   console.log(response);
+//   //if response.error then do this
+//   return await response.json();
+// };
 
 const generateMenuItems = (times: string[]) => {
   return times.map((time) => <MenuItem value={time}>{time}</MenuItem>);
 };
-
+/*
 const updateShifts: (
   employeeId: number,
   startTime: string,
@@ -130,6 +130,7 @@ const updateShifts: (
   // fetch;
   return newShifts;
 };
+*/
 const ModalTimeCell = ({
   name,
   employeeId,
@@ -139,7 +140,7 @@ const ModalTimeCell = ({
   endTime,
   date,
 }: IProps) => {
-  const shifts = useContext(ShiftsContext);
+  // const shifts = useContext(ShiftsContext);
 
   //useState
   const [currentStartTime, setCurrentStartTime] = useState("");
@@ -160,6 +161,7 @@ const ModalTimeCell = ({
   };
 
   const handleSubmit = () => {
+    //need to add e.preventDefault()
     const indexStart = currentStartTime.indexOf(":");
     const indexEnd = currentEndTime.indexOf(":");
 
@@ -178,17 +180,19 @@ const ModalTimeCell = ({
     ) {
       setError("Starting time cannot be higher than end time.");
     } else {
+      console.log(employeeId);
+      console.log(date);
       setError("");
-      if (shifts) {
-        const updatedShifts = updateShifts(
-          employeeId,
-          currentStartTime,
-          currentEndTime,
-          date,
-          shifts
-        );
-        console.log(updatedShifts);
-      }
+      // if (shifts) {
+      //   const updatedShifts = updateShifts(
+      //     employeeId,
+      //     currentStartTime,
+      //     currentEndTime,
+      //     date,
+      //     shifts
+      //   );
+      //   console.log(updatedShifts);
+      // }
     }
   };
 

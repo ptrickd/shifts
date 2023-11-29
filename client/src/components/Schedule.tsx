@@ -1,5 +1,5 @@
 //React
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer } from "react";
 
 //Material UI
 import Container from "@mui/material/Container";
@@ -12,15 +12,11 @@ import DisplayEmployeeCells from "./DisplayEmployeeCells";
 import DateNavbar from "./DateNavbar";
 
 //Context
-import { ShiftsContext } from "../context/Context";
+// import { ShiftsContext } from "../context/Context";
+import { shiftsReducer, ACTIONS } from "../context/Reducer";
 
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
-
-/*
-| Employee Cell | Monday | Tuesday | Wednesday | Thursday |  Friday | Sat | Sund
-
-*/
 
 const Schedule = () => {
   //Constants
@@ -30,13 +26,12 @@ const Schedule = () => {
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
-  const [shifts, setShifts] = useState<IShift[] | null>(null);
-  // const [state, setState] = useState<IShift[] | null>(null);
+  // const [shifts, setShifts] = useState<IShift[] | []>([]);
+
+  //Context
+  const [shifts, dispatch] = useReducer(shiftsReducer, []);
 
   //useEffect
-  useEffect(() => {
-    console.log(weekStart);
-  }, [weekStart]);
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(
@@ -44,7 +39,7 @@ const Schedule = () => {
       );
 
       const data = await response.json();
-      // console.log(response.ok);
+      console.log(response.ok);
       // console.log(data);
       const formatedEmployeesObject = data.map(
         (employee: IResponseEmployee) => {
@@ -56,7 +51,6 @@ const Schedule = () => {
 
     fetchEmployees();
   }, []);
-
   useEffect(() => {
     const fetchShifts = async () => {
       const response = await fetch(
@@ -64,7 +58,7 @@ const Schedule = () => {
       );
       const data = await response.json();
       // console.log(WEEK_START);
-      // console.log(data);
+      console.log(data);
       const formatedShiftsObject = data.map((shift: IResponseShift) => {
         return {
           employeeId: shift.employee_id,
@@ -73,43 +67,46 @@ const Schedule = () => {
           endTime: shift.end_time,
         };
       });
-      setShifts(formatedShiftsObject);
+      console.log(formatedShiftsObject);
+      dispatch({ type: ACTIONS.SET_SHIFTS, payload: formatedShiftsObject });
     };
     fetchShifts();
   }, [weekStart]);
-
+  // useEffect(() => {
+  //   shifts.onChange(updatedShifts);
+  // }, [updatedShifts, shifts]);
   if (employees && shifts)
     return (
-      <ShiftsContext.Provider value={shifts}>
-        <Container>
-          <DateNavbar
-            date={weekStart}
-            newShifts={(direction) =>
-              setWeekStart(computeNewWeekStart(weekStart, direction))
-            }
-          />
+      // <ShiftsContext.Provider value={[]}>
+      <Container>
+        <DateNavbar
+          date={weekStart}
+          newShifts={(direction) =>
+            setWeekStart(computeNewWeekStart(weekStart, direction))
+          }
+        />
 
-          <Box
-            component="div"
-            sx={{
-              flexGrow: 1,
-              border: "1px solid gray",
-            }}
-          >
-            <Grid container spacing={1}>
-              <Grid container item spacing={1}>
-                <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
-              </Grid>
-
-              <DisplayEmployeeCells
-                employees={employees}
-                shifts={shifts}
-                weekStart={weekStart}
-              />
+        <Box
+          component="div"
+          sx={{
+            flexGrow: 1,
+            border: "1px solid gray",
+          }}
+        >
+          <Grid container spacing={1}>
+            <Grid container item spacing={1}>
+              <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
             </Grid>
-          </Box>
-        </Container>
-      </ShiftsContext.Provider>
+
+            <DisplayEmployeeCells
+              employees={employees}
+              shifts={shifts}
+              weekStart={weekStart}
+            />
+          </Grid>
+        </Box>
+      </Container>
+      // </ShiftsContext.Provider>
     );
 };
 
