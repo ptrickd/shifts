@@ -1,5 +1,11 @@
 //React
-import { useEffect, useState, useReducer } from "react";
+import {
+  useEffect,
+  useState,
+  useReducer,
+  createContext,
+  Dispatch,
+} from "react";
 
 //Material UI
 import Container from "@mui/material/Container";
@@ -12,8 +18,9 @@ import DisplayEmployeeCells from "./DisplayEmployeeCells";
 import DateNavbar from "./DateNavbar";
 
 //Context
-// import { ShiftsContext } from "../context/Context";
 import { shiftsReducer, ACTIONS } from "../context/Reducer";
+export const ShiftsContext = createContext<IShift[] | []>([]);
+export const DispatchContext = createContext<Dispatch<IAction> | null>(null);
 
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
@@ -26,7 +33,6 @@ const Schedule = () => {
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
-  // const [shifts, setShifts] = useState<IShift[] | []>([]);
 
   //Context
   const [shifts, dispatch] = useReducer(shiftsReducer, []);
@@ -75,37 +81,39 @@ const Schedule = () => {
 
   if (employees && shifts)
     return (
-      // <ShiftsContext.Provider value={[]}>
-      <Container>
-        <DateNavbar
-          date={weekStart}
-          newShifts={(direction) =>
-            setWeekStart(computeNewWeekStart(weekStart, direction))
-          }
-        />
-
-        <Box
-          component="div"
-          sx={{
-            flexGrow: 1,
-            border: "1px solid gray",
-          }}
-        >
-          <Grid container spacing={1}>
-            <Grid container item spacing={1}>
-              <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
-            </Grid>
-
-            <DisplayEmployeeCells
-              employees={employees}
-              shifts={shifts}
-              weekStart={weekStart}
-              shiftDispatch={dispatch}
+      <ShiftsContext.Provider value={shifts}>
+        <DispatchContext.Provider value={dispatch}>
+          <Container>
+            <DateNavbar
+              date={weekStart}
+              newShifts={(direction) =>
+                setWeekStart(computeNewWeekStart(weekStart, direction))
+              }
             />
-          </Grid>
-        </Box>
-      </Container>
-      // </ShiftsContext.Provider>
+
+            <Box
+              component="div"
+              sx={{
+                flexGrow: 1,
+                border: "1px solid gray",
+              }}
+            >
+              <Grid container spacing={1}>
+                <Grid container item spacing={1}>
+                  <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
+                </Grid>
+
+                <DisplayEmployeeCells
+                  employees={employees}
+                  shifts={shifts}
+                  weekStart={weekStart}
+                  shiftDispatch={dispatch}
+                />
+              </Grid>
+            </Box>
+          </Container>
+        </DispatchContext.Provider>
+      </ShiftsContext.Provider>
     );
 };
 

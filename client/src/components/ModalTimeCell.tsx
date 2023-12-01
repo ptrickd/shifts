@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch } from "react";
+import { useState, useEffect, Dispatch, useContext } from "react";
 
 //Material UI
 import Dialog from "@mui/material/Dialog";
@@ -16,8 +16,8 @@ import { TIMES } from "../utils/constants";
 //Functions
 import { computeWeekStart } from "../utils/date";
 
-//Context
-// import { ShiftsContext } from "../context/Context";
+// Context
+import { ShiftsContext } from "./Schedule";
 
 //Types
 interface IProps {
@@ -90,10 +90,9 @@ const updateShifts: (
   startTime: string,
   endTime: string,
   date: string,
-  shifts: IShift[]
+  shifts: IShift[] | []
 ) => IShift[] = (employeeId, startTime, endTime, date, shifts) => {
   let foundShift: null | IShift = null;
-  if (!shifts) throw new Error("shifts undefined");
 
   const newShifts = shifts.map((shift) => {
     if (shift.employeeId === employeeId && shift.date === date) {
@@ -143,7 +142,8 @@ const ModalTimeCell = ({
   const [currentStartTime, setCurrentStartTime] = useState("");
   const [currentEndTime, setCurrentEndTime] = useState("");
   const [error, setError] = useState("");
-
+  //Context
+  const shifts = useContext(ShiftsContext);
   useEffect(() => {
     setCurrentStartTime(startTime);
     setCurrentEndTime(endTime);
@@ -180,16 +180,19 @@ const ModalTimeCell = ({
       console.log(employeeId);
       console.log(date);
       setError("");
-      // if (shifts) {
-      //   const updatedShifts = updateShifts(
-      //     employeeId,
-      //     currentStartTime,
-      //     currentEndTime,
-      //     date,
-      //     shifts
-      //   );
-      //   console.log(updatedShifts);
-      // }
+      if (shifts) {
+        const updatedShifts = updateShifts(
+          employeeId,
+          currentStartTime,
+          currentEndTime,
+          date,
+          shifts
+        )
+        console.log(updatedShifts)
+        }else{
+        setError('Internal Error')};
+        
+      }
     }
   };
 
