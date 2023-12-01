@@ -1,3 +1,4 @@
+import { ACTIONS } from "./context/Reducer";
 //Response from the server when
 //calling Employees#index
 interface IResponseEmployee {
@@ -34,6 +35,6 @@ interface IShift {
 }
 
 interface IAction {
-  type: ACTIONS.SET_SHIFTS;
-  payload?: IShift[] | [];
+  type: ACTIONS.SET_SHIFTS | ACTIONS.ADD_SHIFT;
+  payload?: IShift[] | [] | IShift;
 }

@@ -69,8 +69,8 @@ const Schedule = () => {
         return {
           employeeId: shift.employee_id,
           date: shift.date,
-          startTime: shift.start_time,
-          endTime: shift.end_time,
+          startTime: shift.start_time.substring(11, 16),
+          endTime: shift.end_time.substring(11, 16),
         };
       });
       console.log(formatedShiftsObject);
@@ -105,9 +105,7 @@ const Schedule = () => {
 
                 <DisplayEmployeeCells
                   employees={employees}
-                  shifts={shifts}
                   weekStart={weekStart}
-                  shiftDispatch={dispatch}
                 />
               </Grid>
             </Box>

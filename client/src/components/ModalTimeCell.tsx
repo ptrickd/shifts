@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, useContext } from "react";
+import { useState, Dispatch, useContext } from "react";
 
 //Material UI
 import Dialog from "@mui/material/Dialog";
@@ -17,7 +17,8 @@ import { TIMES } from "../utils/constants";
 import { computeWeekStart } from "../utils/date";
 
 // Context
-import { ShiftsContext } from "./Schedule";
+import { ShiftsContext, DispatchContext } from "./Schedule";
+import { ACTIONS } from "../context/Reducer";
 
 //Types
 interface IProps {
@@ -28,7 +29,6 @@ interface IProps {
   endTime: string;
   date: string;
   onClose: () => void;
-  shiftDispatch: Dispatch<IAction>;
 }
 
 interface IData {
@@ -90,8 +90,9 @@ const updateShifts: (
   startTime: string,
   endTime: string,
   date: string,
-  shifts: IShift[] | []
-) => IShift[] = (employeeId, startTime, endTime, date, shifts) => {
+  shifts: IShift[] | [],
+  dispatch: Dispatch<IAction>
+) => IShift[] = (employeeId, startTime, endTime, date, shifts, dispatch) => {
   let foundShift: null | IShift = null;
 
   const newShifts = shifts.map((shift) => {
@@ -109,12 +110,16 @@ const updateShifts: (
   console.log(newShifts);
 
   if (!foundShift) {
-    newShifts.push({
-      employeeId: employeeId,
-      startTime: startTime,
-      endTime: endTime,
-      date: date,
+    dispatch({
+      type: ACTIONS.ADD_SHIFT,
+      payload: {
+        employeeId: employeeId,
+        startTime: startTime,
+        endTime: endTime,
+        date: date,
+      },
     });
+    console.log(shifts);
     postShift({
       employeeId: employeeId,
       startTime: startTime,
@@ -136,18 +141,20 @@ const ModalTimeCell = ({
   startTime,
   endTime,
   date,
-  shiftDispatch,
 }: IProps) => {
   //useState
-  const [currentStartTime, setCurrentStartTime] = useState("");
-  const [currentEndTime, setCurrentEndTime] = useState("");
+  const [currentStartTime, setCurrentStartTime] = useState(startTime);
+  const [currentEndTime, setCurrentEndTime] = useState(endTime);
   const [error, setError] = useState("");
   //Context
   const shifts = useContext(ShiftsContext);
-  useEffect(() => {
-    setCurrentStartTime(startTime);
-    setCurrentEndTime(endTime);
-  }, [startTime, endTime]);
+  const dispatch = useContext(DispatchContext);
+
+  //useEffect
+  // useEffect(() => {
+  //   setCurrentStartTime(startTime);
+  //   setCurrentEndTime(endTime);
+  // }, [startTime, endTime]);
 
   const handleStartChange = (event: SelectChangeEvent) => {
     setCurrentStartTime(event.target.value as string);
@@ -186,12 +193,12 @@ const ModalTimeCell = ({
           currentStartTime,
           currentEndTime,
           date,
-          shifts
-        )
-        console.log(updatedShifts)
-        }else{
-        setError('Internal Error')};
-        
+          shifts,
+          dispatch
+        );
+        console.log(updatedShifts);
+      } else {
+        setError("Internal Error");
       }
     }
   };

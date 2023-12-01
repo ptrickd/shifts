@@ -1,4 +1,5 @@
-import { Dispatch } from "react";
+import { useContext } from "react";
+
 //Material UI
 import Grid from "@mui/material/Grid";
 
@@ -6,11 +7,12 @@ import Grid from "@mui/material/Grid";
 import DisplayTimeCells from "./DisplayTimeCells";
 import EmployeeCell from "./EmployeeCell";
 
+//Context
+import { ShiftsContext } from "./Schedule";
+
 interface IProps {
   employees: IEmployee[];
-  shifts: IShift[];
   weekStart: string;
-  shiftDispatch: Dispatch<IAction>;
 }
 
 function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
@@ -23,12 +25,9 @@ function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
   return employeeShifts;
 }
 
-const DisplayEmployeeCells = ({
-  employees,
-  shifts,
-  weekStart,
-  shiftDispatch,
-}: IProps) => {
+const DisplayEmployeeCells = ({ employees, weekStart }: IProps) => {
+  const shifts = useContext(ShiftsContext);
+
   if (employees != null) {
     return employees.map((employee, index) => (
       <Grid
@@ -43,7 +42,6 @@ const DisplayEmployeeCells = ({
           employee={employee}
           shifts={sortedShiftsByEmployee(employee.id, shifts)}
           weekStart={weekStart}
-          shiftDispatch={shiftDispatch}
         />
       </Grid>
     ));

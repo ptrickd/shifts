@@ -1,5 +1,6 @@
 export enum ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
+  ADD_SHIFT = "ADD_SHIFT",
 }
 
 export function shiftsReducer(shifts: IShift[] | [], action: IAction) {
@@ -9,7 +10,10 @@ export function shiftsReducer(shifts: IShift[] | [], action: IAction) {
       else return [...shifts];
 
       break;
+    case ACTIONS.ADD_SHIFT:
+      return [...shifts, { ...action.payload }];
 
+      break;
     default:
       return [...shifts];
   }
