@@ -65,16 +65,20 @@ const Schedule = () => {
       const data = await response.json();
       // console.log(WEEK_START);
       console.log(data);
-      const formatedShiftsObject = data.map((shift: IResponseShift) => {
-        return {
-          employeeId: shift.employee_id,
-          date: shift.date,
-          startTime: shift.start_time.substring(11, 16),
-          endTime: shift.end_time.substring(11, 16),
-        };
-      });
+      const formatedShiftsObject: IShift[] | [] = data.map(
+        (shift: IResponseShift) => {
+          return {
+            employeeId: shift.employee_id,
+            date: shift.date,
+            startTime: shift.start_time.substring(11, 16),
+            endTime: shift.end_time.substring(11, 16),
+          };
+        }
+      );
       console.log(formatedShiftsObject);
-      dispatch({ type: ACTIONS.SET_SHIFTS, payload: formatedShiftsObject });
+      if (formatedShiftsObject.length > 0) {
+        dispatch({ type: ACTIONS.SET_SHIFTS, payload: formatedShiftsObject });
+      }
     };
     fetchShifts();
   }, [weekStart]);

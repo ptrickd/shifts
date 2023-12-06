@@ -62,7 +62,7 @@ const postShift = async (data: IData) => {
     body: JSON.stringify(formatToPOST(data)),
   });
   console.log(response);
-  console.log(response.statusText);
+  console.log(response.ok);
 
   return await response.json();
 };

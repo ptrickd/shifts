@@ -35,6 +35,7 @@ const DisplayEmployeeCells = ({ employees, weekStart }: IProps) => {
         item
         spacing={1}
         sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
+        key={index}
       >
         <EmployeeCell displayName={employee.displayName} key={index} />
 

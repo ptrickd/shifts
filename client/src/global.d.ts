@@ -1,4 +1,15 @@
-import { ACTIONS } from "./context/Reducer";
+//Can't have import or export in this file
+//Reducer action
+enum ACTIONS {
+  SET_SHIFTS = "SET_SHIFTS",
+  ADD_SHIFT = "ADD_SHIFT",
+}
+
+interface IAction {
+  type: ACTIONS.SET_SHIFTS | ACTIONS.ADD_SHIFT;
+  payload?: IShift[] | [] | IShift;
+}
+
 //Response from the server when
 //calling Employees#index
 interface IResponseEmployee {
@@ -11,6 +22,7 @@ interface IResponseEmployee {
   created_at: string;
   updated_at: string;
 }
+
 //Response from the server when
 //calling Shifts#index
 interface IResponseShift {
@@ -23,6 +35,7 @@ interface IResponseShift {
   updated_at: string;
   week_start: string;
 }
+
 interface IEmployee {
   id: number;
   displayName: string;
@@ -32,9 +45,4 @@ interface IShift {
   date: string;
   startTime: string;
   endTime: string;
-}
-
-interface IAction {
-  type: ACTIONS.SET_SHIFTS | ACTIONS.ADD_SHIFT;
-  payload?: IShift[] | [] | IShift;
 }
