@@ -82,7 +82,11 @@ const putShift = async (data: IData) => {
 };
 
 const generateMenuItems = (times: string[]) => {
-  return times.map((time) => <MenuItem value={time}>{time}</MenuItem>);
+  return times.map((time, index) => (
+    <MenuItem key={index} value={time}>
+      {time}
+    </MenuItem>
+  ));
 };
 
 const updateShifts: (
@@ -187,7 +191,7 @@ const ModalTimeCell = ({
       console.log(employeeId);
       console.log(date);
       setError("");
-      if (shifts) {
+      if (shifts && dispatch) {
         const updatedShifts = updateShifts(
           employeeId,
           currentStartTime,

@@ -18,14 +18,14 @@ interface IProps {
 }
 
 const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
-  let text = <></>;
+  let textDisplay = <></>;
 
   //useState
   const [openModal, setOpenModal] = useState(false);
 
   //if conditions are nulls then the employee is off that day
   if (startTime === null || endTime === null) {
-    text = (
+    textDisplay = (
       <Typography
         variant="body1"
         color="text.primary"
@@ -37,7 +37,7 @@ const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
       </Typography>
     );
   } else {
-    text = (
+    textDisplay = (
       <>
         <Typography
           variant="body1"
@@ -73,7 +73,7 @@ const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
       }}
     >
       <Box component="span" onClick={() => setOpenModal(true)}>
-        {text}
+        {textDisplay}
       </Box>
       <ModalTimeCell
         name={name}

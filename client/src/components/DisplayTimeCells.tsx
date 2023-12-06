@@ -16,17 +16,20 @@ function findTodayShift(
   const todayDate = new Date(weekStart);
   todayDate.setDate(todayDate.getDate() + index);
   let todayShift: IShift | null = null;
+  const formatDayDate = (date: Date) => {
+    if (String(date.getDate()).length === 1) return `0${date.getDate()}`;
+    else return String(date.getDate());
+  };
   shifts.map((shift) => {
     if (
       shift.date ===
-      `${todayDate.getFullYear()}-${
-        todayDate.getMonth() + 1
-      }-${todayDate.getDate()}`
+      `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${formatDayDate(
+        todayDate
+      )}`
     ) {
       todayShift = shift;
     }
   });
-  console.log(todayShift);
   return todayShift;
 }
 const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
