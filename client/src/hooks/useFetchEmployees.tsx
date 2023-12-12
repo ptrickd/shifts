@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const useFetchEmployees = () => {
-  const [employees, setEmployees] = useState<IResponseEmployee | null>(null);
+  const [employees, setEmployees] = useState<IEmployee[] | null>(null);
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(
@@ -9,7 +9,7 @@ const useFetchEmployees = () => {
       );
 
       const data = await response.json();
-      const formatedEmployeesObject = data.map(
+      const formatedEmployeesObject: IEmployee[] = data.map(
         (employee: IResponseEmployee) => {
           return { id: employee.id, displayName: employee.display_name };
         }

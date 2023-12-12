@@ -1,8 +1,8 @@
 //React
 import {
-  useEffect,
   useState,
   useReducer,
+  useEffect,
   createContext,
   Dispatch,
 } from "react";
@@ -27,48 +27,30 @@ import { computeWeekStart, computeNewWeekStart } from "../utils/date";
 
 // Custom Hooks
 import useFetchEmployees from "../hooks/useFetchEmployees";
+import useFetchShifts from "../hooks/useFetchShifts";
 
 const Schedule = () => {
   //Constants
   const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const TODAY = new Date(Date.now());
 
-  //Hooks
-  const { employees } = useFetchEmployees();
-
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
-  // const [employees] = useState<IEmployee[] | null>(null);
+
+  //Hooks
+  const { employees } = useFetchEmployees();
+  const { shifts: fetchedShifts } = useFetchShifts(weekStart);
 
   //Context
-  const [shifts, dispatch] = useReducer(shiftsReducer, []);
+  const [shifts, dispatch] = useReducer(shiftsReducer, fetchedShifts);
 
+  //update the reducer when shifts are fetchs
   useEffect(() => {
-    const fetchShifts = async () => {
-      const response = await fetch(
-        `http://localhost:3000/api/v1/shifts/?week_start=${weekStart}`
-      );
-      const data = await response.json();
-      // console.log(WEEK_START);
-      console.log(data);
-      const formatedShiftsObject: IShift[] | [] = data.map(
-        (shift: IResponseShift) => {
-          return {
-            id: shift.id,
-            employeeId: shift.employee_id,
-            date: shift.date,
-            startTime: shift.start_time.substring(11, 16),
-            endTime: shift.end_time.substring(11, 16),
-          };
-        }
-      );
-      console.log(formatedShiftsObject);
-      if (formatedShiftsObject.length > 0) {
-        dispatch({ type: ACTIONS.SET_SHIFTS, payload: formatedShiftsObject });
-      }
-    };
-    fetchShifts();
-  }, [weekStart]);
+    dispatch({
+      type: ACTIONS.SET_SHIFTS,
+      payload: fetchedShifts,
+    });
+  }, [fetchedShifts]);
 
   if (employees && shifts)
     return (

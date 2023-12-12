@@ -1,0 +1,34 @@
+import { useEffect, useState } from "react";
+
+const useFetchShifts = (weekStart: string) => {
+  const [shifts, setShifts] = useState<IShift[] | []>([]);
+
+  useEffect(() => {
+    const fetchShifts = async () => {
+      const response = await fetch(
+        `http://localhost:3000/api/v1/shifts/?week_start=${weekStart}`
+      );
+      const data = await response.json();
+
+      const formatedShiftsObject: IShift[] | [] = data.map(
+        (shift: IResponseShift) => {
+          return {
+            id: shift.id,
+            employeeId: shift.employee_id,
+            date: shift.date,
+            startTime: shift.start_time.substring(11, 16),
+            endTime: shift.end_time.substring(11, 16),
+          };
+        }
+      );
+
+      if (formatedShiftsObject) {
+        setShifts(formatedShiftsObject);
+      }
+    };
+    fetchShifts();
+  }, [weekStart, setShifts]);
+  return { shifts };
+};
+
+export default useFetchShifts;
