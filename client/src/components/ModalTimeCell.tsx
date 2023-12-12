@@ -179,12 +179,6 @@ const ModalTimeCell = ({
   const shifts = useContext(ShiftsContext);
   const dispatch = useContext(DispatchContext);
 
-  //useEffect
-  // useEffect(() => {
-  //   setCurrentStartTime(startTime);
-  //   setCurrentEndTime(endTime);
-  // }, [startTime, endTime]);
-
   const handleStartChange = (event: SelectChangeEvent) => {
     setCurrentStartTime(event.target.value as string);
   };

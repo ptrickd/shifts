@@ -25,38 +25,24 @@ export const DispatchContext = createContext<Dispatch<IAction> | null>(null);
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
 
+// Custom Hooks
+import useFetchEmployees from "../hooks/useFetchEmployees";
+
 const Schedule = () => {
   //Constants
   const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const TODAY = new Date(Date.now());
 
+  //Hooks
+  const { employees } = useFetchEmployees();
+
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
-  const [employees, setEmployees] = useState<IEmployee[] | null>(null);
+  // const [employees] = useState<IEmployee[] | null>(null);
 
   //Context
   const [shifts, dispatch] = useReducer(shiftsReducer, []);
 
-  //useEffect
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      const response = await fetch(
-        "http://localhost:3000/api/v1/employees.json"
-      );
-
-      const data = await response.json();
-      console.log(response.ok);
-      // console.log(data);
-      const formatedEmployeesObject = data.map(
-        (employee: IResponseEmployee) => {
-          return { id: employee.id, displayName: employee.display_name };
-        }
-      );
-      setEmployees(formatedEmployeesObject);
-    };
-
-    fetchEmployees();
-  }, []);
   useEffect(() => {
     const fetchShifts = async () => {
       const response = await fetch(
