@@ -44,6 +44,7 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
     if (todayShift !== null) {
       rowOfTimeCells.push(
         <TimeCell
+          id={todayShift.id}
           name={employee.displayName}
           employeeId={employee.id}
           date={todayShift.date}
@@ -55,6 +56,7 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
     } else {
       rowOfTimeCells.push(
         <TimeCell
+          id={0}
           name={employee.displayName}
           employeeId={employee.id}
           date={`${todayDate.getFullYear()}-${

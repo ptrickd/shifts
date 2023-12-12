@@ -2,6 +2,7 @@
 export enum ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
   ADD_SHIFT = "ADD_SHIFT",
+  UPDATE_SHIFT = "UPDATE_SHIFT",
 }
 
 export function shiftsReducer(
@@ -24,6 +25,25 @@ export function shiftsReducer(
         return [...shifts, { ...action.payload }];
       else return shifts;
       break;
+    case ACTIONS.UPDATE_SHIFT: {
+      const newShifts: IShift[] = [];
+      if (action?.payload && !Array.isArray(action.payload)) {
+        shifts.map((shift) => {
+          if (
+            !Array.isArray(action.payload) &&
+            action?.payload?.id !== undefined &&
+            shift.id === action?.payload?.id
+          ) {
+            newShifts.push(action.payload);
+          } else {
+            newShifts.push(shift);
+          }
+        });
+      }
+      if (newShifts.length) return newShifts;
+      else return shifts;
+      break;
+    }
     default:
       return shifts;
   }

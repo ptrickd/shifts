@@ -34,7 +34,7 @@ module Api
       # PATCH/PUT /shifts/1.json
       def update
         if @shift.update(shift_params)
-          render :show, status: :ok, location: @shift
+          render json: @shift
         else
           render json: @shift.errors, status: :unprocessable_entity
         end

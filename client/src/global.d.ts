@@ -3,10 +3,11 @@
 enum ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
   ADD_SHIFT = "ADD_SHIFT",
+  UPDATE_SHIFT = "UPDATE_SHIFT",
 }
 
 interface IAction {
-  type: ACTIONS.SET_SHIFTS | ACTIONS.ADD_SHIFT;
+  type: ACTIONS.SET_SHIFTS | ACTIONS.ADD_SHIFT | UPDATE_SHIFT;
   payload?: IShift[] | [] | IShift;
 }
 
@@ -26,6 +27,7 @@ interface IResponseEmployee {
 //Response from the server when
 //calling Shifts#index
 interface IResponseShift {
+  id: number;
   employee_id: number;
   date: string;
   start_time: string;
@@ -41,6 +43,7 @@ interface IEmployee {
   displayName: string;
 }
 interface IShift {
+  id: number;
   employeeId: number;
   date: string;
   startTime: string;

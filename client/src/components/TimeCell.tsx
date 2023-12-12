@@ -10,6 +10,7 @@ import ModalTimeCell from "./ModalTimeCell";
 
 //Types
 interface IProps {
+  id: number;
   name: string;
   employeeId: number;
   startTime: string | null;
@@ -17,7 +18,14 @@ interface IProps {
   date: string;
 }
 
-const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
+const TimeCell = ({
+  id,
+  name,
+  employeeId,
+  startTime,
+  endTime,
+  date,
+}: IProps) => {
   let textDisplay = <></>;
 
   //useState
@@ -76,6 +84,7 @@ const TimeCell = ({ name, employeeId, startTime, endTime, date }: IProps) => {
         {textDisplay}
       </Box>
       <ModalTimeCell
+        id={id}
         name={name}
         employeeId={employeeId}
         open={openModal}

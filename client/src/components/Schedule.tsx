@@ -68,6 +68,7 @@ const Schedule = () => {
       const formatedShiftsObject: IShift[] | [] = data.map(
         (shift: IResponseShift) => {
           return {
+            id: shift.id,
             employeeId: shift.employee_id,
             date: shift.date,
             startTime: shift.start_time.substring(11, 16),

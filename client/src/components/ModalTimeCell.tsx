@@ -22,6 +22,7 @@ import { ACTIONS } from "../context/Reducer";
 
 //Types
 interface IProps {
+  id: number;
   name: string;
   employeeId: number;
   open: boolean;
@@ -51,6 +52,7 @@ const formatToPOST = (data: IData) => {
     week_start: weekStart,
   };
 };
+
 const postShift = async (data: IData) => {
   console.log(JSON.stringify(formatToPOST(data)));
   const response = await fetch(url, {
@@ -68,7 +70,7 @@ const postShift = async (data: IData) => {
 };
 
 const putShift = async (data: IData) => {
-  const response = await fetch(url, {
+  const response = await fetch(`${url}/${data.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -90,16 +92,26 @@ const generateMenuItems = (times: string[]) => {
 };
 
 const updateShifts: (
+  id: number,
   employeeId: number,
   startTime: string,
   endTime: string,
   date: string,
   shifts: IShift[] | [],
   dispatch: Dispatch<IAction>
-) => IShift[] = (employeeId, startTime, endTime, date, shifts, dispatch) => {
+) => IShift[] = (
+  id,
+  employeeId,
+  startTime,
+  endTime,
+  date,
+  shifts,
+  dispatch
+) => {
   let foundShift: null | IShift = null;
+  console.log(id);
 
-  const newShifts = shifts.map((shift) => {
+  const newShifts = shifts.map((shift: IShift) => {
     if (shift.employeeId === employeeId && shift.date === date) {
       foundShift = {
         ...shift,
@@ -117,27 +129,40 @@ const updateShifts: (
     dispatch({
       type: ACTIONS.ADD_SHIFT,
       payload: {
+        id: id,
         employeeId: employeeId,
         startTime: startTime,
         endTime: endTime,
         date: date,
       },
     });
-    console.log(shifts);
+
     postShift({
       employeeId: employeeId,
       startTime: startTime,
       endTime: endTime,
       date: date,
     });
-  } else {
+  } else if (foundShift) {
+    dispatch({
+      type: ACTIONS.UPDATE_SHIFT,
+      payload: {
+        id: id,
+        employeeId: employeeId,
+        startTime: startTime,
+        endTime: endTime,
+        date: date,
+      },
+    });
     putShift(foundShift);
-  }
+  } else throw new Error("founshfit not found");
+
   // fetch;
   return newShifts;
 };
 
 const ModalTimeCell = ({
+  id,
   name,
   employeeId,
   open,
@@ -188,11 +213,10 @@ const ModalTimeCell = ({
     ) {
       setError("Starting time cannot be higher than end time.");
     } else {
-      console.log(employeeId);
-      console.log(date);
       setError("");
       if (shifts && dispatch) {
         const updatedShifts = updateShifts(
+          id,
           employeeId,
           currentStartTime,
           currentEndTime,
@@ -248,7 +272,7 @@ const ModalTimeCell = ({
         color="error"
         onClick={onClose}
       >
-        Cancel
+        Delete
       </Button>
     </Dialog>
   );
