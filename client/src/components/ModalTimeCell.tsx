@@ -95,8 +95,8 @@ const ModalTimeCell = ({
           endTime: currentEndTime,
           date,
         };
-        const updatedShifts = updateShifts(newShift, shifts, dispatch);
-        console.log(updatedShifts);
+        updateShifts(newShift, shifts, dispatch);
+        onClose();
       } else {
         setError("Internal Error");
       }

@@ -32,8 +32,6 @@ const updateShifts: (
     }
   });
 
-  console.log(newShifts);
-
   if (!foundShift) {
     dispatch({
       type: ACTIONS.ADD_SHIFT,
