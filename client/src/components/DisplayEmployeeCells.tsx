@@ -16,12 +16,10 @@ interface IProps {
 }
 
 function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
-  // console.log(shifts);
-  // console.log(employeeId);
   const employeeShifts = shifts.filter(
     (shift) => shift.employeeId === employeeId
   );
-  // console.log(employeeShifts);
+
   return employeeShifts;
 }
 
