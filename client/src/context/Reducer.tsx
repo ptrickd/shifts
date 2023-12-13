@@ -3,6 +3,7 @@ export enum ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
   ADD_SHIFT = "ADD_SHIFT",
   UPDATE_SHIFT = "UPDATE_SHIFT",
+  DELETE_SHIFT = "DELETE_SHIFT",
 }
 
 export function shiftsReducer(
@@ -42,6 +43,27 @@ export function shiftsReducer(
       }
       if (newShifts.length) return newShifts;
       else return shifts;
+      break;
+    }
+    case ACTIONS.DELETE_SHIFT: {
+      const newShifts: IShift[] = [];
+      if (
+        action.payload &&
+        !Array.isArray(action.payload) &&
+        action.payload.id !== undefined
+      ) {
+        shifts.map((shift) => {
+          if (
+            action.payload &&
+            !Array.isArray(action.payload) &&
+            action.payload.id !== undefined &&
+            shift.id !== action.payload?.id
+          )
+            newShifts.push(shift);
+        });
+      }
+      console.log(newShifts);
+      return newShifts;
       break;
     }
     default:

@@ -43,7 +43,11 @@ module Api
       # DELETE /shifts/1
       # DELETE /shifts/1.json
       def destroy
-        @shift.destroy
+        if @shift.destroy
+          render json: @shift
+        else
+          render json: @shift.errors, status: :unprocessable_entity
+        end
       end
 
       private

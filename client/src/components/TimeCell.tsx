@@ -88,7 +88,7 @@ const TimeCell = ({
         name={name}
         employeeId={employeeId}
         open={openModal}
-        startTime={startTime || "8:00"}
+        startTime={startTime || "08:00"}
         endTime={endTime || "12:00"}
         date={date}
         onClose={() => setOpenModal(false)}

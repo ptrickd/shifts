@@ -48,4 +48,19 @@ const putShift = async (data: IData) => {
   return await response.json();
 };
 
-export { postShift, putShift };
+//change name of the for shiftApiCall????
+const deleteShift = async (id: number) => {
+  const response = await fetch(`${url}/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  });
+
+  if (response.ok) {
+    const data = await response.json();
+    return { data };
+  } else return { error: response.statusText };
+};
+export { postShift, putShift, deleteShift };

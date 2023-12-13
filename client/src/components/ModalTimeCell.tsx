@@ -15,9 +15,11 @@ import { TIMES } from "../utils/constants";
 
 // Context
 import { ShiftsContext, DispatchContext } from "./Schedule";
+import { ACTIONS } from "../context/Reducer";
 
 //Function
 import { updateShifts } from "../utils/shiftsOps";
+import { deleteShift } from "../utils/restApiCall";
 
 //Types
 interface IProps {
@@ -102,6 +104,28 @@ const ModalTimeCell = ({
       }
     }
   };
+  const handleDelete = async () => {
+    //api call for delete
+    const response = await deleteShift(id);
+    if (response.error) setError(response.error);
+    else {
+      //delete shift in local array if success
+      if (dispatch) {
+        dispatch({
+          type: ACTIONS.DELETE_SHIFT,
+          payload: {
+            id: id,
+            employeeId: employeeId,
+            startTime: startTime,
+            endTime: endTime,
+            date: date,
+          },
+        });
+        //close modal if success
+        onClose();
+      } else setError("Dispatch undefined");
+    }
+  };
 
   return (
     <Dialog
@@ -142,7 +166,7 @@ const ModalTimeCell = ({
         sx={{ margin: 1 }}
         variant="outlined"
         color="error"
-        onClick={onClose}
+        onClick={handleDelete}
       >
         Delete
       </Button>

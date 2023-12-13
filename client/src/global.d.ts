@@ -4,6 +4,7 @@ enum ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
   ADD_SHIFT = "ADD_SHIFT",
   UPDATE_SHIFT = "UPDATE_SHIFT",
+  DELETE_SHIFT = "DELETE_SHIFT",
 }
 
 interface IAction {
