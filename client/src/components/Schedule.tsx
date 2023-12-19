@@ -34,7 +34,7 @@ const Schedule = () => {
   //Constants
   const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const TODAY = new Date(Date.now());
-
+  console.log(TODAY);
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
 
@@ -45,7 +45,7 @@ const Schedule = () => {
   //Context
   const [shifts, dispatch] = useReducer(shiftsReducer, fetchedShifts);
 
-  //update the reducer when shifts are fetchs
+  //update the reducer when shifts are fetcheds
   useEffect(() => {
     dispatch({
       type: ACTIONS.SET_SHIFTS,

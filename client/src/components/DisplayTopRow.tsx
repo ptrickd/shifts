@@ -8,6 +8,7 @@ interface IProps {
 }
 
 const DisplayTopRow = ({ weekDays, today }: IProps) => {
+  console.log(today);
   return weekDays.map((value, index) => (
     <Grid item xs={1.5} key={value + index} zeroMinWidth>
       {today.getDay() + 1 === index ? (

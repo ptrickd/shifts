@@ -10,8 +10,8 @@ const stringify = (date: Date) => {
 };
 
 //function computing the fist day of the week sunday
-export const computeWeekStart = (today: Date) => {
-  // const getNumberOfDaysInMonth = () => {};
+export const computeWeekStart = (ogToday: Date) => {
+  const today = new Date(ogToday.getTime());
   const dayWeekInNumber = today.getDay();
   const dateInNumber = today.getDate();
   const numberOfDaysInMonth = new Date(
