@@ -2,20 +2,12 @@ import { Dispatch } from "react";
 import { postShift, putShift } from "./restApiCall";
 import { ACTIONS } from "../context/Reducer";
 
-interface INewShift {
-  id: number;
-  employeeId: number;
-  startTime: string;
-  endTime: string;
-  date: string;
-}
-
 const updateShifts: (
-  newShift: INewShift,
+  newShift: IShift,
   shifts: IShift[] | [],
   dispatch: Dispatch<IAction>
 ) => IShift[] = (newShift, shifts, dispatch) => {
-  const { id, employeeId, startTime, endTime, date } = newShift;
+  const { id, employeeId, startTime, endTime, date, weekStart } = newShift;
 
   let foundShift: null | IShift = null;
 
@@ -36,11 +28,12 @@ const updateShifts: (
     dispatch({
       type: ACTIONS.ADD_SHIFT,
       payload: {
-        id: id,
-        employeeId: employeeId,
-        startTime: startTime,
-        endTime: endTime,
-        date: date,
+        id,
+        employeeId,
+        startTime,
+        endTime,
+        date,
+        weekStart,
       },
     });
 
@@ -49,16 +42,18 @@ const updateShifts: (
       startTime: startTime,
       endTime: endTime,
       date: date,
+      weekStart,
     });
   } else if (foundShift) {
     dispatch({
       type: ACTIONS.UPDATE_SHIFT,
       payload: {
-        id: id,
-        employeeId: employeeId,
-        startTime: startTime,
-        endTime: endTime,
-        date: date,
+        id,
+        employeeId,
+        startTime,
+        endTime,
+        date,
+        weekStart,
       },
     });
 

@@ -49,4 +49,5 @@ interface IShift {
   date: string;
   startTime: string;
   endTime: string;
+  weekStart: string;
 }

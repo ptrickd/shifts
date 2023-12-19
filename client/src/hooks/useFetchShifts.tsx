@@ -18,6 +18,7 @@ const useFetchShifts = (weekStart: string) => {
             date: shift.date,
             startTime: shift.start_time.substring(11, 16),
             endTime: shift.end_time.substring(11, 16),
+            weekStart: shift.week_start,
           };
         }
       );

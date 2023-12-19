@@ -10,29 +10,19 @@ import ModalTimeCell from "./ModalTimeCell";
 
 //Types
 interface IProps {
-  id: number;
+  shift: IShift;
   name: string;
-  employeeId: number;
-  startTime: string | null;
-  endTime: string | null;
-  date: string;
 }
 
-const TimeCell = ({
-  id,
-  name,
-  employeeId,
-  startTime,
-  endTime,
-  date,
-}: IProps) => {
+const TimeCell = ({ shift, name }: IProps) => {
+  const { startTime, endTime } = shift;
   let textDisplay = <></>;
 
   //useState
   const [openModal, setOpenModal] = useState(false);
 
   //if conditions are nulls then the employee is off that day
-  if (startTime === null || endTime === null) {
+  if (shift.id === 0) {
     textDisplay = (
       <Typography
         variant="body1"
@@ -84,13 +74,9 @@ const TimeCell = ({
         {textDisplay}
       </Box>
       <ModalTimeCell
-        id={id}
+        shift={shift}
         name={name}
-        employeeId={employeeId}
         open={openModal}
-        startTime={startTime || "08:00"}
-        endTime={endTime || "12:00"}
-        date={date}
         onClose={() => setOpenModal(false)}
       />
     </Grid>

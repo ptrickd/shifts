@@ -11,6 +11,7 @@ import {
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 //Components
 import DisplayTopRow from "./DisplayTopRow";
@@ -63,25 +64,26 @@ const Schedule = () => {
                 setWeekStart(computeNewWeekStart(weekStart, direction))
               }
             />
+            <Paper elevation={1}>
+              <Box
+                component="div"
+                sx={{
+                  flexGrow: 1,
+                  border: "1px solid gray",
+                }}
+              >
+                <Grid container spacing={1}>
+                  <Grid container item spacing={1}>
+                    <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
+                  </Grid>
 
-            <Box
-              component="div"
-              sx={{
-                flexGrow: 1,
-                border: "1px solid gray",
-              }}
-            >
-              <Grid container spacing={1}>
-                <Grid container item spacing={1}>
-                  <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
+                  <DisplayEmployeeCells
+                    employees={employees}
+                    weekStart={weekStart}
+                  />
                 </Grid>
-
-                <DisplayEmployeeCells
-                  employees={employees}
-                  weekStart={weekStart}
-                />
-              </Grid>
-            </Box>
+              </Box>
+            </Paper>
           </Container>
         </DispatchContext.Provider>
       </ShiftsContext.Provider>

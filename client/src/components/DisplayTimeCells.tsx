@@ -44,26 +44,27 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
     if (todayShift !== null) {
       rowOfTimeCells.push(
         <TimeCell
-          id={todayShift.id}
+          shift={todayShift}
           name={employee.displayName}
-          employeeId={employee.id}
-          date={todayShift.date}
-          startTime={todayShift.startTime}
-          endTime={todayShift.endTime}
           key={numOfCell}
         />
       );
     } else {
+      const currentDate = `${todayDate.getFullYear()}-${
+        todayDate.getMonth() + 1
+      }-${todayDate.getDate()}`;
+      const newShift = {
+        id: 0,
+        employeeId: employee.id,
+        date: currentDate,
+        startTime: "08:00",
+        endTime: "12:00",
+        weekStart,
+      };
       rowOfTimeCells.push(
         <TimeCell
-          id={0}
+          shift={newShift}
           name={employee.displayName}
-          employeeId={employee.id}
-          date={`${todayDate.getFullYear()}-${
-            todayDate.getMonth() + 1
-          }-${todayDate.getDate()}`}
-          startTime={null}
-          endTime={null}
           key={numOfCell}
         />
       );

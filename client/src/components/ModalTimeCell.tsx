@@ -23,13 +23,9 @@ import { deleteShift } from "../utils/restApiCall";
 
 //Types
 interface IProps {
-  id: number;
+  shift: IShift;
   name: string;
-  employeeId: number;
   open: boolean;
-  startTime: string;
-  endTime: string;
-  date: string;
   onClose: () => void;
 }
 
@@ -41,20 +37,13 @@ const generateMenuItems = (times: string[]) => {
   ));
 };
 
-const ModalTimeCell = ({
-  id,
-  name,
-  employeeId,
-  open,
-  onClose,
-  startTime,
-  endTime,
-  date,
-}: IProps) => {
+const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
+  const { id, employeeId, date, startTime, endTime, weekStart } = shift;
   //useState
   const [currentStartTime, setCurrentStartTime] = useState(startTime);
   const [currentEndTime, setCurrentEndTime] = useState(endTime);
   const [error, setError] = useState("");
+
   //Context
   const shifts = useContext(ShiftsContext);
   const dispatch = useContext(DispatchContext);
@@ -75,6 +64,7 @@ const ModalTimeCell = ({
 
     const hourStart = currentStartTime.substring(indexStart, -2);
     const minuteStart = currentStartTime.substring(indexStart + 1);
+
     const hourEnd = currentEndTime.substring(indexEnd, -2);
     const minuteEnd = currentEndTime.substring(indexEnd + 1);
 
@@ -96,6 +86,7 @@ const ModalTimeCell = ({
           startTime: currentStartTime,
           endTime: currentEndTime,
           date,
+          weekStart,
         };
         updateShifts(newShift, shifts, dispatch);
         onClose();
@@ -119,6 +110,7 @@ const ModalTimeCell = ({
             startTime: startTime,
             endTime: endTime,
             date: date,
+            weekStart: weekStart,
           },
         });
         //close modal if success

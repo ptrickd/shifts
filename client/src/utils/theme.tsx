@@ -9,6 +9,7 @@ import "@fontsource/roboto/700.css";
 const theme = createTheme({
   palette: {
     mode: "dark",
+    background: { default: "#121212", paper: "#121212" }, //"#114538" , "#05313d"
     primary: {
       main: "#556cd6",
     },

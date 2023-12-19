@@ -1,5 +1,4 @@
 //Functions
-import { computeWeekStart } from "../utils/date";
 
 interface IData {
   id?: number;
@@ -7,19 +6,20 @@ interface IData {
   date: string;
   startTime: string;
   endTime: string;
+  weekStart: string;
 }
 
 const url = `http://localhost:3000/api/v1/shifts`;
 
 const formatToPOST = (data: IData) => {
-  const weekStart = computeWeekStart(new Date(data.date));
+  // const weekStart = computeWeekStart(new Date(data.date));
   return {
     employee_id: data.employeeId,
     date: data.date,
     start_time: `${data.startTime}:00`,
     end_time: `${data.endTime}:00`,
     is_split_shift: false,
-    week_start: weekStart,
+    week_start: data.weekStart,
   };
 };
 

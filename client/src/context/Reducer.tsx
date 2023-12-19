@@ -22,9 +22,10 @@ export function shiftsReducer(
         action.payload &&
         typeof action.payload === "object" &&
         !Array.isArray(action.payload)
-      )
-        return [...shifts, { ...action.payload }];
-      else return shifts;
+      ) {
+        // to fix later, should use the id use by response from the server
+        return [...shifts, { ...action.payload, id: -1 }];
+      } else return shifts;
       break;
     case ACTIONS.UPDATE_SHIFT: {
       const newShifts: IShift[] = [];
@@ -41,6 +42,7 @@ export function shiftsReducer(
           }
         });
       }
+
       if (newShifts.length) return newShifts;
       else return shifts;
       break;
