@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 const useFetchShifts = (weekStart: string) => {
   const [shifts, setShifts] = useState<IShift[] | []>([]);
+  const [error, setError] = useState<unknown | null>(null);
 
   useEffect(() => {
     const fetchShifts = async () => {
@@ -27,9 +28,15 @@ const useFetchShifts = (weekStart: string) => {
         setShifts(formatedShiftsObject);
       }
     };
-    fetchShifts();
+
+    try {
+      fetchShifts();
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
   }, [weekStart, setShifts]);
-  return { shifts };
+  return { shifts, error };
 };
 
 export default useFetchShifts;

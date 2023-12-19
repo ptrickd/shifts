@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 
 const useFetchEmployees = () => {
   const [employees, setEmployees] = useState<IEmployee[] | null>(null);
+  const [error, setError] = useState<unknown | null>(null);
+
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(
@@ -17,10 +19,15 @@ const useFetchEmployees = () => {
       setEmployees(formatedEmployeesObject);
     };
 
-    fetchEmployees();
+    try {
+      fetchEmployees();
+    } catch (err) {
+      console.log(err);
+      setError(err);
+    }
   }, []);
 
-  return { employees };
+  return { employees, error };
 };
 
 export default useFetchEmployees;
