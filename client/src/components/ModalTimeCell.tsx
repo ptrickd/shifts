@@ -42,7 +42,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
   //useState
   const [currentStartTime, setCurrentStartTime] = useState(startTime);
   const [currentEndTime, setCurrentEndTime] = useState(endTime);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | unknown>("");
 
   //Context
   const shifts = useContext(ShiftsContext);
@@ -150,18 +150,22 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
           {generateMenuItems(TIMES)}
         </Select>
       </FormControl>
-      <Typography color="red">{error}</Typography>
+      <Typography color="red">
+        {typeof error === "string" ? error : null}
+      </Typography>
       <Button sx={{ margin: 1 }} variant="outlined" onClick={handleSubmit}>
         OK
       </Button>
-      <Button
-        sx={{ margin: 1 }}
-        variant="outlined"
-        color="error"
-        onClick={handleDelete}
-      >
-        Delete
-      </Button>
+      {id !== 0 ? (
+        <Button
+          sx={{ margin: 1 }}
+          variant="outlined"
+          color="error"
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
+      ) : null}
     </Dialog>
   );
 };
