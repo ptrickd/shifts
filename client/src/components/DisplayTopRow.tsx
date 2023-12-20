@@ -5,9 +5,10 @@ import Grid from "@mui/material/Grid";
 interface IProps {
   weekDays: string[];
   today: Date;
+  weekStart: Date;
 }
 
-const DisplayTopRow = ({ weekDays, today }: IProps) => {
+const DisplayTopRow = ({ weekDays, today, weekStart }: IProps) => {
   console.log(today);
   return weekDays.map((value, index) => (
     <Grid item xs={1.5} key={value + index} zeroMinWidth>
@@ -37,7 +38,7 @@ const DisplayTopRow = ({ weekDays, today }: IProps) => {
           align="center"
           sx={{ margin: 0, padding: 0 }}
         >
-          {today.getDate() + index - 1}
+          {weekStart.getDate() + index}
         </Typography>
       )}
     </Grid>

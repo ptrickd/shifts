@@ -92,7 +92,11 @@ const Schedule = () => {
               >
                 <Grid container spacing={1}>
                   <Grid container item spacing={1}>
-                    <DisplayTopRow weekDays={TOP_ROW} today={TODAY} />
+                    <DisplayTopRow
+                      weekDays={TOP_ROW}
+                      today={TODAY}
+                      weekStart={new Date(weekStart)}
+                    />
                   </Grid>
 
                   <DisplayEmployeeCells
