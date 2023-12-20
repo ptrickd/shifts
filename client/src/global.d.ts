@@ -1,17 +1,33 @@
 //Can't have import or export in this file
 //Reducer action
-enum ACTIONS {
+enum SHIFTS_ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
   ADD_SHIFT = "ADD_SHIFT",
   UPDATE_SHIFT = "UPDATE_SHIFT",
   DELETE_SHIFT = "DELETE_SHIFT",
 }
 
-interface IAction {
-  type: ACTIONS.SET_SHIFTS | ACTIONS.ADD_SHIFT | UPDATE_SHIFT;
+interface IShiftsAction {
+  type:
+    | SHIFTS_ACTIONS.SET_SHIFTS
+    | SHIFTS_ACTIONS.ADD_SHIFT
+    | SHIFTS_ACTIONS.UPDATE_SHIFT
+    | SHIFTS_ACTIONS.DELETE_SHIFT;
   payload?: IShift[] | [] | IShift;
 }
 
+/******************************************/
+
+enum VALUES_ACTIONS {
+  SET_VALUES = "SET_VALUES",
+}
+
+interface IValuesAction {
+  type: VALUES_ACTIONS.SET_VALUES;
+  payload?: IShifts[] | [];
+}
+
+/******************************************/
 //Response from the server when
 //calling Employees#index
 interface IResponseEmployee {

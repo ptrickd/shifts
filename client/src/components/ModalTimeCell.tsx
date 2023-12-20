@@ -15,7 +15,7 @@ import { TIMES } from "../utils/constants";
 
 // Context
 import { ShiftsContext, DispatchContext } from "./Schedule";
-import { ACTIONS } from "../context/Reducer";
+import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
 
 //Function
 import { updateShifts } from "../utils/shiftsOps";
@@ -103,7 +103,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
       //delete shift in local array if success
       if (dispatch) {
         dispatch({
-          type: ACTIONS.DELETE_SHIFT,
+          type: SHIFTS_ACTIONS.DELETE_SHIFT,
           payload: {
             id: id,
             employeeId: employeeId,

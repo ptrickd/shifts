@@ -19,9 +19,17 @@ import DisplayEmployeeCells from "./DisplayEmployeeCells";
 import DateNavbar from "./DateNavbar";
 
 //Context
-import { shiftsReducer, ACTIONS } from "../context/Reducer";
+import { shiftsReducer, SHIFTS_ACTIONS } from "../context/shiftsReducer";
+
+import {
+  computedValuesReducer,
+  VALUES_ACTIONS,
+} from "../context/computedValuesReducer";
+
 export const ShiftsContext = createContext<IShift[] | []>([]);
-export const DispatchContext = createContext<Dispatch<IAction> | null>(null);
+export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
+  null
+);
 
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
@@ -44,15 +52,25 @@ const Schedule = () => {
 
   //Context
   const [shifts, dispatch] = useReducer(shiftsReducer, fetchedShifts);
+  const [computedValues, valuesDispatch] = useReducer(
+    computedValuesReducer,
+    {}
+  );
 
   //update the reducer when shifts are fetcheds
   useEffect(() => {
     dispatch({
-      type: ACTIONS.SET_SHIFTS,
+      type: SHIFTS_ACTIONS.SET_SHIFTS,
       payload: fetchedShifts,
     });
   }, [fetchedShifts]);
 
+  useEffect(() => {
+    valuesDispatch({ type: VALUES_ACTIONS.SET_VALUES, payload: fetchedShifts });
+  }, [fetchedShifts]);
+  useEffect(() => {
+    console.log(computedValues);
+  }, [computedValues]);
   if (employees && shifts)
     return (
       <ShiftsContext.Provider value={shifts}>

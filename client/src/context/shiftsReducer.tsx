@@ -1,5 +1,5 @@
 //if change ACTIONS has to be updated in global.d.ts
-export enum ACTIONS {
+export enum SHIFTS_ACTIONS {
   SET_SHIFTS = "SET_SHIFTS",
   ADD_SHIFT = "ADD_SHIFT",
   UPDATE_SHIFT = "UPDATE_SHIFT",
@@ -8,16 +8,16 @@ export enum ACTIONS {
 
 export function shiftsReducer(
   shifts: IShift[] | [],
-  action: IAction
+  action: IShiftsAction
 ): IShift[] {
   switch (action.type) {
-    case ACTIONS.SET_SHIFTS:
+    case SHIFTS_ACTIONS.SET_SHIFTS:
       if (action.payload && Array.isArray(action.payload))
         return [...action.payload];
       else return shifts;
 
       break;
-    case ACTIONS.ADD_SHIFT:
+    case SHIFTS_ACTIONS.ADD_SHIFT:
       if (
         action.payload &&
         typeof action.payload === "object" &&
@@ -27,7 +27,7 @@ export function shiftsReducer(
         return [...shifts, { ...action.payload, id: -1 }];
       } else return shifts;
       break;
-    case ACTIONS.UPDATE_SHIFT: {
+    case SHIFTS_ACTIONS.UPDATE_SHIFT: {
       const newShifts: IShift[] = [];
       if (action?.payload && !Array.isArray(action.payload)) {
         shifts.map((shift) => {
@@ -47,7 +47,7 @@ export function shiftsReducer(
       else return shifts;
       break;
     }
-    case ACTIONS.DELETE_SHIFT: {
+    case SHIFTS_ACTIONS.DELETE_SHIFT: {
       const newShifts: IShift[] = [];
       if (
         action.payload &&
@@ -64,7 +64,6 @@ export function shiftsReducer(
             newShifts.push(shift);
         });
       }
-      console.log(newShifts);
       return newShifts;
       break;
     }
