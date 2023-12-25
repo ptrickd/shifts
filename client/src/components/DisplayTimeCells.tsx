@@ -14,7 +14,7 @@ function findTodayShift(
   index: number
 ): IShift | null {
   const todayDate = new Date(weekStart);
-  todayDate.setDate(todayDate.getDate() + index);
+  todayDate.setDate(todayDate.getDate() + index + 1);
   let todayShift: IShift | null = null;
   const formatDayDate = (date: Date) => {
     if (String(date.getDate()).length === 1) return `0${date.getDate()}`;

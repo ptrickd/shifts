@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 //Components
 import DisplayTopRow from "./DisplayTopRow";
 import DisplayEmployeeCells from "./DisplayEmployeeCells";
+import BottomRow from "./BottomRow";
 import DateNavbar from "./DateNavbar";
 
 //Context
@@ -42,7 +43,7 @@ const Schedule = () => {
   //Constants
   const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const TODAY = new Date(Date.now());
-  console.log(TODAY);
+
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
 
@@ -54,7 +55,7 @@ const Schedule = () => {
   const [shifts, dispatch] = useReducer(shiftsReducer, fetchedShifts);
   const [computedValues, valuesDispatch] = useReducer(
     computedValuesReducer,
-    {}
+    []
   );
 
   //update the reducer when shifts are fetcheds
@@ -68,9 +69,11 @@ const Schedule = () => {
   useEffect(() => {
     valuesDispatch({ type: VALUES_ACTIONS.SET_VALUES, payload: fetchedShifts });
   }, [fetchedShifts]);
+
   useEffect(() => {
     console.log(computedValues);
   }, [computedValues]);
+
   if (employees && shifts)
     return (
       <ShiftsContext.Provider value={shifts}>
@@ -103,6 +106,9 @@ const Schedule = () => {
                     employees={employees}
                     weekStart={weekStart}
                   />
+                  <Grid container item spacing={1}>
+                    <BottomRow />
+                  </Grid>
                 </Grid>
               </Box>
             </Paper>
