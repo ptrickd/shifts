@@ -1,12 +1,34 @@
 import { Dispatch } from "react";
 import { postShift, putShift } from "./restApiCall";
 import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
+import { VALUES_ACTIONS } from "../context/computedValuesReducer";
+
+const getDayAndTotal: (
+  startTime: string,
+  endTime: string,
+  date: Date
+) => { totalHour: number; day: number } = (startTime, endTime, date) => {
+  const indexStart = Number(startTime.indexOf(":"));
+  const indexEnd = Number(endTime.indexOf(":"));
+
+  const hourStart = Number(startTime.substring(indexStart, -2));
+  const minuteStart = Number(startTime.substring(indexStart + 1));
+
+  const hourEnd = Number(endTime.substring(indexEnd, -2));
+  const minuteEnd = Number(endTime.substring(indexEnd + 1));
+
+  const totalHour = hourEnd - hourStart + (minuteEnd - minuteStart) / 60;
+  const day = date.getDay();
+
+  return { totalHour, day };
+};
 
 const updateShifts: (
   newShift: IShift,
   shifts: IShift[] | [],
-  dispatch: Dispatch<IShiftsAction>
-) => IShift[] = (newShift, shifts, dispatch) => {
+  dispatch: Dispatch<IShiftsAction>,
+  valuesDispatch: Dispatch<IValuesAction>
+) => IShift[] = (newShift, shifts, dispatch, valuesDispatch) => {
   const { id, employeeId, startTime, endTime, date, weekStart } = newShift;
 
   let foundShift: null | IShift = null;
@@ -59,8 +81,13 @@ const updateShifts: (
       putShift(foundShift);
     } else throw new Error("founshfit not found");
   };
-  updatingShift();
 
+  updatingShift();
+  const { day, totalHour } = getDayAndTotal(startTime, endTime, new Date(date));
+  valuesDispatch({
+    type: VALUES_ACTIONS.ADD_VALUES,
+    payload: { day, totalHour },
+  });
   return newShifts;
 };
 

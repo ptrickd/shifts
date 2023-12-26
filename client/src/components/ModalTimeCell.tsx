@@ -14,7 +14,11 @@ import Typography from "@mui/material/Typography";
 import { TIMES } from "../utils/constants";
 
 // Context
-import { ShiftsContext, DispatchContext } from "./Schedule";
+import {
+  ShiftsContext,
+  DispatchContext,
+  ValuesDispatchContext,
+} from "./Schedule";
 import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
 
 //Function
@@ -47,6 +51,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
   //Context
   const shifts = useContext(ShiftsContext);
   const dispatch = useContext(DispatchContext);
+  const valuesDispatch = useContext(ValuesDispatchContext);
 
   const handleStartChange = (event: SelectChangeEvent) => {
     setCurrentStartTime(event.target.value as string);
@@ -79,7 +84,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
       setError("Starting time cannot be higher than end time.");
     } else {
       setError("");
-      if (shifts && dispatch) {
+      if (shifts && dispatch && valuesDispatch) {
         const newShift = {
           id,
           employeeId,
@@ -88,7 +93,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
           date,
           weekStart,
         };
-        updateShifts(newShift, shifts, dispatch);
+        updateShifts(newShift, shifts, dispatch, valuesDispatch);
         onClose();
       } else {
         setError("Internal Error");

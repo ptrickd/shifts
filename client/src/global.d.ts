@@ -20,11 +20,21 @@ interface IShiftsAction {
 
 enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",
+  ADD_VALUES = "ADD_VALUES",
+}
+
+interface IComputedValues {
+  total: number;
+}
+
+interface INewTotal {
+  day: number;
+  totalHour: number;
 }
 
 interface IValuesAction {
-  type: VALUES_ACTIONS.SET_VALUES;
-  payload?: IShifts[] | [];
+  type: VALUES_ACTIONS.SET_VALUES | VALUES_ACTIONS.ADD_VALUES;
+  payload?: IShifts[] | [] | IComputedValues | INewTotal;
 }
 
 /******************************************/

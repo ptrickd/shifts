@@ -1,12 +1,18 @@
 //if change ACTIONS has to be updated in global.d.ts
 export enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",
+  ADD_VALUES = "ADD_VALUES",
 }
 
-interface IComputedValues {
-  total: number;
-}
-
+const defaultValues = [
+  { total: 0 },
+  { total: 0 },
+  { total: 0 },
+  { total: 0 },
+  { total: 0 },
+  { total: 0 },
+  { total: 0 },
+];
 const computeHoursInShift = (startTime: string, endTime: string) => {
   const startTimeHours = Number(startTime.substring(0, 2));
   const startTimeMinutes = Number(startTime.substring(3, 5));
@@ -54,9 +60,6 @@ export function computedValuesReducer( //Record<string | never> type for empty o
 ): IComputedValues[] | [] {
   switch (action.type) {
     case VALUES_ACTIONS.SET_VALUES: {
-      //   const shifts = action.payload;
-      //   const weekStart = shifts[0].week_start;
-      console.log(computedValues);
       if (
         action.payload &&
         Array.isArray(action.payload) &&
@@ -65,10 +68,28 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         return computeValuesByTotal(action.payload);
       }
 
-      return [];
+      return defaultValues;
+      break;
+    }
+    case VALUES_ACTIONS.ADD_VALUES: {
+      if (
+        action.payload &&
+        typeof action.payload === "object" &&
+        "day" in action.payload
+      ) {
+        const { day, totalHour } = action.payload;
+
+        const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
+        valuesToReturn[day].total += totalHour;
+
+        return valuesToReturn;
+      }
+      console.log(action?.payload);
+
+      return defaultValues;
       break;
     }
     default:
-      return [];
+      return defaultValues;
   }
 }

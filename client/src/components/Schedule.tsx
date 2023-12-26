@@ -31,6 +31,8 @@ export const ShiftsContext = createContext<IShift[] | []>([]);
 export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
   null
 );
+export const ValuesDispatchContext =
+  createContext<Dispatch<IValuesAction> | null>(null);
 
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
@@ -78,46 +80,48 @@ const Schedule = () => {
     return (
       <ShiftsContext.Provider value={shifts}>
         <DispatchContext.Provider value={dispatch}>
-          <Container>
-            <DateNavbar
-              date={weekStart}
-              newShifts={(direction) =>
-                setWeekStart(computeNewWeekStart(weekStart, direction))
-              }
-            />
-            <Paper elevation={1}>
-              <Box
-                component="div"
-                sx={{
-                  flexGrow: 1,
-                  border: "1px solid gray",
-                }}
-              >
-                <Grid container spacing={1}>
-                  <Grid container item spacing={1}>
-                    <DisplayTopRow
-                      weekDays={TOP_ROW}
-                      today={TODAY}
-                      weekStart={new Date(weekStart)}
-                    />
-                  </Grid>
+          <ValuesDispatchContext.Provider value={valuesDispatch}>
+            <Container>
+              <DateNavbar
+                date={weekStart}
+                newShifts={(direction) =>
+                  setWeekStart(computeNewWeekStart(weekStart, direction))
+                }
+              />
+              <Paper elevation={1}>
+                <Box
+                  component="div"
+                  sx={{
+                    flexGrow: 1,
+                    border: "1px solid gray",
+                  }}
+                >
+                  <Grid container spacing={1}>
+                    <Grid container item spacing={1}>
+                      <DisplayTopRow
+                        weekDays={TOP_ROW}
+                        today={TODAY}
+                        weekStart={new Date(weekStart)}
+                      />
+                    </Grid>
 
-                  <DisplayEmployeeCells
-                    employees={employees}
-                    weekStart={weekStart}
-                  />
-                  <Grid
-                    container
-                    item
-                    spacing={1}
-                    sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
-                  >
-                    <BottomRow computedValues={computedValues} />
+                    <DisplayEmployeeCells
+                      employees={employees}
+                      weekStart={weekStart}
+                    />
+                    <Grid
+                      container
+                      item
+                      spacing={1}
+                      sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
+                    >
+                      <BottomRow computedValues={computedValues} />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </Box>
-            </Paper>
-          </Container>
+                </Box>
+              </Paper>
+            </Container>
+          </ValuesDispatchContext.Provider>
         </DispatchContext.Provider>
       </ShiftsContext.Provider>
     );
