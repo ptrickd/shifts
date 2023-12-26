@@ -74,7 +74,7 @@ const Schedule = () => {
     console.log(computedValues);
   }, [computedValues]);
 
-  if (employees && shifts)
+  if (employees && shifts && computedValues)
     return (
       <ShiftsContext.Provider value={shifts}>
         <DispatchContext.Provider value={dispatch}>
@@ -106,8 +106,13 @@ const Schedule = () => {
                     employees={employees}
                     weekStart={weekStart}
                   />
-                  <Grid container item spacing={1}>
-                    <BottomRow />
+                  <Grid
+                    container
+                    item
+                    spacing={1}
+                    sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
+                  >
+                    <BottomRow computedValues={computedValues} />
                   </Grid>
                 </Grid>
               </Box>
