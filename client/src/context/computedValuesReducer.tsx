@@ -84,7 +84,6 @@ export function computedValuesReducer( //Record<string | never> type for empty o
 
         return valuesToReturn;
       }
-      console.log(action?.payload);
 
       return defaultValues;
       break;

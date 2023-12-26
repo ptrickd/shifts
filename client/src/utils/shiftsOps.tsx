@@ -54,6 +54,7 @@ const updateShifts: (
         date,
         weekStart,
       });
+
       dispatch({
         type: SHIFTS_ACTIONS.ADD_SHIFT,
         payload: {
@@ -66,6 +67,8 @@ const updateShifts: (
         },
       });
     } else if (foundShift) {
+      putShift(foundShift);
+
       dispatch({
         type: SHIFTS_ACTIONS.UPDATE_SHIFT,
         payload: {
@@ -77,9 +80,7 @@ const updateShifts: (
           weekStart,
         },
       });
-
-      putShift(foundShift);
-    } else throw new Error("founshfit not found");
+    } else throw new Error("foundshift not found");
   };
 
   updatingShift();
