@@ -33,8 +33,6 @@ function findTodayShift(
   return todayShift;
 }
 const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
-  // console.log(shifts);
-
   //sort by date
   const rowOfTimeCells = [];
   for (let numOfCell = 0; numOfCell < 7; numOfCell++) {
@@ -52,7 +50,8 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
     } else {
       const currentDate = `${todayDate.getFullYear()}-${
         todayDate.getMonth() + 1
-      }-${todayDate.getDate()}`;
+      }-${todayDate.getDate() + 1}`;
+
       const newShift = {
         id: 0,
         employeeId: employee.id,

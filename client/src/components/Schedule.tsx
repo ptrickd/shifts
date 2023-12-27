@@ -72,9 +72,7 @@ const Schedule = () => {
     valuesDispatch({ type: VALUES_ACTIONS.SET_VALUES, payload: fetchedShifts });
   }, [fetchedShifts]);
 
-  useEffect(() => {
-    console.log(computedValues);
-  }, [computedValues]);
+  useEffect(() => {}, [computedValues]);
 
   if (employees && shifts && computedValues)
     return (
