@@ -21,6 +21,7 @@ interface IShiftsAction {
 enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",
   ADD_VALUES = "ADD_VALUES",
+  SUBSTRACT_VALUES = "SUBSTRACT_VALUES",
 }
 
 interface IComputedValues {
@@ -33,8 +34,11 @@ interface INewTotal {
 }
 
 interface IValuesAction {
-  type: VALUES_ACTIONS.SET_VALUES | VALUES_ACTIONS.ADD_VALUES;
-  payload?: IShifts[] | [] | IComputedValues | INewTotal;
+  type:
+    | VALUES_ACTIONS.SET_VALUES
+    | VALUES_ACTIONS.ADD_VALUES
+    | VALUES_ACTIONS.SUBSTRACT_VALUES;
+  payload?: IShifts[] | [] | IComputedValues | INewTotal | IShift;
 }
 
 /******************************************/

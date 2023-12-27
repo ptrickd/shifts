@@ -92,4 +92,4 @@ const updateShifts: (
   return newShifts;
 };
 
-export { updateShifts };
+export { updateShifts, getDayAndTotal };

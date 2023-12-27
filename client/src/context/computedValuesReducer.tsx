@@ -1,7 +1,10 @@
+import { getDayAndTotal } from "../utils/shiftsOps";
+
 //if change ACTIONS has to be updated in global.d.ts
 export enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",
   ADD_VALUES = "ADD_VALUES",
+  SUBSTRACT_VALUES = "SUBSTRACT_VALUES",
 }
 
 const defaultValues = [
@@ -80,11 +83,32 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         const { day, totalHour } = action.payload;
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
-        valuesToReturn[day].total += totalHour;
+        valuesToReturn[day + 1].total += totalHour;
 
         return valuesToReturn;
       }
 
+      return defaultValues;
+      break;
+    }
+    case VALUES_ACTIONS.SUBSTRACT_VALUES: {
+      if (
+        action.payload &&
+        typeof action.payload === "object" &&
+        "id" in action.payload
+      ) {
+        const { startTime, endTime, date } = action.payload;
+        const { totalHour, day } = getDayAndTotal(
+          startTime,
+          endTime,
+          new Date(date)
+        );
+
+        const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
+        valuesToReturn[day + 1].total -= totalHour;
+
+        return valuesToReturn;
+      }
       return defaultValues;
       break;
     }

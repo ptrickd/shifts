@@ -19,7 +19,9 @@ import {
   DispatchContext,
   ValuesDispatchContext,
 } from "./Schedule";
+
 import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
+import { VALUES_ACTIONS } from "../context/computedValuesReducer";
 
 //Function
 import { updateShifts } from "../utils/shiftsOps";
@@ -106,18 +108,31 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
     if (response.error) setError(response.error);
     else {
       //delete shift in local array if success
-      if (dispatch) {
+      if (dispatch && valuesDispatch) {
         dispatch({
           type: SHIFTS_ACTIONS.DELETE_SHIFT,
           payload: {
-            id: id,
-            employeeId: employeeId,
-            startTime: startTime,
-            endTime: endTime,
-            date: date,
-            weekStart: weekStart,
+            id,
+            employeeId,
+            startTime,
+            endTime,
+            date,
+            weekStart,
           },
         });
+
+        valuesDispatch({
+          type: VALUES_ACTIONS.SUBSTRACT_VALUES,
+          payload: {
+            id,
+            employeeId,
+            startTime,
+            endTime,
+            date,
+            weekStart,
+          },
+        });
+
         //close modal if success
         onClose();
       } else setError("Dispatch undefined");
