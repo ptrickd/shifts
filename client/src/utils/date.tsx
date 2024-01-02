@@ -7,20 +7,20 @@ const parseDate = (weekStart: string) => {
   return { year, month, day };
 };
 // const tempDays = ["Sunday", "Monday", "Tuesday", "Wednesday"];
-// const tempMonth = [
-//   "Jan",
-//   "Feb",
-//   "Mar",
-//   "Apr",
-//   "May",
-//   "Jun",
-//   "Jul",
-//   "Aug",
-//   "Sep",
-//   "Oct",
-//   "Nov",
-//   "Dec",
-// ];
+const tempMonth = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
 
 const determineDateState = (date: Date) => {
   /*
@@ -29,6 +29,7 @@ const determineDateState = (date: Date) => {
   const today = new Date(date.getTime());
   const dateInNumber = today.getDate();
   const month = today.getMonth();
+
   // console.log(`numberOfDaysInMonth: ${numberOfDaysInMonth}`);
   // console.log(`dateInNumber: ${dateInNumber}`);
   // console.log(`dayWeekInNumber: ${tempDays[dayWeekInNumber]}`);
@@ -83,13 +84,12 @@ export const computeWeekStart = (ogToday: Date) => {
           previousMonth,
           0
         ).getDate();
+
         const firstDayOfWeek =
-          numberOfDaysInPreviousMonth -
-          dateInNumber +
-          numberOfDaysInPreviousMonth -
-          dateInNumber +
-          dayWeekInNumber;
+          numberOfDaysInPreviousMonth - dayWeekInNumber + dateInNumber;
+
         today.setDate(firstDayOfWeek);
+        today.setMonth(today.getMonth() - 1);
 
         //convert to format '2023-11-12'
         return stringify(today);
