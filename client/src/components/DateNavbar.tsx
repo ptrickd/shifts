@@ -3,8 +3,8 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-//Types
 
+//Types
 interface IProps {
   date: string;
   newShifts: (direction: "backward" | "forward") => void;

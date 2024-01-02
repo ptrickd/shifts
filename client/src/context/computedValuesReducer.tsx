@@ -80,6 +80,7 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         typeof action.payload === "object" &&
         "day" in action.payload
       ) {
+        console.log("hdhdhdhd");
         const { day, totalHour } = action.payload;
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
@@ -112,6 +113,7 @@ export function computedValuesReducer( //Record<string | never> type for empty o
       return defaultValues;
       break;
     }
+
     default:
       return defaultValues;
   }

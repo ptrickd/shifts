@@ -28,24 +28,26 @@ const updateShifts: (
   shifts: IShift[] | [],
   dispatch: Dispatch<IShiftsAction>,
   valuesDispatch: Dispatch<IValuesAction>
-) => IShift[] = (newShift, shifts, dispatch, valuesDispatch) => {
+) => void = (newShift, shifts, dispatch, valuesDispatch) => {
   const { id, employeeId, startTime, endTime, date, weekStart } = newShift;
 
   let foundShift: null | IShift = null;
 
-  const newShifts = shifts.map((shift: IShift) => {
+  shifts.forEach((shift: IShift) => {
     if (shift.employeeId === employeeId && shift.date === date) {
       foundShift = {
         ...shift,
-        startTime: startTime,
-        endTime: endTime,
       };
-      return foundShift;
-    } else {
-      return { ...shift };
     }
   });
+
   const updatingShift = async () => {
+    const { day, totalHour } = getDayAndTotal(
+      startTime,
+      endTime,
+      new Date(date)
+    );
+
     if (!foundShift) {
       const response = await postShift({
         employeeId,
@@ -66,8 +68,34 @@ const updateShifts: (
           weekStart,
         },
       });
+
+      valuesDispatch({
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: { day, totalHour },
+      });
     } else if (foundShift) {
-      putShift(foundShift);
+      putShift({ ...foundShift, startTime, endTime });
+
+      const newDate = new Date(date);
+
+      const { totalHour: newTotalHour, day } = getDayAndTotal(
+        startTime,
+        endTime,
+        newDate
+      );
+
+      const { totalHour: previousTotalHour } = getDayAndTotal(
+        foundShift.startTime,
+        foundShift.endTime,
+        newDate
+      );
+
+      const diffTotalHour = newTotalHour - previousTotalHour;
+
+      valuesDispatch({
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: { day, totalHour: diffTotalHour },
+      });
 
       dispatch({
         type: SHIFTS_ACTIONS.UPDATE_SHIFT,
@@ -84,12 +112,6 @@ const updateShifts: (
   };
 
   updatingShift();
-  const { day, totalHour } = getDayAndTotal(startTime, endTime, new Date(date));
-  valuesDispatch({
-    type: VALUES_ACTIONS.ADD_VALUES,
-    payload: { day, totalHour },
-  });
-  return newShifts;
 };
 
 export { updateShifts, getDayAndTotal };
