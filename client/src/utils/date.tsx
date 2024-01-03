@@ -6,41 +6,32 @@ const parseDate = (weekStart: string) => {
   const day = weekStart.substring(8, 10);
   return { year, month, day };
 };
-const tempDays = ["Sunday", "Monday", "Tuesday", "Wednesday"];
-const tempMonth = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+// const tempDays = ["Sunday", "Monday", "Tuesday", "Wednesday"];
+// const tempMonth = [
+//   "Jan",
+//   "Feb",
+//   "Mar",
+//   "Apr",
+//   "May",
+//   "Jun",
+//   "Jul",
+//   "Aug",
+//   "Sep",
+//   "Oct",
+//   "Nov",
+//   "Dec",
+// ];
 
 const determineDateState = (date: Date) => {
   const today = new Date(date.getTime());
   const dateInNumber = today.getDate();
   const month = today.getMonth();
 
-  // console.log(`numberOfDaysInMonth: ${numberOfDaysInMonth}`);
-  // console.log(`dateInNumber: ${dateInNumber}`);
-  // console.log(`dayWeekInNumber: ${tempDays[dayWeekInNumber]}`);
-  // console.log(`year: ${year}`);
-  // console.log(`month: ${tempMonth[month]}`);
-
   if (dateInNumber >= 6) {
-    // 1-beginning of the week is this month
     return "weekStartThisMonth";
   } else if (dateInNumber < 6 && month > 0) {
-    //2-beginning of the week is in previous month, same year
     return "weekStartPreviousMonthThisYear";
   } else if (dateInNumber < 6) {
-    //3-beginning of the week is in previous year
     return "weekStartPreviousYear";
   }
 };
@@ -74,14 +65,34 @@ const determineNextWeekDateState = (currentWeekStart: string) => {
   }
 };
 
+const determineLastWeekDateState = (currentWeekStart: string) => {
+  const weekStart = new Date(currentWeekStart);
+  const dateInNumber = weekStart.getDate();
+  const month = weekStart.getMonth();
+
+  if (dateInNumber > 7) {
+    return "lastWeekStartThisMonth";
+  } else if (dateInNumber <= 7 && month > 0) {
+    return "lastWeekStartLastMonth";
+  } else if (dateInNumber <= 7) {
+    return "lastWeekStartLastYear";
+  }
+};
+
 //function transforming date format in string ex:'2023-11-12'
 const stringify = (date: Date) => {
-  const formatDay = (date: date) => {
+  const formatDay = (date: Date) => {
     const day = date.getDate();
     if (day < 10) return `0${day}`;
     else return `${day}`;
   };
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${formatDay(date)}`;
+  const formatMonth = (date: Date) => {
+    const month = date.getMonth() + 1;
+
+    if (month < 10) return `0${month}`;
+    else return `${month}`;
+  };
+  return `${date.getFullYear()}-${formatMonth(date)}-${formatDay(date)}`;
 };
 
 /******** Export ********/
@@ -161,10 +172,50 @@ export const computeNewWeekStart = (
   const { year, month, day } = parseDate(currentWeekStart);
 
   if (direction === "backward") {
-    const newDay = Number(day) - 7;
-    return `${year}-${month}-${newDay}`;
+    console.log(determineLastWeekDateState(currentWeekStart));
+    switch (determineLastWeekDateState(currentWeekStart)) {
+      case "lastWeekStartThisMonth":
+        {
+          const newDay = Number(day) - 7;
+          return stringify(new Date(`${year}-${month}-${newDay}`));
+        }
+        break;
+      case "lastWeekStartLastMonth":
+        {
+          const numberOfDaysInLastMonth = new Date(
+            Number(year),
+            Number(month),
+            0
+          ).getDate();
+
+          const newWeekStart = new Date();
+          newWeekStart.setFullYear(Number(year));
+          newWeekStart.setMonth(Number(month));
+          newWeekStart.setDate(Number(day) - 7 - numberOfDaysInLastMonth);
+
+          return stringify(newWeekStart);
+        }
+        break;
+      case "lastWeekStartLastYear":
+        {
+          const numberOfDaysInLastMonth = new Date(
+            Number(year),
+            Number(month),
+            0
+          ).getDate();
+
+          const newWeekStart = new Date();
+          newWeekStart.setFullYear(Number(year));
+          newWeekStart.setMonth(Number(month));
+          newWeekStart.setDate(Number(day) - 7 - numberOfDaysInLastMonth);
+
+          return stringify(newWeekStart);
+        }
+        break;
+      default:
+        break;
+    }
   } else if (direction === "forward") {
-    console.log(determineNextWeekDateState(currentWeekStart));
     switch (determineNextWeekDateState(currentWeekStart)) {
       case "nextWeekStartThisMonth":
         {
@@ -176,13 +227,30 @@ export const computeNewWeekStart = (
         {
           const numberOfDaysInThisMonth = new Date(
             Number(year),
-            Number(month) - 1,
+            Number(month),
             0
           ).getDate();
+
           const newWeekStart = new Date();
           newWeekStart.setFullYear(Number(year));
           newWeekStart.setMonth(Number(month));
-          newWeekStart.setDate(Number(day) + 7 - numberOfDaysInThisMonth);
+          newWeekStart.setDate(Number(day) + 6 - numberOfDaysInThisMonth);
+
+          return stringify(newWeekStart);
+        }
+        break;
+      case "nextWeekStartNextYear":
+        {
+          const numberOfDaysInThisMonth = new Date(
+            Number(year),
+            Number(month),
+            0
+          ).getDate();
+
+          const newWeekStart = new Date();
+          newWeekStart.setFullYear(Number(year));
+          newWeekStart.setMonth(Number(month));
+          newWeekStart.setDate(Number(day) + 6 - numberOfDaysInThisMonth);
 
           return stringify(newWeekStart);
         }
