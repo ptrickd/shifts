@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
-import { computeWeekStart } from "./date";
+import { computeWeekStart, computeNewWeekStart } from "./date";
 
-test("week start today", () => {
+test("computeWeekStart: week start today", () => {
   const today = new Date();
   today.setYear(2023);
   today.setMonth(11);
@@ -10,7 +10,7 @@ test("week start today", () => {
   expect(computeWeekStart(today)).toBe("2023-12-10");
 });
 
-test("week start this month", () => {
+test("computeWeekStart: week start this month", () => {
   const today = new Date();
   today.setYear(2023);
   today.setMonth(11);
@@ -19,7 +19,7 @@ test("week start this month", () => {
   expect(computeWeekStart(today)).toBe("2023-12-10");
 });
 
-test("week start the previous month", () => {
+test("computeWeekStart: week start the previous month", () => {
   const today = new Date();
   today.setYear(2023);
   today.setMonth(11);
@@ -28,7 +28,7 @@ test("week start the previous month", () => {
   expect(computeWeekStart(today)).toBe("2023-11-26");
 });
 
-test("week start the previous year", () => {
+test("computeWeekStart: week start the previous year", () => {
   const today = new Date();
   today.setYear(2024);
   today.setMonth(0);
@@ -36,3 +36,15 @@ test("week start the previous year", () => {
 
   expect(computeWeekStart(today)).toBe("2023-12-31");
 });
+
+test("computeNewWeekStart: next week is this month", () => {
+  expect(computeNewWeekStart("2023-12-10", "forward")).toBe("2023-12-17");
+});
+
+test("computeNewWeekStart: next week is next month", () => {
+  expect(computeNewWeekStart("2023-11-26", "forward")).toBe("2023-12-02");
+});
+
+// test("computeNewWeekStart: last week is this month", () => {
+//   expect(computeNewWeekStart("2023-12-10", "backward")).toBe("2023-12-03");
+// });
