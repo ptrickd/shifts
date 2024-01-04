@@ -3,7 +3,7 @@ import { computeWeekStart, computeNewWeekStart } from "./date";
 
 test("computeWeekStart: week start today", () => {
   const today = new Date();
-  today.setYear(2023);
+  today.setFullYear(2023);
   today.setMonth(11);
   today.setDate(10);
 
@@ -12,7 +12,7 @@ test("computeWeekStart: week start today", () => {
 
 test("computeWeekStart: week start this month", () => {
   const today = new Date();
-  today.setYear(2023);
+  today.setFullYear(2023);
   today.setMonth(11);
   today.setDate(14);
 
@@ -21,7 +21,7 @@ test("computeWeekStart: week start this month", () => {
 
 test("computeWeekStart: week start the previous month", () => {
   const today = new Date();
-  today.setYear(2023);
+  today.setFullYear(2023);
   today.setMonth(11);
   today.setDate(2);
 
@@ -30,7 +30,7 @@ test("computeWeekStart: week start the previous month", () => {
 
 test("computeWeekStart: week start the previous year", () => {
   const today = new Date();
-  today.setYear(2024);
+  today.setFullYear(2024);
   today.setMonth(0);
   today.setDate(2);
 

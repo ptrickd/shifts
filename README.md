@@ -1,24 +1,63 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Shift App
 
-Things you may want to cover:
+This a project I start to learn ruby on rails. It means to be an app to help user to make schedule for employees. Should include when finish features to add employees, add shifts on 7 days week, requests time off, total of hours for each days and total of hours by for each employees.
 
-* Ruby version
+## License
 
-* System dependencies
+To be added later
 
-* Configuration
+## System Dependencies
 
-* Database creation
+- Ruby 3.2
+- Rails 7
+- Postgres 14
+- React 15
+- Node 18
 
-* Database initialization
+## Installation
 
-* How to run the test suite
+You need ruby, postgres and node to install that project. Copy the repo on your local machine.
+Start a terminal to install dependencies:
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+cd shifts
+bundle
+cd client
+npm install
+```
 
-* Deployment instructions
+### Database initialization
 
-* ...
+To be added later\*\*\*\*
+
+```
+
+```
+
+To start the project rails app, start a terminal in the shifts folder:
+
+```
+rails s
+```
+
+To start the project react app, start a second terminal in the shifts folder:
+
+```
+cd client
+npm run dev
+```
+
+## Testing
+
+So far only the react app got testing set up. To run the tests, open a terminal in the root folder:
+
+```
+cd client
+npm run dev
+```
+
+## Deployment
+
+### To be added later\*\*\*
