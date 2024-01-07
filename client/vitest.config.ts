@@ -6,5 +6,8 @@ export default defineConfig({
     coverage: {
       provider: "istanbul", // or 'v8'
     },
+    globals: true,
+    setupFiles: ["./vitest-setup.ts"],
+    environment: "jsdom",
   },
 });

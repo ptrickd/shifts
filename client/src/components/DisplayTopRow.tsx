@@ -9,7 +9,12 @@ interface IProps {
 }
 
 const DisplayTopRow = ({ weekDays, today, weekStart }: IProps) => {
-  console.log(today);
+  // console.log(today);
+  /*
+  we need :
+   -the numer of day this month
+   -the date of the week start 
+   */
   return weekDays.map((value, index) => (
     <Grid item xs={1.5} key={value + index} zeroMinWidth>
       {today.getDay() + 1 === index ? (
