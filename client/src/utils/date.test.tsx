@@ -39,21 +39,39 @@ test("computeWeekStart: week start the previous year", () => {
 
 // computeNewWeekStart "forward"
 
+// 2023-11-26
+// 2023-12-03
+// 2023-12-10
+// 2023-12-17
+// 2023-12-24
+// 2023-12-31
+// 2024-01-07
+// 2024-01-14
+// 2024-01-21
+// 2024-01-28
+// 2024-02-04
+
 test("computeNewWeekStart: next week is this month", () => {
   expect(computeNewWeekStart("2023-12-10", "forward")).toBe("2023-12-17");
 });
 
 test("computeNewWeekStart: next week is next month", () => {
-  expect(computeNewWeekStart("2023-11-26", "forward")).toBe("2023-12-02");
+  expect(computeNewWeekStart("2023-11-26", "forward")).toBe("2023-12-03");
 });
 
 test("computeNewWeekStart: next week is next year", () => {
   expect(computeNewWeekStart("2023-12-31", "forward")).toBe("2024-01-06");
 });
-
+test("computeNewWeekStart: next week is next ,month", () => {
+  expect(computeNewWeekStart("2024-01-28", "forward")).toBe("2024-02-04");
+});
 // computeNewWeekStart "backward"
 test("computeNewWeekStart: last week is this month", () => {
   expect(computeNewWeekStart("2023-12-10", "backward")).toBe("2023-12-03");
+});
+
+test("computeNewWeekStart: last week is this month", () => {
+  expect(computeNewWeekStart("2023-12-31", "backward")).toBe("2023-12-24");
 });
 
 test("computeNewWeekStart: last week is last month", () => {

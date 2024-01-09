@@ -59,7 +59,9 @@ const Schedule = () => {
     computedValuesReducer,
     []
   );
-
+  useEffect(() => {
+    console.log(`weekStart: ${weekStart}`);
+  }, [weekStart]);
   //update the reducer when shifts are fetcheds
   useEffect(() => {
     dispatch({
