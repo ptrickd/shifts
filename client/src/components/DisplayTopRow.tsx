@@ -4,47 +4,42 @@ import Grid from "@mui/material/Grid";
 
 interface IProps {
   weekDays: string[];
-  today: Date;
   weekStart: Date;
 }
 
 const getListOfDates = (weekStart: Date) => {
-  const dateInNumber = weekStart.getDate();
+  const date = weekStart.getDate();
   const month = weekStart.getMonth();
   const year = weekStart.getFullYear();
+
   const numberOfDaysInThisMonth = new Date(
     Number(year),
-    Number(month),
+    Number(month) + 1,
     0
   ).getDate();
-  // console.log(`dateInNumber: ${dateInNumber}`);
-  // console.log(`month: ${month}`);
-  // console.log(`year: ${year}`);
-  // console.log(`numberOfDaysInThisMonth: ${numberOfDaysInThisMonth}`);
 
   const listOfDates = [];
-
-  for (let i = 1; i < 8; i++) {
-    // if 31 < ( 1 + 27)
-    if (numberOfDaysInThisMonth < i + dateInNumber - 1) {
-      listOfDates.push(numberOfDaysInThisMonth - dateInNumber + i - 1);
+  let newMonthDays = 1;
+  for (let i = 0; i < 7; i++) {
+    if (numberOfDaysInThisMonth <= i + date - 1) {
+      listOfDates.push(newMonthDays);
+      newMonthDays += 1;
     } else {
-      listOfDates.push(dateInNumber + i);
+      listOfDates.push(date + i);
     }
   }
 
   return listOfDates;
 };
 
-const DisplayTopRow = ({ weekDays, today, weekStart }: IProps) => {
-  // console.log(today);
+const DisplayTopRow = ({ weekDays, weekStart }: IProps) => {
   /*
   we need :
    -the numer of day this month
    -the date of the week start 
    */
   const listOfDates = getListOfDates(weekStart);
-  // console.log(listOfDates);
+
   return weekDays.map((value, index) => (
     <Grid item xs={1.5} key={value + index} zeroMinWidth>
       <Typography

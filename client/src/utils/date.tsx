@@ -22,6 +22,16 @@ const parseDate = (weekStart: string) => {
 //   "Dec",
 // ];
 
+export const createDate = (dateInString: string) => {
+  const { year, month, day } = parseDate(dateInString);
+
+  const date = new Date();
+  date.setFullYear(Number(year));
+  date.setMonth(Number(month) - 1);
+  date.setDate(Number(day));
+
+  return date;
+};
 const determineDateState = (date: Date) => {
   const today = new Date(date.getTime());
   const dateInNumber = today.getDate();
@@ -152,7 +162,7 @@ export const computeWeekStart = (ogToday: Date) => {
           numberOfDaysInPreviousMonth - dateInNumber + dayWeekInNumber;
 
         today.setFullYear(previousYear);
-        today.setMonth(11);
+        today.setMonth(11); //December
         today.setDate(firstDayOfWeek);
 
         //convert to format '2023-11-12'

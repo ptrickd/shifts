@@ -26,7 +26,7 @@ import {
   computedValuesReducer,
   VALUES_ACTIONS,
 } from "../context/computedValuesReducer";
-
+import { createDate } from "../utils/date";
 export const ShiftsContext = createContext<IShift[] | []>([]);
 export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
   null
@@ -100,8 +100,7 @@ const Schedule = () => {
                     <Grid container item spacing={1}>
                       <DisplayTopRow
                         weekDays={TOP_ROW}
-                        today={TODAY}
-                        weekStart={new Date(weekStart)}
+                        weekStart={createDate(weekStart)}
                       />
                     </Grid>
 
