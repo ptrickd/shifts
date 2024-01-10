@@ -16,7 +16,7 @@ import Paper from "@mui/material/Paper";
 //Components
 import DisplayTopRow from "./DisplayTopRow";
 import DisplayEmployeeCells from "./DisplayEmployeeCells";
-import BottomRow from "./BottomRow";
+import TotalHoursByDay from "./TotalHoursByDay";
 import DateNavbar from "./DateNavbar";
 
 //Context
@@ -59,9 +59,7 @@ const Schedule = () => {
     computedValuesReducer,
     []
   );
-  useEffect(() => {
-    console.log(`weekStart: ${weekStart}`);
-  }, [weekStart]);
+
   //update the reducer when shifts are fetcheds
   useEffect(() => {
     dispatch({
@@ -73,8 +71,6 @@ const Schedule = () => {
   useEffect(() => {
     valuesDispatch({ type: VALUES_ACTIONS.SET_VALUES, payload: fetchedShifts });
   }, [fetchedShifts]);
-
-  useEffect(() => {}, [computedValues]);
 
   if (employees && shifts && computedValues)
     return (
@@ -114,7 +110,7 @@ const Schedule = () => {
                       spacing={1}
                       sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
                     >
-                      <BottomRow computedValues={computedValues} />
+                      <TotalHoursByDay computedValues={computedValues} />
                     </Grid>
                   </Grid>
                 </Box>

@@ -84,7 +84,7 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         const { day, totalHour } = action.payload;
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
-        valuesToReturn[day + 1].total += totalHour;
+        valuesToReturn[day].total += totalHour;
 
         return valuesToReturn;
       }

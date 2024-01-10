@@ -10,7 +10,8 @@ interface IProps {
   computedValues: IComputedValues[];
 }
 
-const BottomRow = ({ computedValues }: IProps) => {
+const TotalHoursByDay = ({ computedValues }: IProps) => {
+  console.log(computedValues);
   const totalGrids = computedValues.map((value, index) => (
     <Grid
       item
@@ -60,4 +61,4 @@ const BottomRow = ({ computedValues }: IProps) => {
   );
 };
 
-export default BottomRow;
+export default TotalHoursByDay;
