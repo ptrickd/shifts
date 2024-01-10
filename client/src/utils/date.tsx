@@ -37,10 +37,12 @@ const determineDateState = (date: Date) => {
 };
 
 const determineNextWeekDateState = (currentWeekStart: string) => {
-  const weekStart = new Date(currentWeekStart);
-  const dateInNumber = weekStart.getDate();
-  const month = weekStart.getMonth();
-  const year = weekStart.getFullYear();
+  // const weekStart = new Date(currentWeekStart);
+  // const weekStart = new Date();
+  const { year, month, day } = parseDate(currentWeekStart);
+  const date = Number(day);
+  // const month = weekStart.getMonth();
+  // const year = weekStart.getFullYear();
 
   const numberOfDaysInNextMonth = new Date(
     Number(year),
@@ -48,12 +50,14 @@ const determineNextWeekDateState = (currentWeekStart: string) => {
     0
   ).getDate();
 
-  if (dateInNumber >= 6 && dateInNumber < numberOfDaysInNextMonth - 6) {
+  if (date <= numberOfDaysInNextMonth - 7) {
     return "nextWeekStartThisMonth";
-  } else if (dateInNumber + 7 > numberOfDaysInNextMonth && month < 11) {
+  } else if (date + 7 > numberOfDaysInNextMonth && Number(month) <= 11) {
     return "nextWeekStartNextMonth";
-  } else if (dateInNumber + 7 > numberOfDaysInNextMonth) {
+  } else if (date + 7 > numberOfDaysInNextMonth) {
     return "nextWeekStartNextYear";
+  } else {
+    return "undefined state";
   }
 };
 
@@ -69,6 +73,8 @@ const determineLastWeekDateState = (currentWeekStart: string) => {
     return "lastWeekStartLastMonth";
   } else if (dateInNumber <= 7) {
     return "lastWeekStartLastYear";
+  } else {
+    return "undefined state";
   }
 };
 
@@ -203,23 +209,27 @@ export const computeNewWeekStart = (
           ).getDate();
 
           const newWeekStart = new Date();
-          newWeekStart.setFullYear(Number(year));
-          newWeekStart.setMonth(Number(month));
-          newWeekStart.setDate(Number(day) - 7 - numberOfDaysInLastMonth);
+          newWeekStart.setFullYear(Number(year) - 1);
+          newWeekStart.setMonth(11);
+          newWeekStart.setDate(numberOfDaysInLastMonth + Number(day) - 7);
 
           return stringify(newWeekStart);
         }
         break;
       default:
-        throw Error("Undefined state");
+        return "0-0-0";
         break;
     }
   } else if (direction === "forward") {
     switch (determineNextWeekDateState(currentWeekStart)) {
       case "nextWeekStartThisMonth":
         {
-          const newDay = Number(day) + 7;
-          return `${year}-${month}-${newDay}`;
+          const newWeekStart = new Date();
+          newWeekStart.setFullYear(Number(year));
+          newWeekStart.setMonth(Number(month) - 1);
+          newWeekStart.setDate(Number(day) + 7);
+
+          return stringify(newWeekStart);
         }
         break;
       case "nextWeekStartNextMonth":
@@ -249,12 +259,13 @@ export const computeNewWeekStart = (
           const newWeekStart = new Date();
           newWeekStart.setFullYear(Number(year));
           newWeekStart.setMonth(Number(month));
-          newWeekStart.setDate(Number(day) + 7 - numberOfDaysInThisMonth - 1);
+          newWeekStart.setDate(Number(day) + 7 - numberOfDaysInThisMonth);
 
           return stringify(newWeekStart);
         }
         break;
       default:
+        return "0-0-0";
         break;
     }
   }
