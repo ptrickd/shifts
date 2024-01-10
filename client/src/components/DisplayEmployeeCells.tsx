@@ -25,7 +25,6 @@ function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
 
 const DisplayEmployeeCells = ({ employees, weekStart }: IProps) => {
   const shifts = useContext(ShiftsContext);
-
   if (employees != null) {
     return employees.map((employee, index) => (
       <Grid

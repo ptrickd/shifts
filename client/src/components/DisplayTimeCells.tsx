@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 //Components
 import TimeCell from "./TimeCell";
-
+import { createDate } from "../utils/date";
 //Types
 interface IProps {
   employee: IEmployee;
@@ -13,28 +14,37 @@ function findTodayShift(
   weekStart: string,
   index: number
 ): IShift | null {
-  const todayDate = new Date(weekStart);
-  todayDate.setDate(todayDate.getDate() + index + 1);
+  const weekStartDate = createDate(weekStart);
+  weekStartDate.setDate(weekStartDate.getDate() + index);
+
   let todayShift: IShift | null = null;
+
   const formatDayDate = (date: Date) => {
     if (String(date.getDate()).length === 1) return `0${date.getDate()}`;
     else return String(date.getDate());
   };
+  const formatMonth = (date: Date) => {
+    if (String(date.getMonth()).length === 1) return `0${date.getMonth() + 1}`;
+    else return String(date.getMonth() + 1);
+  };
+
   shifts.map((shift) => {
     if (
       shift.date ===
-      `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${formatDayDate(
-        todayDate
-      )}`
+      `${weekStartDate.getFullYear()}-${formatMonth(
+        weekStartDate
+      )}-${formatDayDate(weekStartDate)}`
     ) {
       todayShift = shift;
     }
   });
   return todayShift;
 }
+
 const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
   //sort by date
   const rowOfTimeCells = [];
+
   for (let numOfCell = 0; numOfCell < 7; numOfCell++) {
     const todayDate = new Date(weekStart);
     todayDate.setDate(todayDate.getDate() + numOfCell);

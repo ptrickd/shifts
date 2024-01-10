@@ -36,13 +36,14 @@ const TimeCell = ({ shift, name }: IProps) => {
     );
   } else {
     textDisplay = (
-      <>
+      <span>
         <Typography
           variant="body1"
           color="text.primary"
           align="center"
           noWrap
           sx={{ margin: 0, padding: 0 }}
+          data-testid="start-time"
         >
           Start : {startTime}
         </Typography>
@@ -52,10 +53,11 @@ const TimeCell = ({ shift, name }: IProps) => {
           align="center"
           noWrap
           sx={{ paddingBottom: 1 }}
+          data-testid="end-time"
         >
           End : {endTime}
         </Typography>
-      </>
+      </span>
     );
   }
   return (

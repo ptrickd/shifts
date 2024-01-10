@@ -11,7 +11,6 @@ interface IProps {
 }
 
 const TotalHoursByDay = ({ computedValues }: IProps) => {
-  console.log(computedValues);
   const totalGrids = computedValues.map((value, index) => (
     <Grid
       item
