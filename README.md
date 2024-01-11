@@ -55,7 +55,7 @@ So far only the react app got testing set up. To run the tests, open a terminal 
 
 ```
 cd client
-npm run dev
+npm run test
 ```
 
 ## Deployment
