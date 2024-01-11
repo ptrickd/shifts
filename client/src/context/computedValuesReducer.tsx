@@ -1,5 +1,5 @@
 import { getDayAndTotal } from "../utils/shiftsOps";
-
+import { createDate } from "../utils/date";
 //if change ACTIONS has to be updated in global.d.ts
 export enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",
@@ -44,8 +44,8 @@ const computeValuesByTotal = (shifts: IShift[]) => {
   ];
 
   shifts.forEach((shift) => {
-    const currentDate = new Date(`${shift.date} 07:00:00`);
-    const weekStartDate = new Date(`${shift.weekStart} 07:00:00`);
+    const currentDate = createDate(`${shift.date}`);
+    const weekStartDate = createDate(`${shift.weekStart}`);
     const currentIndex = currentDate.getDay() - weekStartDate.getDay();
 
     const total = computeHoursInShift(shift.startTime, shift.endTime);
@@ -80,7 +80,6 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         typeof action.payload === "object" &&
         "day" in action.payload
       ) {
-        console.log("hdhdhdhd");
         const { day, totalHour } = action.payload;
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
@@ -102,7 +101,7 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         const { totalHour, day } = getDayAndTotal(
           startTime,
           endTime,
-          new Date(date)
+          createDate(date)
         );
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));

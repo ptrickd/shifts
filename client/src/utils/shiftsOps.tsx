@@ -2,6 +2,7 @@ import { Dispatch } from "react";
 import { postShift, putShift } from "./restApiCall";
 import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
 import { VALUES_ACTIONS } from "../context/computedValuesReducer";
+import { createDate } from "./date";
 
 const getDayAndTotal: (
   startTime: string,
@@ -45,7 +46,7 @@ const updateShifts: (
     const { day, totalHour } = getDayAndTotal(
       startTime,
       endTime,
-      new Date(date)
+      createDate(date)
     );
 
     if (!foundShift) {
@@ -76,7 +77,7 @@ const updateShifts: (
     } else if (foundShift) {
       putShift({ ...foundShift, startTime, endTime });
 
-      const newDate = new Date(date);
+      const newDate = createDate(date);
 
       const { totalHour: newTotalHour, day } = getDayAndTotal(
         startTime,

@@ -1,14 +1,21 @@
-import { useEffect } from "react";
 //Components
 import TimeCell from "./TimeCell";
 import { createDate } from "../utils/date";
+
 //Types
 interface IProps {
   employee: IEmployee;
   shifts: IShift[];
   weekStart: string;
 }
-
+const formatDayDate = (date: Date) => {
+  if (String(date.getDate()).length === 1) return `0${date.getDate()}`;
+  else return String(date.getDate());
+};
+const formatMonth = (date: Date) => {
+  if (String(date.getMonth()).length === 1) return `0${date.getMonth() + 1}`;
+  else return String(date.getMonth() + 1);
+};
 function findTodayShift(
   shifts: IShift[],
   weekStart: string,
@@ -18,15 +25,6 @@ function findTodayShift(
   weekStartDate.setDate(weekStartDate.getDate() + index);
 
   let todayShift: IShift | null = null;
-
-  const formatDayDate = (date: Date) => {
-    if (String(date.getDate()).length === 1) return `0${date.getDate()}`;
-    else return String(date.getDate());
-  };
-  const formatMonth = (date: Date) => {
-    if (String(date.getMonth()).length === 1) return `0${date.getMonth() + 1}`;
-    else return String(date.getMonth() + 1);
-  };
 
   shifts.map((shift) => {
     if (
@@ -38,6 +36,7 @@ function findTodayShift(
       todayShift = shift;
     }
   });
+
   return todayShift;
 }
 
@@ -46,7 +45,7 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
   const rowOfTimeCells = [];
 
   for (let numOfCell = 0; numOfCell < 7; numOfCell++) {
-    const todayDate = new Date(weekStart);
+    const todayDate = createDate(weekStart);
     todayDate.setDate(todayDate.getDate() + numOfCell);
     const todayShift = findTodayShift(shifts, weekStart, numOfCell);
     if (todayShift !== null) {
@@ -58,9 +57,9 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
         />
       );
     } else {
-      const currentDate = `${todayDate.getFullYear()}-${
-        todayDate.getMonth() + 1
-      }-${todayDate.getDate() + 1}`;
+      const currentDate = `${todayDate.getFullYear()}-${formatMonth(
+        todayDate
+      )}-${formatDayDate(todayDate)}`;
 
       const newShift = {
         id: 0,
