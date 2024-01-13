@@ -42,7 +42,8 @@ describe("Shifts basics commands", () => {
 
     cy.contains("Delete").click();
   });
-
+});
+describe("Navigate between weeks, back and forth", () => {
   it("It navigate to the next week when clicking on the button", () => {
     // const todayDate = stringify(new Date());
     const weekStart = computeWeekStart(new Date());

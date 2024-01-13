@@ -63,13 +63,14 @@ const TimeCell = ({ shift, name }: IProps) => {
   return (
     <Grid
       item
-      xs={1.5}
+      xs={1.333}
       zeroMinWidth
       sx={{
         margin: 0,
         padding: 0,
         flexGrow: 1,
         border: "1px solid gray",
+        cursor: "default",
       }}
     >
       <Box component="span" onClick={() => setOpenModal(true)}>

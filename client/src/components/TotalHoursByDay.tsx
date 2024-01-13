@@ -14,7 +14,7 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
   const totalGrids = computedValues.map((value, index) => (
     <Grid
       item
-      xs={1.5}
+      xs={1.333}
       key={index}
       zeroMinWidth
       sx={{
@@ -39,7 +39,7 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
     <>
       <Grid
         item
-        xs={1.5}
+        xs={1.333}
         zeroMinWidth
         sx={{
           border: "1px solid gray",
@@ -56,6 +56,24 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
         </Typography>
       </Grid>
       {totalGrids}
+      <Grid
+        item
+        xs={1.333}
+        zeroMinWidth
+        sx={{
+          border: "1px solid gray",
+        }}
+      >
+        <Typography
+          variant="body1"
+          color="text.primary"
+          align="center"
+          noWrap
+          sx={{ margin: 0, padding: 0 }}
+        >
+          N/A
+        </Typography>
+      </Grid>
     </>
   );
 };

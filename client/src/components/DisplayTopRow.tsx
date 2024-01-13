@@ -41,7 +41,7 @@ const DisplayTopRow = ({ weekDays, weekStart }: IProps) => {
   const listOfDates = getListOfDates(weekStart);
 
   return weekDays.map((value, index) => (
-    <Grid item xs={1.5} key={value + index} zeroMinWidth>
+    <Grid item xs={1.333} key={value + index} zeroMinWidth>
       <Typography
         variant="h6"
         gutterBottom

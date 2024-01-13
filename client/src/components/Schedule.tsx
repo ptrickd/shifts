@@ -43,7 +43,17 @@ import useFetchShifts from "../hooks/useFetchShifts";
 
 const Schedule = () => {
   //Constants
-  const TOP_ROW = ["Names", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const TOP_ROW = [
+    "Names",
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Total",
+  ];
   const TODAY = new Date(Date.now());
 
   //useState

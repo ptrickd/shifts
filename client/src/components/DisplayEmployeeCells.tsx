@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 //Conponents
 import DisplayTimeCells from "./DisplayTimeCells";
 import EmployeeCell from "./EmployeeCell";
+import TotalHoursByEmployee from "./TotalHoursByEmployee";
 
 //Context
 import { ShiftsContext } from "./Schedule";
@@ -41,6 +42,7 @@ const DisplayEmployeeCells = ({ employees, weekStart }: IProps) => {
           shifts={sortedShiftsByEmployee(employee.id, shifts)}
           weekStart={weekStart}
         />
+        <TotalHoursByEmployee total={5} />
       </Grid>
     ));
   }
