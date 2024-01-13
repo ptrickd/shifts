@@ -154,6 +154,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
           id="start-time-select"
           value={currentStartTime}
           onChange={handleStartChange}
+          data-testid="start-time-select"
         >
           {generateMenuItems(TIMES)}
         </Select>

@@ -9,6 +9,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
     "test-ui": "vitest --ui",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
