@@ -29,7 +29,7 @@ const computeHoursInShift = (startTime: string, endTime: string) => {
   return totalHours + totalMinutes / 60;
 };
 
-const computeValuesByTotal = (shifts: IShift[]) => {
+const computeValuesTotalByDay = (shifts: IShift[]) => {
   //find the weekStart make it index 0
 
   // //map through shift
@@ -57,10 +57,10 @@ const computeValuesByTotal = (shifts: IShift[]) => {
   return sortedValues;
 };
 
-export function computedValuesReducer( //Record<string | never> type for empty object
-  computedValues: IComputedValues[] | [],
+export function computedTotalHoursByDay( //Record<string | never> type for empty object
+  computedValues: IComputedTotalHoursByDay[] | [],
   action: IValuesAction
-): IComputedValues[] | [] {
+): IComputedTotalHoursByDay[] | [] {
   switch (action.type) {
     case VALUES_ACTIONS.SET_VALUES: {
       if (
@@ -68,7 +68,7 @@ export function computedValuesReducer( //Record<string | never> type for empty o
         Array.isArray(action.payload) &&
         action.payload.length
       ) {
-        return computeValuesByTotal(action.payload);
+        return computeValuesTotalByDay(action.payload);
       }
 
       return defaultValues;

@@ -23,9 +23,9 @@ import DateNavbar from "./DateNavbar";
 import { shiftsReducer, SHIFTS_ACTIONS } from "../context/shiftsReducer";
 
 import {
-  computedValuesReducer,
+  computedTotalHoursByDay,
   VALUES_ACTIONS,
-} from "../context/computedValuesReducer";
+} from "../context/computedTotalHoursByDay";
 import { createDate } from "../utils/date";
 export const ShiftsContext = createContext<IShift[] | []>([]);
 export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
@@ -66,7 +66,7 @@ const Schedule = () => {
   //Context
   const [shifts, dispatch] = useReducer(shiftsReducer, fetchedShifts);
   const [computedValues, valuesDispatch] = useReducer(
-    computedValuesReducer,
+    computedTotalHoursByDay,
     []
   );
 

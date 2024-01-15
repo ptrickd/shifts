@@ -23,10 +23,15 @@ enum VALUES_ACTIONS {
   ADD_VALUES = "ADD_VALUES",
   SUBSTRACT_VALUES = "SUBSTRACT_VALUES",
 }
-
-interface IComputedValues {
+//find interface definition for map onject.
+interface ITotalsByEmployee {
+  [id: string]: string;
+}
+interface IComputedTotalHoursByDay {
   total: number;
 }
+
+//find interface for map object.
 
 interface INewTotal {
   day: number;

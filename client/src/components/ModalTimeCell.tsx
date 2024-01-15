@@ -21,7 +21,7 @@ import {
 } from "./Schedule";
 
 import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
-import { VALUES_ACTIONS } from "../context/computedValuesReducer";
+import { VALUES_ACTIONS } from "../context/computedTotalHoursByDay";
 
 //Function
 import { updateShifts } from "../utils/shiftsOps";
