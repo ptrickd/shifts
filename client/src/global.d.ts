@@ -23,27 +23,36 @@ enum VALUES_ACTIONS {
   ADD_VALUES = "ADD_VALUES",
   SUBSTRACT_VALUES = "SUBSTRACT_VALUES",
 }
-//find interface definition for map onject.
-interface ITotalsByEmployee {
-  [id: string]: string;
-}
-interface IComputedTotalHoursByDay {
-  total: number;
-}
-
 //find interface for map object.
 
 interface INewTotal {
   day: number;
-  totalHour: number;
+  totalHours: number;
+}
+interface ITotalHoursByEmployee {
+  totalHours: number;
+}
+//find interface definition for map onject.
+type TComputedTotalHoursByEmployee = Map<number, ITotalHoursByEmployee>;
+
+interface IComputedTotalHoursByDay {
+  total: number;
 }
 
-interface IValuesAction {
+interface IValuesByDayAction {
   type:
     | VALUES_ACTIONS.SET_VALUES
     | VALUES_ACTIONS.ADD_VALUES
     | VALUES_ACTIONS.SUBSTRACT_VALUES;
-  payload?: IShifts[] | [] | IComputedValues | INewTotal | IShift;
+  payload?: IShift[] | [] | IComputedTotalHoursByDay | IShift | INewTotal;
+}
+
+interface IValuesByEmployeeAction {
+  type:
+    | VALUES_ACTIONS.SET_VALUES
+    | VALUES_ACTIONS.ADD_VALUES
+    | VALUES_ACTIONS.SUBSTRACT_VALUES;
+  payload?: IShift[] | [] | IComputedTotalHoursByEmployee | IShift;
 }
 
 /******************************************/

@@ -32,7 +32,7 @@ export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
   null
 );
 export const ValuesDispatchContext =
-  createContext<Dispatch<IValuesAction> | null>(null);
+  createContext<Dispatch<IValuesByDayAction> | null>(null);
 
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";

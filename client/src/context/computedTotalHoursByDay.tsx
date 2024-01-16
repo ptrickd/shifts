@@ -1,5 +1,6 @@
 import { getDayAndTotal } from "../utils/shiftsOps";
 import { createDate } from "../utils/date";
+import { computeHoursInShift } from "../utils/shiftComputing";
 //if change ACTIONS has to be updated in global.d.ts
 export enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",
@@ -16,18 +17,6 @@ const defaultValues = [
   { total: 0 },
   { total: 0 },
 ];
-const computeHoursInShift = (startTime: string, endTime: string) => {
-  const startTimeHours = Number(startTime.substring(0, 2));
-  const startTimeMinutes = Number(startTime.substring(3, 5));
-
-  const endTimeHours = Number(endTime.substring(0, 2));
-  const endTimeMinutes = Number(endTime.substring(3, 5));
-
-  const totalHours = endTimeHours - startTimeHours;
-  const totalMinutes = endTimeMinutes - startTimeMinutes;
-
-  return totalHours + totalMinutes / 60;
-};
 
 const computeValuesTotalByDay = (shifts: IShift[]) => {
   //find the weekStart make it index 0
@@ -59,7 +48,7 @@ const computeValuesTotalByDay = (shifts: IShift[]) => {
 
 export function computedTotalHoursByDay( //Record<string | never> type for empty object
   computedValues: IComputedTotalHoursByDay[] | [],
-  action: IValuesAction
+  action: IValuesByDayAction
 ): IComputedTotalHoursByDay[] | [] {
   switch (action.type) {
     case VALUES_ACTIONS.SET_VALUES: {
@@ -80,10 +69,10 @@ export function computedTotalHoursByDay( //Record<string | never> type for empty
         typeof action.payload === "object" &&
         "day" in action.payload
       ) {
-        const { day, totalHour } = action.payload;
+        const { day, totalHours } = action.payload;
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
-        valuesToReturn[day].total += totalHour;
+        valuesToReturn[day].total += totalHours;
 
         return valuesToReturn;
       }
