@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import { computedTotalHoursByEmployee } from "./computedTotalHoursByEmployee";
-import { VALUES_ACTIONS } from "../context/computedTotalHoursByDay";
+import { computedTotalHoursByEmployee } from "../reducer/computedTotalHoursByEmployee";
+import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 
 const emptyMap = new Map();
 const oneShift = [

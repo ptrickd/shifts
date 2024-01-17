@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { expect, test } from "vitest";
 
 //Conponents
-import TotalHoursByDay from "./TotalHoursByDay";
+import TotalHoursByDay from "../components/TotalHoursByDay";
 
 test("render DisplayTopRow properly when all values are )", async () => {
   render(

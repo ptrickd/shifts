@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { test, expect } from "vitest";
-import DisplayTimeCells from "./DisplayTimeCells";
+import DisplayTimeCells from "../components/DisplayTimeCells";
 
 test("render DisplayTimeCells properly when all shifts Off", () => {
   render(

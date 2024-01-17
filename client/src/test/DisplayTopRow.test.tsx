@@ -6,7 +6,7 @@ import { createDate } from "../utils/date";
 // import userEvent from "@testing-library/user-event";
 
 //Conponents
-import DisplayTopRow from "./DisplayTopRow";
+import DisplayTopRow from "../components/DisplayTopRow";
 
 // expect.extend(matchers);
 

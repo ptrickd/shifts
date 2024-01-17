@@ -1,7 +1,7 @@
 import { Dispatch } from "react";
 import { postShift, putShift } from "./restApiCall";
-import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
-import { VALUES_ACTIONS } from "../context/computedTotalHoursByDay";
+import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
+import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 import { createDate } from "./date";
 
 const getDayAndTotal: (

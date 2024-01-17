@@ -20,8 +20,8 @@ import {
   ValuesDispatchContext,
 } from "./Schedule";
 
-import { SHIFTS_ACTIONS } from "../context/shiftsReducer";
-import { VALUES_ACTIONS } from "../context/computedTotalHoursByDay";
+import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
+import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 
 //Function
 import { updateShifts } from "../utils/shiftsOps";

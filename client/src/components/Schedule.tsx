@@ -20,12 +20,12 @@ import TotalHoursByDay from "./TotalHoursByDay";
 import DateNavbar from "./DateNavbar";
 
 //Context
-import { shiftsReducer, SHIFTS_ACTIONS } from "../context/shiftsReducer";
+import { shiftsReducer, SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
 
 import {
   computedTotalHoursByDay,
   VALUES_ACTIONS,
-} from "../context/computedTotalHoursByDay";
+} from "../reducer/computedTotalHoursByDay";
 import { createDate } from "../utils/date";
 export const ShiftsContext = createContext<IShift[] | []>([]);
 export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
