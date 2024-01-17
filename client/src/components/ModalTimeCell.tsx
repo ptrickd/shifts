@@ -17,7 +17,7 @@ import { TIMES } from "../utils/constants";
 import {
   ShiftsContext,
   DispatchContext,
-  ValuesDispatchContext,
+  ValuesByDayDispatchContext,
 } from "./Schedule";
 
 import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
@@ -53,7 +53,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
   //Context
   const shifts = useContext(ShiftsContext);
   const dispatch = useContext(DispatchContext);
-  const valuesDispatch = useContext(ValuesDispatchContext);
+  const valuesDispatch = useContext(ValuesByDayDispatchContext);
 
   const handleStartChange = (event: SelectChangeEvent) => {
     setCurrentStartTime(event.target.value as string);

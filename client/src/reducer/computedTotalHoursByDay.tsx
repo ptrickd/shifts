@@ -1,6 +1,7 @@
 import { getDayAndTotal } from "../utils/shiftsOps";
 import { createDate } from "../utils/date";
 import { computeHoursInShift } from "../utils/shiftComputing";
+
 //if change ACTIONS has to be updated in global.d.ts
 export enum VALUES_ACTIONS {
   SET_VALUES = "SET_VALUES",

@@ -26,13 +26,19 @@ import {
   computedTotalHoursByDay,
   VALUES_ACTIONS,
 } from "../reducer/computedTotalHoursByDay";
+import { computedTotalHoursByEmployee } from "../reducer/computedTotalHoursByEmployee";
+
 import { createDate } from "../utils/date";
 export const ShiftsContext = createContext<IShift[] | []>([]);
 export const DispatchContext = createContext<Dispatch<IShiftsAction> | null>(
   null
 );
-export const ValuesDispatchContext =
+
+export const ValuesByDayDispatchContext =
   createContext<Dispatch<IValuesByDayAction> | null>(null);
+
+export const ValuesByEmployeeDispatchContext =
+  createContext<Dispatch<IValuesByEmployeeAction> | null>(null);
 
 //Functions
 import { computeWeekStart, computeNewWeekStart } from "../utils/date";
@@ -65,9 +71,15 @@ const Schedule = () => {
 
   //Context
   const [shifts, dispatch] = useReducer(shiftsReducer, fetchedShifts);
-  const [computedValues, valuesDispatch] = useReducer(
+
+  const [computedValuesByDay, valuesByDayDispatch] = useReducer(
     computedTotalHoursByDay,
     []
+  );
+
+  const [computedValuesByEmployee, valuesByEmployeeDispatch] = useReducer(
+    computedTotalHoursByEmployee,
+    new Map()
   );
 
   //update the reducer when shifts are fetcheds
@@ -79,54 +91,69 @@ const Schedule = () => {
   }, [fetchedShifts]);
 
   useEffect(() => {
-    valuesDispatch({ type: VALUES_ACTIONS.SET_VALUES, payload: fetchedShifts });
+    valuesByDayDispatch({
+      type: VALUES_ACTIONS.SET_VALUES,
+      payload: fetchedShifts,
+    });
   }, [fetchedShifts]);
 
-  if (employees && shifts && computedValues)
+  useEffect(() => {
+    valuesByEmployeeDispatch({
+      type: VALUES_ACTIONS.SET_VALUES,
+      payload: fetchedShifts,
+    });
+  }, [fetchedShifts]);
+
+  if (employees && shifts && computedValuesByDay)
     return (
       <ShiftsContext.Provider value={shifts}>
         <DispatchContext.Provider value={dispatch}>
-          <ValuesDispatchContext.Provider value={valuesDispatch}>
-            <Container>
-              <DateNavbar
-                date={weekStart}
-                newShifts={(direction) =>
-                  setWeekStart(computeNewWeekStart(weekStart, direction))
-                }
-              />
-              <Paper elevation={1}>
-                <Box
-                  component="div"
-                  sx={{
-                    flexGrow: 1,
-                    border: "1px solid gray",
-                  }}
-                >
-                  <Grid container spacing={1}>
-                    <Grid container item spacing={1}>
-                      <DisplayTopRow
-                        weekDays={TOP_ROW}
-                        weekStart={createDate(weekStart)}
-                      />
-                    </Grid>
+          <ValuesByDayDispatchContext.Provider value={valuesByDayDispatch}>
+            <ValuesByEmployeeDispatchContext.Provider
+              value={valuesByEmployeeDispatch}
+            >
+              <Container>
+                <DateNavbar
+                  date={weekStart}
+                  newShifts={(direction) =>
+                    setWeekStart(computeNewWeekStart(weekStart, direction))
+                  }
+                />
+                <Paper elevation={1}>
+                  <Box
+                    component="div"
+                    sx={{
+                      flexGrow: 1,
+                      border: "1px solid gray",
+                    }}
+                  >
+                    <Grid container spacing={1}>
+                      <Grid container item spacing={1}>
+                        <DisplayTopRow
+                          weekDays={TOP_ROW}
+                          weekStart={createDate(weekStart)}
+                        />
+                      </Grid>
 
-                    <DisplayEmployeeCells
-                      employees={employees}
-                      weekStart={weekStart}
-                    />
-                    <Grid
-                      container
-                      item
-                      spacing={1}
-                      sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
-                    >
-                      <TotalHoursByDay computedValues={computedValues} />
+                      <DisplayEmployeeCells
+                        employees={employees}
+                        weekStart={weekStart}
+                        computedValuesByEmployee={computedValuesByEmployee}
+                      />
+                      <Grid
+                        container
+                        item
+                        spacing={1}
+                        sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
+                      >
+                        <TotalHoursByDay computedValues={computedValuesByDay} />
+                      </Grid>
                     </Grid>
-                  </Grid>
-                </Box>
-              </Paper>
-            </Container>
-          </ValuesDispatchContext.Provider>
+                  </Box>
+                </Paper>
+              </Container>
+            </ValuesByEmployeeDispatchContext.Provider>
+          </ValuesByDayDispatchContext.Provider>
         </DispatchContext.Provider>
       </ShiftsContext.Provider>
     );

@@ -29,9 +29,11 @@ interface INewTotal {
   day: number;
   totalHours: number;
 }
+
 interface ITotalHoursByEmployee {
   totalHours: number;
 }
+
 //find interface definition for map onject.
 type TComputedTotalHoursByEmployee = Map<number, ITotalHoursByEmployee>;
 
@@ -52,7 +54,7 @@ interface IValuesByEmployeeAction {
     | VALUES_ACTIONS.SET_VALUES
     | VALUES_ACTIONS.ADD_VALUES
     | VALUES_ACTIONS.SUBSTRACT_VALUES;
-  payload?: IShift[] | [] | IComputedTotalHoursByEmployee | IShift;
+  payload?: IShift[] | [];
 }
 
 /******************************************/

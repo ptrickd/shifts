@@ -14,6 +14,7 @@ import { ShiftsContext } from "./Schedule";
 interface IProps {
   employees: IEmployee[];
   weekStart: string;
+  computedValuesByEmployee: TComputedTotalHoursByEmployee;
 }
 
 function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
@@ -24,7 +25,11 @@ function sortedShiftsByEmployee(employeeId: number, shifts: IShift[]) {
   return employeeShifts;
 }
 
-const DisplayEmployeeCells = ({ employees, weekStart }: IProps) => {
+const DisplayEmployeeCells = ({
+  employees,
+  weekStart,
+  computedValuesByEmployee,
+}: IProps) => {
   const shifts = useContext(ShiftsContext);
   if (employees != null) {
     return employees.map((employee, index) => (
@@ -42,7 +47,9 @@ const DisplayEmployeeCells = ({ employees, weekStart }: IProps) => {
           shifts={sortedShiftsByEmployee(employee.id, shifts)}
           weekStart={weekStart}
         />
-        <TotalHoursByEmployee total={5} />
+        <TotalHoursByEmployee
+          total={computedValuesByEmployee.get(employee.id)?.totalHours || 0}
+        />
       </Grid>
     ));
   }
