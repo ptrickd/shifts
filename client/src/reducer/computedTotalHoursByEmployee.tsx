@@ -35,6 +35,38 @@ export function computedTotalHoursByEmployee(
         return computeValuesTotalByEmployee(action.payload);
       } else return computedValues;
     }
+    case VALUES_ACTIONS.ADD_VALUES: {
+      if (
+        action.payload !== null &&
+        !Array.isArray(action.payload) &&
+        typeof action.payload === "object" &&
+        "employeeId" in action.payload &&
+        "startTime" in action.payload &&
+        "endTime" in action.payload
+      ) {
+        const { employeeId, startTime, endTime } = action.payload;
+        const hoursToAdd = computeHoursInShift(startTime, endTime);
+        const newTotals = new Map();
+        let employeeIdFound = false;
+
+        computedValues.forEach((value, key) => {
+          if (key !== employeeId) {
+            newTotals.set(key, { totalHours: value.totalHours });
+          } else {
+            newTotals.set(key, {
+              totalHours: value.totalHours + hoursToAdd,
+            });
+            employeeIdFound = true;
+          }
+        });
+        if (!employeeIdFound) {
+          newTotals.set(employeeId, { totalHours: hoursToAdd });
+        }
+
+        return newTotals;
+      } else return computedValues;
+      break;
+    }
     default:
       return computedValues;
   }

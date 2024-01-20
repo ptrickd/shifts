@@ -54,7 +54,7 @@ interface IValuesByEmployeeAction {
     | VALUES_ACTIONS.SET_VALUES
     | VALUES_ACTIONS.ADD_VALUES
     | VALUES_ACTIONS.SUBSTRACT_VALUES;
-  payload?: IShift[] | [];
+  payload?: IShift[] | [] | IShift;
 }
 
 /******************************************/
