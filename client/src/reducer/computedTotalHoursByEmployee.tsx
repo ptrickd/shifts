@@ -74,54 +74,38 @@ export function computedTotalHoursByEmployee(
         "endTime" in action.payload &&
         "date" in action.payload
       ) {
+        /*
+        Find if employeeId is present
+        
+        */
         const { employeeId, startTime, endTime, date } = action.payload;
         const hoursToAdd = computeHoursInShift(startTime, endTime);
-        const newTotals = computedValues;
-
-        const isDateFound = (date: string, dates: string[]) => {
-          let isDateFound = false;
-
-          dates?.map((dateInArr) => {
-            if (dateInArr === date) isDateFound = true;
-          });
-          return isDateFound;
-        };
-        const entries = computedValues.entries();
-        console.log(entries);
-
-        // const keys = computedValues.keys();
-        // const value=
-
-        // const datesInArr = value.dates;
-        // datesInArr.push(date);
-        console.log("hdhdhdhdhd");
-        console.log(date);
-        // console.log(datesInArr);
+        const dateObj = createDate(date);
+        const day = dateObj.getDay();
+        const newTotals = new Map(computedValues);
+        const initialHoursByDay = [0, 0, 0, 0, 0, 0, 0];
         if (!computedValues.has(employeeId)) {
+          initialHoursByDay[day] = hoursToAdd;
+          const newTotal = initialHoursByDay.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+          );
           newTotals.set(employeeId, {
-            dates: [date],
-            totalHours: hoursToAdd,
-          });
-        } else if (
-          //employeee exist but date don't
-          !isDateFound(date, computedValues.get(employeeId)?.dates || [])
-        ) {
-          const datesInArr = computedValues.get(employeeId)?.dates || [];
-          const totalHours = computedValues.get(employeeId)?.totalHours || 0;
-          datesInArr.push(date);
-          newTotals.set(employeeId, {
-            dates: datesInArr,
-            totalHours: hoursToAdd + totalHours,
+            hoursByDay: initialHoursByDay,
+            totalHours: newTotal,
           });
         } else {
           //date already exist
-          // const totalHours = computedValues.get(employeeId)?.totalHours || 0;
-          const datesInArr = computedValues.get(employeeId)?.dates || [];
-          const diffTotalHour = 0;
-
+          const hours =
+            newTotals.get(employeeId)?.hoursByDay || initialHoursByDay;
+          hours[day] = hoursToAdd;
+          const newTotal = initialHoursByDay.reduce(
+            (accumulator, currentValue) => accumulator + currentValue,
+            0
+          );
           newTotals.set(employeeId, {
-            dates: datesInArr,
-            totalHours: diffTotalHour,
+            hoursByDay: hours,
+            totalHours: newTotal,
           });
         }
 
