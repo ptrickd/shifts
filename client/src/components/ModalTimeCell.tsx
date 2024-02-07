@@ -18,6 +18,7 @@ import {
   ShiftsContext,
   DispatchContext,
   ValuesByDayDispatchContext,
+  ValuesByEmployeeDispatchContext,
 } from "./Schedule";
 
 import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
@@ -53,7 +54,8 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
   //Context
   const shifts = useContext(ShiftsContext);
   const dispatch = useContext(DispatchContext);
-  const valuesDispatch = useContext(ValuesByDayDispatchContext);
+  const valuesByDayDispatch = useContext(ValuesByDayDispatchContext);
+  const valuesByEmployeeDispatch = useContext(ValuesByEmployeeDispatchContext);
 
   const handleStartChange = (event: SelectChangeEvent) => {
     setCurrentStartTime(event.target.value as string);
@@ -86,7 +88,12 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
       setError("Starting time cannot be higher than end time.");
     } else {
       setError("");
-      if (shifts && dispatch && valuesDispatch) {
+      if (
+        shifts &&
+        dispatch &&
+        valuesByDayDispatch &&
+        valuesByEmployeeDispatch
+      ) {
         const newShift = {
           id,
           employeeId,
@@ -95,7 +102,13 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
           date,
           weekStart,
         };
-        updateShifts(newShift, shifts, dispatch, valuesDispatch);
+        updateShifts(
+          newShift,
+          shifts,
+          dispatch,
+          valuesByDayDispatch,
+          valuesByEmployeeDispatch
+        );
         onClose();
       } else {
         setError("Internal Error");
@@ -108,7 +121,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
     if (response.error) setError(response.error);
     else {
       //delete shift in local array if success
-      if (dispatch && valuesDispatch) {
+      if (dispatch && valuesByDayDispatch) {
         dispatch({
           type: SHIFTS_ACTIONS.DELETE_SHIFT,
           payload: {
@@ -121,7 +134,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
           },
         });
 
-        valuesDispatch({
+        valuesByDayDispatch({
           type: VALUES_ACTIONS.SUBSTRACT_VALUES,
           payload: {
             id,

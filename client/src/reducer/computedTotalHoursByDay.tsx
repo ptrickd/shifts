@@ -88,14 +88,14 @@ export function computedTotalHoursByDay( //Record<string | never> type for empty
         "id" in action.payload
       ) {
         const { startTime, endTime, date } = action.payload;
-        const { totalHour, day } = getDayAndTotal(
+        const { totalHours, day } = getDayAndTotal(
           startTime,
           endTime,
           createDate(date)
         );
 
         const valuesToReturn = JSON.parse(JSON.stringify(computedValues));
-        valuesToReturn[day].total -= totalHour;
+        valuesToReturn[day].total -= totalHours;
 
         return valuesToReturn;
       }

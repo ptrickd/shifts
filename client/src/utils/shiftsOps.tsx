@@ -3,12 +3,11 @@ import { postShift, putShift } from "./restApiCall";
 import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
 import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 import { createDate } from "./date";
-
 const getDayAndTotal: (
   startTime: string,
   endTime: string,
   date: Date
-) => { totalHour: number; day: number } = (startTime, endTime, date) => {
+) => { totalHours: number; day: number } = (startTime, endTime, date) => {
   const indexStart = Number(startTime.indexOf(":"));
   const indexEnd = Number(endTime.indexOf(":"));
 
@@ -18,18 +17,25 @@ const getDayAndTotal: (
   const hourEnd = Number(endTime.substring(indexEnd, -2));
   const minuteEnd = Number(endTime.substring(indexEnd + 1));
 
-  const totalHour = hourEnd - hourStart + (minuteEnd - minuteStart) / 60;
+  const totalHours = hourEnd - hourStart + (minuteEnd - minuteStart) / 60;
   const day = date.getDay();
 
-  return { totalHour, day };
+  return { totalHours, day };
 };
 
 const updateShifts: (
   newShift: IShift,
   shifts: IShift[] | [],
   dispatch: Dispatch<IShiftsAction>,
-  valuesDispatch: Dispatch<IValuesAction>
-) => void = (newShift, shifts, dispatch, valuesDispatch) => {
+  valuesByDayDispatch: Dispatch<IValuesByDayAction>,
+  valuesByEmployeeDispatch: Dispatch<IValuesByEmployeeAction>
+) => void = (
+  newShift,
+  shifts,
+  dispatch,
+  valuesByDayDispatch,
+  valuesByEmployeeDispatch
+) => {
   const { id, employeeId, startTime, endTime, date, weekStart } = newShift;
 
   let foundShift: null | IShift = null;
@@ -43,7 +49,7 @@ const updateShifts: (
   });
 
   const updatingShift = async () => {
-    const { day, totalHour } = getDayAndTotal(
+    const { day, totalHours } = getDayAndTotal(
       startTime,
       endTime,
       createDate(date)
@@ -70,22 +76,34 @@ const updateShifts: (
         },
       });
 
-      valuesDispatch({
+      valuesByDayDispatch({
         type: VALUES_ACTIONS.ADD_VALUES,
-        payload: { day, totalHour },
+        payload: { day, totalHours },
+      });
+
+      valuesByEmployeeDispatch({
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: {
+          id: response.id,
+          employeeId,
+          startTime,
+          endTime,
+          date,
+          weekStart,
+        },
       });
     } else if (foundShift) {
       putShift({ ...foundShift, startTime, endTime });
 
       const newDate = createDate(date);
 
-      const { totalHour: newTotalHour, day } = getDayAndTotal(
+      const { totalHours: newTotalHour, day } = getDayAndTotal(
         startTime,
         endTime,
         newDate
       );
 
-      const { totalHour: previousTotalHour } = getDayAndTotal(
+      const { totalHours: previousTotalHour } = getDayAndTotal(
         foundShift.startTime,
         foundShift.endTime,
         newDate
@@ -93,9 +111,21 @@ const updateShifts: (
 
       const diffTotalHour = newTotalHour - previousTotalHour;
 
-      valuesDispatch({
+      valuesByDayDispatch({
         type: VALUES_ACTIONS.ADD_VALUES,
-        payload: { day, totalHour: diffTotalHour },
+        payload: { day, totalHours: diffTotalHour },
+      });
+
+      valuesByEmployeeDispatch({
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: {
+          id,
+          employeeId,
+          startTime,
+          endTime,
+          date,
+          weekStart,
+        },
       });
 
       dispatch({

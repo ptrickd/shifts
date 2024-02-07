@@ -25,16 +25,16 @@ enum VALUES_ACTIONS {
 }
 //find interface for map object.
 
-interface INewTotal {
+interface INewByDayTotal {
   day: number;
   totalHours: number;
 }
 
 interface ITotalHoursByEmployee {
+  hoursByDay: numbers[];
   totalHours: number;
 }
 
-//find interface definition for map onject.
 type TComputedTotalHoursByEmployee = Map<number, ITotalHoursByEmployee>;
 
 interface IComputedTotalHoursByDay {
@@ -46,7 +46,7 @@ interface IValuesByDayAction {
     | VALUES_ACTIONS.SET_VALUES
     | VALUES_ACTIONS.ADD_VALUES
     | VALUES_ACTIONS.SUBSTRACT_VALUES;
-  payload?: IShift[] | [] | IComputedTotalHoursByDay | IShift | INewTotal;
+  payload?: IShift[] | [] | IComputedTotalHoursByDay | IShift | INewByDayTotal;
 }
 
 interface IValuesByEmployeeAction {
