@@ -145,57 +145,69 @@ describe("totalHoursByEmployee: action.type.addValues", () => {
       })
     ).toStrictEqual(expectedResponse);
   });
-  // test("it add 4 hours to a second employee", () => {
-  //   const initialValue = new Map();
-  //   initialValue.set(67, { dates: ["2024-01-10"], totalHours: 4 });
-  //   const expectedResponse = new Map();
-  //   expectedResponse.set(57, { dates: ["2024-01-10"], totalHours: 4 });
-  //   expectedResponse.set(67, { dates: ["2024-01-10"], totalHours: 4 });
-  //   expect(
-  //     computedTotalHoursByEmployee(initialValue, {
-  //       type: VALUES_ACTIONS.ADD_VALUES,
-  //       payload: newShift,
-  //     })
-  //   ).toStrictEqual(expectedResponse);
-  // });
-  // test("it add 4 hours to a the first employee, 2 employee total", () => {
-  //   const initialValue = new Map();
-  //   initialValue.set(67, { dates: ["2024-01-09"], totalHours: 4 });
-  //   initialValue.set(57, { dates: ["2024-01-10"], totalHours: 4 });
-  //   const expectedResponse = new Map();
-  //   expectedResponse.set(57, {
-  //     dates: ["2024-01-09", "2024-01-10"],
-  //     totalHours: 8,
-  //   });
-  //   expectedResponse.set(67, { dates: ["2024-01-10"], totalHours: 4 });
-  //   expect(
-  //     computedTotalHoursByEmployee(initialValue, {
-  //       type: VALUES_ACTIONS.ADD_VALUES,
-  //       payload: newShift,
-  //     })
-  //   ).toStrictEqual(expectedResponse);
-  // });
-  //   test("it add 1 hours to 1 employee, same shift", () => {
-  //     const modifiedShift = {
-  //       id: 236,
-  //       employeeId: 57,
-  //       date: "2024-01-09",
-  //       startTime: "08:00",
-  //       endTime: "13:00",
-  //       weekStart: "2024-01-07",
-  //     };
-  //     const initialValue = new Map();
-  //     initialValue.set(67, { date: ["2024-01-09"], totalHours: 4 });
-  //     const expectedResponse = new Map();
-  //     expectedResponse.set(67, {
-  //       date: ["2024-01-09"],
-  //       totalHours: 5,
-  //     });
-  //     expect(
-  //       computedTotalHoursByEmployee(initialValue, {
-  //         type: VALUES_ACTIONS.ADD_VALUES,
-  //         payload: modifiedShift,
-  //       })
-  //     ).toStrictEqual(expectedResponse);
-  //   });
+  test("it add 4 hours to a second employee", () => {
+    const initialValue = new Map();
+    initialValue.set(67, { hoursByDay: [0, 0, 0, 4, 0, 0, 0], totalHours: 4 });
+    const expectedResponse = new Map();
+    expectedResponse.set(57, {
+      hoursByDay: [0, 0, 0, 4, 0, 0, 0],
+      totalHours: 4,
+    });
+    expectedResponse.set(67, {
+      hoursByDay: [0, 0, 0, 4, 0, 0, 0],
+      totalHours: 4,
+    });
+    expect(
+      computedTotalHoursByEmployee(initialValue, {
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: newShift,
+      })
+    ).toStrictEqual(expectedResponse);
+  });
+  test("it add 4 hours to a the first employee, 2 employee total", () => {
+    const initialValue = new Map();
+    initialValue.set(67, { hoursByDay: [0, 0, 4, 0, 0, 0, 0], totalHours: 4 });
+    initialValue.set(57, { hoursByDay: [0, 0, 4, 0, 0, 0, 0], totalHours: 4 });
+    const expectedResponse = new Map();
+    expectedResponse.set(57, {
+      hoursByDay: [0, 0, 4, 4, 0, 0, 0],
+      totalHours: 8,
+    });
+    expectedResponse.set(67, {
+      hoursByDay: [0, 0, 4, 0, 0, 0, 0],
+      totalHours: 4,
+    });
+    expect(
+      computedTotalHoursByEmployee(initialValue, {
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: newShift,
+      })
+    ).toStrictEqual(expectedResponse);
+  });
+  test("it add 1 hours to 1 employee, same shift", () => {
+    const modifiedShift = {
+      id: 236,
+      employeeId: 57,
+      date: "2024-01-09",
+      startTime: "08:00",
+      endTime: "13:00",
+      weekStart: "2024-01-07",
+    };
+    const initialValue = new Map();
+    initialValue.set(57, {
+      hoursByDay: [0, 0, 4, 0, 0, 0, 0],
+      totalHours: 4,
+    });
+    const expectedResponse = new Map();
+    expectedResponse.set(57, {
+      hoursByDay: [0, 0, 5, 0, 0, 0, 0],
+      totalHours: 5,
+    });
+    expect(
+      computedTotalHoursByEmployee(initialValue, {
+        type: VALUES_ACTIONS.ADD_VALUES,
+        payload: modifiedShift,
+      })
+    ).toStrictEqual(expectedResponse);
+  });
 });

@@ -99,7 +99,7 @@ export function computedTotalHoursByEmployee(
           const hours =
             newTotals.get(employeeId)?.hoursByDay || initialHoursByDay;
           hours[day] = hoursToAdd;
-          const newTotal = initialHoursByDay.reduce(
+          const newTotal = hours.reduce(
             (accumulator, currentValue) => accumulator + currentValue,
             0
           );
