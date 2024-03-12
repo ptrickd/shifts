@@ -26,7 +26,7 @@ import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 
 //Function
 import { updateShifts } from "../utils/shiftsOps";
-import { deleteShift } from "../utils/restApiCall";
+import { deleteShift } from "../utils/shiftsAPI";
 
 //Types
 interface IProps {

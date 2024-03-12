@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { postShift, putShift } from "./restApiCall";
+import { postShift, putShift } from "./shiftsAPI";
 import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
 import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 import { createDate } from "./date";

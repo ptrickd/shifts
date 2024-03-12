@@ -1,6 +1,6 @@
 //Functions
 
-interface IData {
+interface IShifts {
   id?: number;
   employeeId: number;
   date: string;
@@ -11,7 +11,7 @@ interface IData {
 
 const url = `http://localhost:3000/api/v1/shifts`;
 
-const formatToPOST = (data: IData) => {
+const formatToPOSTShifts = (data: IShifts) => {
   // const weekStart = computeWeekStart(new Date(data.date));
   return {
     employee_id: data.employeeId,
@@ -22,8 +22,7 @@ const formatToPOST = (data: IData) => {
     week_start: data.weekStart,
   };
 };
-
-const postShift = async (data: IData) => {
+const postShift = async (data: IShifts) => {
   try {
     const response = await fetch(url, {
       method: "POST",
@@ -31,7 +30,7 @@ const postShift = async (data: IData) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(formatToPOST(data)),
+      body: JSON.stringify(formatToPOSTShifts(data)),
     });
     return await response.json();
   } catch (error) {
@@ -39,7 +38,7 @@ const postShift = async (data: IData) => {
   }
 };
 
-const putShift = async (data: IData) => {
+const putShift = async (data: IShifts) => {
   try {
     const response = await fetch(`${url}/${data.id}`, {
       method: "PUT",
@@ -47,7 +46,7 @@ const putShift = async (data: IData) => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(formatToPOST(data)),
+      body: JSON.stringify(formatToPOSTShifts(data)),
     });
     //if response.error then do this
     return await response.json();
@@ -75,4 +74,5 @@ const deleteShift = async (id: number) => {
     return { error };
   }
 };
+
 export { postShift, putShift, deleteShift };
