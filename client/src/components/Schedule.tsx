@@ -10,6 +10,7 @@ import {
 //Material UI
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 
@@ -18,6 +19,7 @@ import DisplayTopRow from "./DisplayTopRow";
 import DisplayEmployeeCells from "./DisplayEmployeeCells";
 import TotalHoursByDay from "./TotalHoursByDay";
 import DateNavbar from "./DateNavbar";
+import AddEmployeeModal from "./AddEmployeeModal";
 
 //Context
 import { shiftsReducer, SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
@@ -64,6 +66,7 @@ const Schedule = () => {
 
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
+  const [openModal, setOpenModal] = useState(false);
 
   //Hooks
   const { employees } = useFetchEmployees();
@@ -151,6 +154,18 @@ const Schedule = () => {
                     </Grid>
                   </Box>
                 </Paper>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ m: (theme) => theme.spacing(1), ml: 0 }}
+                  onClick={() => setOpenModal(true)}
+                >
+                  Add Employee
+                </Button>
+                <AddEmployeeModal
+                  open={openModal}
+                  handleOnClose={() => setOpenModal(false)}
+                />
               </Container>
             </ValuesByEmployeeDispatchContext.Provider>
           </ValuesByDayDispatchContext.Provider>
