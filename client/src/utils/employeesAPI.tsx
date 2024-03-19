@@ -3,6 +3,7 @@
 interface IEmployee {
   firstName: string;
   lastName: string;
+  displayName: string;
   position: string;
 }
 
@@ -10,7 +11,7 @@ const url = `http://localhost:3000/api/v1/employees`;
 
 const formatToPOSTEmployees = (data: IEmployee) => {
   return {
-    display_name: data.firstName,
+    display_name: data.displayName,
     is_active: true,
     position: data.position,
     first_name: data.firstName,
@@ -28,6 +29,7 @@ const postEmployee = async (data: IEmployee) => {
       },
       body: JSON.stringify(formatToPOSTEmployees(data)),
     });
+
     return await response.json();
   } catch (error) {
     return { error };
