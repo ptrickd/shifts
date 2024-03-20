@@ -1,0 +1,9 @@
+export*from"@mui/base/utils";export*from"@mui/base/Badge";export*from"@mui/base/Button";export{ClickAwayListener}from"@mui/base/ClickAwayListener";export*from"@mui/base/composeClasses";export{Dropdown}from"@mui/base/Dropdown";export{FocusTrap}from"@mui/base/FocusTrap";export*from"@mui/base/FormControl";export*from"@mui/base/Input";export*from"@mui/base/Menu";export*from"@mui/base/MenuButton";export*from"@mui/base/MenuItem";export*from"@mui/base/Modal";export{NoSsr}from"@mui/base/NoSsr";export*from"@mui/base/Unstable_NumberInput";export*from"#OptionGroup";export*from"@mui/base/Option";export{Popper}from"@mui/base/Popper";export*from"#Unstable_Popup";export{Portal}from"@mui/base/Portal";export*from"@mui/base/Select";export*from"@mui/base/Slider";export*from"#Snackbar";export*from"@mui/base/Switch";export*from"@mui/base/TablePagination";export*from"@mui/base/TabPanel";export*from"@mui/base/TabsList";export*from"@mui/base/Tabs";export*from"@mui/base/Tab";export{TextareaAutosize}from"@mui/base/TextareaAutosize";export*from"@mui/base/useAutocomplete";export*from"@mui/base/useBadge";export*from"@mui/base/useButton";export*from"@mui/base/useDropdown";export*from"@mui/base/useInput";export*from"@mui/base/useMenu";export*from"@mui/base/useMenuButton";export*from"@mui/base/useMenuItem";export*from"#unstable_useNumberInput";export*from"@mui/base/useOption";export*from"@mui/base/useSelect";export*from"@mui/base/useSlider";export*from"@mui/base/useSnackbar";export*from"@mui/base/useSwitch";export*from"@mui/base/useTab";export*from"@mui/base/useTabPanel";export*from"@mui/base/useTabs";export*from"@mui/base/useTabsList";export*from"@mui/base/unstable_useModal";
+/**
+ * @mui/base v5.0.0-beta.23
+ *
+ * @license MIT
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */"use client";
+

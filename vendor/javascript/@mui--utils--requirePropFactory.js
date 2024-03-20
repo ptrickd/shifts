@@ -1,0 +1,2 @@
+import e from"@babel/runtime/helpers/esm/extends";function requirePropFactory(r,o){if(process.env.NODE_ENV==="production")return()=>null;const n=o?e({},o.propTypes):null;const requireProp=e=>(o,t,u,p,s,...i)=>{const l=s||t;const c=n==null?void 0:n[l];if(c){const e=c(o,t,u,p,s,...i);if(e)return e}return typeof o[t]==="undefined"||o[e]?null:new Error(`The prop \`${l}\` of \`${r}\` can only be used together with the \`${e}\` prop.`)};return requireProp}export{requirePropFactory as default};
+

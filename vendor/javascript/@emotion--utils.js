@@ -1,0 +1,2 @@
+var e=true;function getRegisteredStyles(e,t,r){var i="";r.split(" ").forEach((function(r){void 0!==e[r]?t.push(e[r]+";"):i+=r+" "}));return i}var t=function registerStyles(t,r,i){var s=t.key+"-"+r.name;false!==i&&false!==e||void 0!==t.registered[s]||(t.registered[s]=r.styles)};var r=function insertStyles(e,r,i){t(e,r,i);var s=e.key+"-"+r.name;if(void 0===e.inserted[r.name]){var n=r;do{e.insert(r===n?"."+s:"",n,e.sheet,true);n=n.next}while(void 0!==n)}};export{getRegisteredStyles,r as insertStyles,t as registerStyles};
+

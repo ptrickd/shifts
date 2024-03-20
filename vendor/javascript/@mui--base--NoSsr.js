@@ -1,0 +1,2 @@
+import*as e from"react";import r from"prop-types";import{unstable_useEnhancedEffect as o,exactProp as s}from"@mui/utils";import{jsx as t}from"react/jsx-runtime";"use client";function NoSsr(r){const{children:s,defer:p=false,fallback:n=null}=r;const[c,i]=e.useState(false);o((()=>{p||i(true)}),[p]);e.useEffect((()=>{p&&i(true)}),[p]);return t(e.Fragment,{children:c?s:n})}process.env.NODE_ENV!=="production"?NoSsr.propTypes={children:r.node,defer:r.bool,fallback:r.node}:void 0;process.env.NODE_ENV!=="production"&&(NoSsr.propTypes=s(NoSsr.propTypes));"use client";export{NoSsr};
+

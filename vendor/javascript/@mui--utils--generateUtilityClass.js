@@ -1,0 +1,2 @@
+import e from"@mui/utils/ClassNameGenerator";const t={active:"active",checked:"checked",completed:"completed",disabled:"disabled",error:"error",expanded:"expanded",focused:"focused",focusVisible:"focusVisible",open:"open",readOnly:"readOnly",required:"required",selected:"selected"};function generateUtilityClass(r,i,a="Mui"){const d=t[i];return d?`${a}-${d}`:`${e.generate(r)}-${i}`}function isGlobalState(e){return t[e]!==void 0}export{generateUtilityClass as default,t as globalStateClasses,isGlobalState};
+

@@ -1,0 +1,2 @@
+import"react";import t from"prop-types";import{Global as e}from"@emotion/react";import{jsx as o}from"react/jsx-runtime";"use client";function isEmpty(t){return t===void 0||t===null||Object.keys(t).length===0}function GlobalStyles(t){const{styles:r,defaultTheme:s={}}=t;const n=typeof r==="function"?t=>r(isEmpty(t)?s:t):r;return o(e,{styles:n})}process.env.NODE_ENV!=="production"?GlobalStyles.propTypes={defaultTheme:t.object,styles:t.oneOfType([t.array,t.string,t.object,t.func])}:void 0;"use client";export{GlobalStyles as default};
+
