@@ -39,6 +39,7 @@ const AddEmployeeModal = ({ open, handleOnClose }: IProps) => {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -62,6 +63,7 @@ const AddEmployeeModal = ({ open, handleOnClose }: IProps) => {
       setErrorResponse(response.display_name[0]);
     } else {
       handleOnClose();
+      reset();
     }
   };
 
