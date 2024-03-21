@@ -3,6 +3,7 @@
 set -o errexit
 
 bundle install
+./bin/rails db:migrate
 # cd /client
 # npm run build-prod
 # cd ..

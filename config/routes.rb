@@ -4,7 +4,6 @@ Rails.application.routes.draw do
       resources :shifts
       resources :requests
       resources :employees
-      get "/", to: proc { [200, {}, [""]] }
     end
   end
 
