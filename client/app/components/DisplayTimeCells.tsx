@@ -1,3 +1,4 @@
+"use client";
 //Components
 import TimeCell from "./TimeCell";
 import { createDate } from "../utils/date";

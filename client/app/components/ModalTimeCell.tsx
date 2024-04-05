@@ -1,3 +1,4 @@
+"use client";
 import { useState, useContext, FormEvent } from "react";
 
 //Material UI

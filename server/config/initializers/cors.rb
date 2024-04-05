@@ -15,7 +15,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
   end
 
   allow do
-    origins "http://127.0.0.1:5500" #for build folder
+    origins "http://localhost:3001" #for nextjs app
 
     resource "*",
              headers: :any,

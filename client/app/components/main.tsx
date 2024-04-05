@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import theme from "./utils/theme";
+import App from "./App";
+import theme from "../utils/theme";
 
 import { ThemeProvider } from "@emotion/react";
 import { CssBaseline } from "@mui/material";

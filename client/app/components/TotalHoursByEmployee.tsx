@@ -1,15 +1,12 @@
+"use client";
 //Material UI
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-//Types
-
-interface Props {
-  displayName: string;
+interface IProps {
+  total: number;
 }
-
-const EmployeeCell = ({ displayName }: Props) => {
-  // first_name last_name position is_active display_name
+const TotalHoursByEmployee = ({ total }: IProps) => {
   return (
     <Grid
       item
@@ -26,13 +23,13 @@ const EmployeeCell = ({ displayName }: Props) => {
         variant="body1"
         color="text.primary"
         align="center"
-        // noWrap
-        // sx={{ paddingBottom: 1 }}
+        noWrap
+        sx={{ paddingBottom: 1 }}
       >
-        {displayName}
+        {total}
       </Typography>
     </Grid>
   );
 };
 
-export default EmployeeCell;
+export default TotalHoursByEmployee;

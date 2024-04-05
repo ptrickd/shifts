@@ -1,5 +1,6 @@
+"use client";
 import Container from "@mui/material/Container";
-import Schedule from "./components/Schedule";
+import Schedule from "./Schedule";
 
 function App() {
   return (

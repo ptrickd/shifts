@@ -1,3 +1,4 @@
+"use client";
 //Material UI
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
