@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+### Secret storing file
+/server/secret.yml
+
 # Ignore bundler config.
 /server/.bundle
 
@@ -57,6 +60,8 @@
 
 # testing
 /client/coverage
+/client/cypress/screenshots
+
 
 # next.js
 /client/.next/
