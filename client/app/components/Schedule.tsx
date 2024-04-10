@@ -21,6 +21,7 @@ import DisplayEmployeeCells from "./DisplayEmployeeCells";
 import TotalHoursByDay from "./TotalHoursByDay";
 import DateNavbar from "./DateNavbar";
 import AddEmployeeModal from "./AddEmployeeModal";
+import DeleteEmployeeModal from "./DeleteEmployeeModal";
 
 //Context
 import { shiftsReducer, SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
@@ -67,7 +68,8 @@ const Schedule = () => {
 
   //useState
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
-  const [openModal, setOpenModal] = useState(false);
+  const [openModalAddEmployee, setOpenModalAddEmployee] = useState(false);
+  const [openModalDelEmployee, setOpenModalDelEmployee] = useState(false);
 
   //Hooks
   const { employees } = useFetchEmployees();
@@ -159,13 +161,25 @@ const Schedule = () => {
                   color="secondary"
                   variant="contained"
                   sx={{ m: (theme) => theme.spacing(1), ml: 0 }}
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => setOpenModalAddEmployee(true)}
                 >
                   Add Employee
                 </Button>
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  sx={{ m: (theme) => theme.spacing(1), ml: 0 }}
+                  onClick={() => setOpenModalDelEmployee(true)}
+                >
+                  Delete Employee
+                </Button>
                 <AddEmployeeModal
-                  open={openModal}
-                  handleOnClose={() => setOpenModal(false)}
+                  open={openModalAddEmployee}
+                  handleOnClose={() => setOpenModalAddEmployee(false)}
+                />
+                <DeleteEmployeeModal
+                  open={openModalDelEmployee}
+                  handleOnClose={() => setOpenModalDelEmployee(false)}
                 />
               </Container>
             </ValuesByEmployeeDispatchContext.Provider>

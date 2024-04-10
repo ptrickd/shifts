@@ -7,7 +7,7 @@ interface IEmployee {
   position: string;
 }
 
-const url = `http://localhost:3000/api/v1/employees`;
+const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/employees`;
 
 const formatToPOSTEmployees = (data: IEmployee) => {
   return {
@@ -28,6 +28,23 @@ const postEmployee = async (data: IEmployee) => {
         Accept: "application/json",
       },
       body: JSON.stringify(formatToPOSTEmployees(data)),
+    });
+
+    return await response.json();
+  } catch (error) {
+    return { error };
+  }
+};
+
+//http://localhost:3000/api/v1/employees/14
+const deleteEmployee = async (id: string) => {
+  try {
+    const response = await fetch(`${url}/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
     });
 
     return await response.json();
