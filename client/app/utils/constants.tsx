@@ -1,3 +1,4 @@
+//Constant representing every from 00:00 t0 23:45 wiith increment of 15 minutes.
 export const TIMES = [
   "00:00",
   "00:15",

@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { computeWeekStart, computeNewWeekStart } from "./date";
+import { computeWeekStart, computeNewWeekStart, createDate } from "./date";
 
 test("computeWeekStart: week start today", () => {
   const today = new Date();
@@ -114,4 +114,13 @@ test("computeNewWeekStart: last week is last month", () => {
  *   *******/
 test("computeNewWeekStart: last week is last year", () => {
   expect(computeNewWeekStart("2024-01-07", "backward")).toBe("2023-12-31");
+});
+
+/****
+ *  createDate: month is 1 digit:
+ *   *******/
+test("createDate: month is 1 digit", () => {
+  expect(createDate("2023-11-26")).toStrictEqual(
+    new Date(2023, 10, 26, 0, 0, 0)
+  );
 });

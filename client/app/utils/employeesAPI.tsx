@@ -20,6 +20,7 @@ const formatToPOSTEmployees = (data: IEmployee) => {
 };
 
 const postEmployee = async (data: IEmployee) => {
+  console.log(data);
   try {
     const response = await fetch(url, {
       method: "POST",

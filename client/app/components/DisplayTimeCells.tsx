@@ -28,12 +28,7 @@ function findTodayShift(
   let todayShift: IShift | null = null;
 
   shifts.map((shift) => {
-    if (
-      shift.date ===
-      `${weekStartDate.getFullYear()}-${formatMonth(
-        weekStartDate
-      )}-${formatDayDate(weekStartDate)}`
-    ) {
+    if (shift.date === weekStartDate.toISOString().split("T")[0]) {
       todayShift = shift;
     }
   });
@@ -46,8 +41,11 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
   const rowOfTimeCells = [];
 
   for (let numOfCell = 0; numOfCell < 7; numOfCell++) {
-    const todayDate = createDate(weekStart);
+    const todayDate = createDate(weekStart); //create from date argument in string
+
+    //Adjust the date by adding the position of the cell in the week starting by 0.
     todayDate.setDate(todayDate.getDate() + numOfCell);
+
     const todayShift = findTodayShift(shifts, weekStart, numOfCell);
     if (todayShift !== null) {
       rowOfTimeCells.push(
@@ -58,9 +56,7 @@ const DisplayTimeCells = ({ employee, shifts, weekStart }: IProps) => {
         />
       );
     } else {
-      const currentDate = `${todayDate.getFullYear()}-${formatMonth(
-        todayDate
-      )}-${formatDayDate(todayDate)}`;
+      const currentDate = todayDate.toISOString().split("T")[0]; //Parse the in format 2024-10-01
 
       const newShift = {
         id: 0,

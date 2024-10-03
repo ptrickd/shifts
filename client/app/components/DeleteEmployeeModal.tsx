@@ -67,7 +67,7 @@ const AddEmployeeModal = ({ open, handleOnClose }: IProps) => {
         {value}
       </MenuItem>
     ));
-    console.log(formattedList);
+    // console.log(formattedList);
     return formattedList;
   };
   if (submitting) return <CircularProgress />;

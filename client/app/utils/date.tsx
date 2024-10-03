@@ -25,10 +25,7 @@ const parseDate = (weekStart: string) => {
 export const createDate = (dateInString: string) => {
   const { year, month, day } = parseDate(dateInString);
 
-  const date = new Date();
-  date.setFullYear(Number(year));
-  date.setMonth(Number(month) - 1);
-  date.setDate(Number(day));
+  const date = new Date(Number(year), Number(month) - 1, Number(day));
 
   return date;
 };

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //Material UI
 import Grid from "@mui/material/Grid";
@@ -21,6 +21,10 @@ const TimeCell = ({ shift, name }: IProps) => {
 
   //useState
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    shift.date;
+  }, [shift]);
 
   //if conditions are nulls then the employee is off that day
   if (shift.id === 0) {

@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 //Material UI
 import Grid from "@mui/material/Grid";
@@ -32,6 +32,7 @@ const DisplayEmployeeCells = ({
   computedValuesByEmployee,
 }: IProps) => {
   const shifts = useContext(ShiftsContext);
+  useEffect(() => {}, [shifts]);
   if (employees != null) {
     return employees.map((employee, index) => (
       <Grid

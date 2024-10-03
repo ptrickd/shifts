@@ -1,3 +1,6 @@
+/*
+  Functions controlling  front end logics
+*/
 import { Dispatch } from "react";
 import { postShift, putShift } from "./shiftsAPI";
 import { SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
@@ -49,6 +52,8 @@ const updateShifts: (
   });
 
   const updatingShift = async () => {
+    console.log(date);
+    console.log(createDate(date).toISOString());
     const { day, totalHours } = getDayAndTotal(
       startTime,
       endTime,
