@@ -197,6 +197,7 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
           variant="outlined"
           color="error"
           onClick={handleDelete}
+          data-testid="button-delete-shift"
         >
           Delete
         </Button>

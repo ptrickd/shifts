@@ -42,7 +42,8 @@ describe("Shifts basics commands", () => {
     cy.visit(url);
     cy.contains("07:15").click();
 
-    cy.contains("Delete").click();
+    // cy.contains("Delete").click();
+    cy.get('[data-testid="button-delete-shift"]').click();
   });
 });
 describe("Navigate between weeks, back and forth", () => {
