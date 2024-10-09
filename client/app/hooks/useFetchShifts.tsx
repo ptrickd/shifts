@@ -7,7 +7,7 @@ const useFetchShifts = (weekStart: string) => {
   useEffect(() => {
     const fetchShifts = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/v1/shifts/?week_start=${weekStart}`
+        `${process.env.NEXT_PUBLIC_SERVER_URL}shifts/?week_start=${weekStart}`
       );
       const data = await response.json();
 
