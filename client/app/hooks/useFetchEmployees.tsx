@@ -7,7 +7,7 @@ const useFetchEmployees = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       const response = await fetch(
-        "${process.env.NEXT_PUBLIC_SERVER_URL}employees.json"
+        `${process.env.NEXT_PUBLIC_SERVER_URL}employees.json`
       );
 
       const data = await response.json();
