@@ -9,7 +9,7 @@ interface IShifts {
   weekStart: string;
 }
 
-const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/shifts`;
+const url = `${process.env.NEXT_PUBLIC_SERVER_URL}shifts`;
 
 const formatToPOSTShifts = (data: IShifts) => {
   // const weekStart = computeWeekStart(new Date(data.date));

@@ -7,7 +7,7 @@ interface IEmployee {
   position: string;
 }
 
-const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/employees`;
+const url = `${process.env.NEXT_PUBLIC_SERVER_URL}employees`;
 
 const formatToPOSTEmployees = (data: IEmployee) => {
   return {

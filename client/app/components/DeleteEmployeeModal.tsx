@@ -59,7 +59,6 @@ const AddEmployeeModal = ({ open, handleOnClose }: IProps) => {
     } else {
       console.log("raise error");
     }
-    console.log(process.env.NEXT_PUBLIC_SERVER_URL);
   };
   const listOfNames = () => {
     const formattedList = ["Henry", "Barb"].map((value) => (
