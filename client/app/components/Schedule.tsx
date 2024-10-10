@@ -22,6 +22,7 @@ import TotalHoursByDay from "./TotalHoursByDay";
 import DateNavbar from "./DateNavbar";
 import AddEmployeeModal from "./AddEmployeeModal";
 import DeleteEmployeeModal from "./DeleteEmployeeModal";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //Context
 import { shiftsReducer, SHIFTS_ACTIONS } from "../reducer/shiftsReducer";
@@ -70,6 +71,7 @@ const Schedule = () => {
   const [weekStart, setWeekStart] = useState<string>(computeWeekStart(TODAY));
   const [openModalAddEmployee, setOpenModalAddEmployee] = useState(false);
   const [openModalDelEmployee, setOpenModalDelEmployee] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   //Hooks
   const { employees } = useFetchEmployees();
@@ -87,6 +89,12 @@ const Schedule = () => {
     computedTotalHoursByEmployee,
     new Map()
   );
+
+  useEffect(() => {
+    if (employees === null) {
+      setLoading(true);
+    } else setLoading(false);
+  }, [employees, fetchedShifts]);
 
   //update the reducer when shifts are fetcheds
   useEffect(() => {
@@ -109,7 +117,23 @@ const Schedule = () => {
       payload: fetchedShifts,
     });
   }, [fetchedShifts]);
-
+  if (loading)
+    return (
+      <Container>
+        <Box
+          component="div"
+          sx={{
+            width: "100%",
+            height: "50vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      </Container>
+    );
   if (employees && shifts && computedValuesByDay)
     return (
       <ShiftsContext.Provider value={shifts}>
