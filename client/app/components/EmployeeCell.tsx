@@ -1,6 +1,6 @@
 "use client";
 //Material UI
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 
 //Types
@@ -13,13 +13,10 @@ const EmployeeCell = ({ displayName }: Props) => {
   // first_name last_name position is_active display_name
   return (
     <Grid
-      item
-      xs={1.333}
-      zeroMinWidth
+      size={{ xs: 1.333 }}
       sx={{
         margin: 0,
-        padding: 0,
-        flexGrow: 1,
+        padding: 1,
         border: "1px solid gray",
       }}
     >
@@ -27,8 +24,7 @@ const EmployeeCell = ({ displayName }: Props) => {
         variant="body1"
         color="text.primary"
         align="center"
-        // noWrap
-        // sx={{ paddingBottom: 1 }}
+        sx={{ margin: 0, padding: 0 }}
       >
         {displayName}
       </Typography>

@@ -15,12 +15,12 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
   const totalGrids = computedValues.map((value, index) => (
     <Grid
       size={{ xs: 1.333 }}
-      spacing={0}
+      // spacing={0}
       key={index}
       sx={{
         margin: 0,
-        padding: 0,
-        flexGrow: 1,
+        padding: 1,
+        // flexGrow: 1,
         border: "1px solid gray",
       }}
     >
@@ -39,8 +39,10 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
     <>
       <Grid
         size={{ xs: 1.333 }}
-        offset={{ xs: 0 }}
+        spacing={1}
         sx={{
+          margin: 0,
+          padding: 1,
           border: "1px solid gray",
         }}
       >
@@ -57,8 +59,9 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
       {totalGrids}
       <Grid
         size={{ xs: 1.333 }}
-        offset={{ xs: 0 }}
         sx={{
+          margin: 0,
+          padding: 1,
           border: "1px solid gray",
         }}
       >

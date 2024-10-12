@@ -139,6 +139,8 @@ const Schedule = () => {
       payload: fetchedShifts,
     });
   }, [fetchedShifts]);
+
+  //Render spinner when the first load of employees
   if (loading)
     return (
       <Container>
@@ -156,6 +158,8 @@ const Schedule = () => {
         </Box>
       </Container>
     );
+
+  //Render simple message if screen smaller then 750px
   if (windowSize[0] <= 750)
     return (
       <Container
@@ -172,6 +176,8 @@ const Schedule = () => {
         </Typography>
       </Container>
     );
+
+  //Render schedule
   if (employees && shifts && computedValuesByDay)
     return (
       <ShiftsContext.Provider value={shifts}>
@@ -195,10 +201,9 @@ const Schedule = () => {
                       border: "1px solid gray",
                     }}
                   >
-                    <Grid container spacing={1}>
+                    <Grid container wrap="wrap">
                       <Grid
                         container
-                        spacing={1}
                         sx={{
                           width: "100%",
                           display: "flex",
@@ -210,19 +215,28 @@ const Schedule = () => {
                           weekStart={createDate(weekStart)}
                         />
                       </Grid>
-
-                      <DisplayEmployeeCells
-                        employees={employees}
-                        weekStart={weekStart}
-                        computedValuesByEmployee={computedValuesByEmployee}
-                      />
-                      {/* <Grid
+                      <Grid
                         container
-                        spacing={0}
+                        // spacing={0}
+                        sx={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        <DisplayEmployeeCells
+                          employees={employees}
+                          weekStart={weekStart}
+                          computedValuesByEmployee={computedValuesByEmployee}
+                        />
+                      </Grid>
+
+                      <Grid
+                        container
                         sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
                       >
                         <TotalHoursByDay computedValues={computedValuesByDay} />
-                      </Grid> */}
+                      </Grid>
                     </Grid>
                   </Box>
                 </Paper>

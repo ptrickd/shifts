@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 //Material UI
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
@@ -67,12 +67,11 @@ const TimeCell = ({ shift, name }: IProps) => {
   }
   return (
     <Grid
-      item
-      xs={1.333}
-      zeroMinWidth
+      size={{ xs: 1.333 }}
+      spacing={1}
       sx={{
         margin: 0,
-        padding: 0,
+        padding: 1,
         flexGrow: 1,
         border: "1px solid gray",
         cursor: "default",

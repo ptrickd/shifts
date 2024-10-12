@@ -2,7 +2,7 @@
 import { useContext, useEffect } from "react";
 
 //Material UI
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 
 //Conponents
 import DisplayTimeCells from "./DisplayTimeCells";
@@ -37,9 +37,9 @@ const DisplayEmployeeCells = ({
     return employees.map((employee, index) => (
       <Grid
         container
-        item
-        spacing={1}
-        sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
+        wrap="nowrap"
+        direction="row"
+        sx={{ flexGrow: 1, marginLeft: 0, padding: 0, width: "90%" }}
         key={index}
       >
         <EmployeeCell displayName={employee.displayName} key={index} />
