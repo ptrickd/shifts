@@ -1,6 +1,6 @@
 "use client";
 //Material UI
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Typography from "@mui/material/Typography";
 
 interface IComputedValues {
@@ -14,10 +14,9 @@ interface IProps {
 const TotalHoursByDay = ({ computedValues }: IProps) => {
   const totalGrids = computedValues.map((value, index) => (
     <Grid
-      item
-      xs={1.333}
+      size={{ xs: 1.333 }}
+      spacing={0}
       key={index}
-      zeroMinWidth
       sx={{
         margin: 0,
         padding: 0,
@@ -39,9 +38,8 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
   return (
     <>
       <Grid
-        item
-        xs={1.333}
-        zeroMinWidth
+        size={{ xs: 1.333 }}
+        offset={{ xs: 0 }}
         sx={{
           border: "1px solid gray",
         }}
@@ -58,9 +56,8 @@ const TotalHoursByDay = ({ computedValues }: IProps) => {
       </Grid>
       {totalGrids}
       <Grid
-        item
-        xs={1.333}
-        zeroMinWidth
+        size={{ xs: 1.333 }}
+        offset={{ xs: 0 }}
         sx={{
           border: "1px solid gray",
         }}

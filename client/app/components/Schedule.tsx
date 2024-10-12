@@ -12,7 +12,7 @@ import {
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 
 //Components
@@ -51,6 +51,7 @@ import { computeWeekStart, computeNewWeekStart } from "../utils/date";
 // Custom Hooks
 import useFetchEmployees from "../hooks/useFetchEmployees";
 import useFetchShifts from "../hooks/useFetchShifts";
+import { Typography } from "@mui/material";
 
 const Schedule = () => {
   //Constants
@@ -72,6 +73,12 @@ const Schedule = () => {
   const [openModalAddEmployee, setOpenModalAddEmployee] = useState(false);
   const [openModalDelEmployee, setOpenModalDelEmployee] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [windowSize, setWindowSize] = useState([
+    window.innerWidth,
+    window.innerHeight,
+  ]);
+  //useRef
+  // const windowWidth = useRef(window.innerWidth);
 
   //Hooks
   const { employees } = useFetchEmployees();
@@ -89,12 +96,27 @@ const Schedule = () => {
     computedTotalHoursByEmployee,
     new Map()
   );
+  console.log(windowSize); //858px minimum
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
+
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  });
 
   useEffect(() => {
     if (employees === null) {
       setLoading(true);
     } else setLoading(false);
   }, [employees, fetchedShifts]);
+
+  // useEffect(() => {}, [windowWidth]);
 
   //update the reducer when shifts are fetcheds
   useEffect(() => {
@@ -134,6 +156,22 @@ const Schedule = () => {
         </Box>
       </Container>
     );
+  if (windowSize[0] <= 750)
+    return (
+      <Container
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Typography color="success" variant="h5">
+          The minimum screen size for this app is 750px.
+        </Typography>
+      </Container>
+    );
   if (employees && shifts && computedValuesByDay)
     return (
       <ShiftsContext.Provider value={shifts}>
@@ -142,7 +180,7 @@ const Schedule = () => {
             <ValuesByEmployeeDispatchContext.Provider
               value={valuesByEmployeeDispatch}
             >
-              <Container>
+              <Container sx={{ minWidth: 500 }}>
                 <DateNavbar
                   date={weekStart}
                   newShifts={(direction) =>
@@ -158,7 +196,15 @@ const Schedule = () => {
                     }}
                   >
                     <Grid container spacing={1}>
-                      <Grid container item spacing={1}>
+                      <Grid
+                        container
+                        spacing={1}
+                        sx={{
+                          width: "100%",
+                          display: "flex",
+                          justifyContent: "space-around",
+                        }}
+                      >
                         <DisplayTopRow
                           weekDays={TOP_ROW}
                           weekStart={createDate(weekStart)}
@@ -170,14 +216,13 @@ const Schedule = () => {
                         weekStart={weekStart}
                         computedValuesByEmployee={computedValuesByEmployee}
                       />
-                      <Grid
+                      {/* <Grid
                         container
-                        item
-                        spacing={1}
+                        spacing={0}
                         sx={{ flexGrow: 1, marginLeft: 0, padding: 0 }}
                       >
                         <TotalHoursByDay computedValues={computedValuesByDay} />
-                      </Grid>
+                      </Grid> */}
                     </Grid>
                   </Box>
                 </Paper>

@@ -1,7 +1,7 @@
 "use client";
 //Material UI
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 
 interface IProps {
   weekDays: string[];
@@ -42,7 +42,7 @@ const DisplayTopRow = ({ weekDays, weekStart }: IProps) => {
   const listOfDates = getListOfDates(weekStart);
 
   return weekDays.map((value, index) => (
-    <Grid item xs={1.333} key={value + index} zeroMinWidth>
+    <Grid size={{ xs: 1 }} key={value + index} spacing={0}>
       <Typography
         variant="h6"
         gutterBottom
