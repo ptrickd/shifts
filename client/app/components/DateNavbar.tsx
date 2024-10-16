@@ -12,7 +12,7 @@ interface IProps {
 }
 
 const DateNavbar = ({ date, newShifts }: IProps) => {
-  console.log(date);
+  // console.log(date);
   return (
     <Box component="div" sx={{ textAlign: "center" }}>
       {/* //function get the previous week shifts */}

@@ -16,41 +16,26 @@ const deleteShiftDispatcher: (
   valuesByDayDispatch,
   valuesByEmployeeDispatch
 ) => {
-  const { id, employeeId, date, startTime, endTime, weekStart } = shift;
+  // const { id, employeeId, date, startTime, endTime, weekStart } = shift;
   console.log("in deleteShiftDispatcher");
   console.log(shift);
   dispatch({
     type: SHIFTS_ACTIONS.DELETE_SHIFT,
     payload: {
-      id,
-      employeeId,
-      startTime,
-      endTime,
-      date,
-      weekStart,
+      ...shift,
     },
   });
 
   valuesByDayDispatch({
     type: VALUES_ACTIONS.SUBSTRACT_VALUES,
     payload: {
-      id,
-      employeeId,
-      startTime,
-      endTime,
-      date,
-      weekStart,
+      ...shift,
     },
   });
   valuesByEmployeeDispatch({
     type: VALUES_ACTIONS.SUBSTRACT_VALUES,
     payload: {
-      id,
-      employeeId,
-      startTime,
-      endTime,
-      date,
-      weekStart,
+      ...shift,
     },
   });
 };
