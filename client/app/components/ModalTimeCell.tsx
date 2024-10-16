@@ -28,6 +28,7 @@ import { VALUES_ACTIONS } from "../reducer/computedTotalHoursByDay";
 //Function
 import { updateShifts } from "../utils/shiftsOps";
 import { deleteShift } from "../utils/shiftsAPI";
+import { deleteShiftDispatcher } from "../utils/deleteShiftDispatcher";
 
 //Types
 interface IProps {
@@ -120,37 +121,22 @@ const ModalTimeCell = ({ shift, name, open, onClose }: IProps) => {
     //api call for delete
     const response = await deleteShift(id);
     if (response.error) setError(response.error);
-    else {
+    else if (
+      shift &&
+      dispatch &&
+      valuesByDayDispatch &&
+      valuesByEmployeeDispatch
+    ) {
       //delete shift in local array if success
-      if (dispatch && valuesByDayDispatch) {
-        dispatch({
-          type: SHIFTS_ACTIONS.DELETE_SHIFT,
-          payload: {
-            id,
-            employeeId,
-            startTime,
-            endTime,
-            date,
-            weekStart,
-          },
-        });
-
-        valuesByDayDispatch({
-          type: VALUES_ACTIONS.SUBSTRACT_VALUES,
-          payload: {
-            id,
-            employeeId,
-            startTime,
-            endTime,
-            date,
-            weekStart,
-          },
-        });
-
-        //close modal if success
-        onClose();
-      } else setError("Dispatch undefined");
-    }
+      deleteShiftDispatcher(
+        shift,
+        dispatch,
+        valuesByDayDispatch,
+        valuesByEmployeeDispatch
+      );
+      //close modal if success
+      onClose();
+    } else setError("Dispatch Object Missing");
   };
 
   return (

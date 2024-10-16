@@ -73,12 +73,7 @@ const Schedule = () => {
   const [openModalAddEmployee, setOpenModalAddEmployee] = useState(false);
   const [openModalDelEmployee, setOpenModalDelEmployee] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [windowSize, setWindowSize] = useState([
-    window.innerWidth,
-    window.innerHeight,
-  ]);
-  //useRef
-  // const windowWidth = useRef(window.innerWidth);
+  const [windowSize, setWindowSize] = useState([1000, 1000]);
 
   //Hooks
   const { employees } = useFetchEmployees();
@@ -96,11 +91,12 @@ const Schedule = () => {
     computedTotalHoursByEmployee,
     new Map()
   );
-  console.log(windowSize); //858px minimum
 
   useEffect(() => {
     const handleWindowResize = () => {
-      setWindowSize([window.innerWidth, window.innerHeight]);
+      if (window !== undefined) {
+        setWindowSize([window.innerWidth, window.innerHeight]);
+      }
     };
 
     window.addEventListener("resize", handleWindowResize);

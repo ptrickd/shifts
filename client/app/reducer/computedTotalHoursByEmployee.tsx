@@ -111,7 +111,83 @@ export function computedTotalHoursByEmployee(
 
         return newTotals;
       } else return computedValues;
-      break;
+    }
+    case VALUES_ACTIONS.SUBSTRACT_VALUES: {
+      // console.log(action.payload);
+      /*
+      payload
+      {
+        "id": 85,
+        "employeeId": 2,
+        "startTime": "08:00",
+        "endTime": "12:00",
+        "date": "2024-10-10",
+        "weekStart": "2024-10-06"
+      }
+      */
+      // console.log(computedValues);
+      /*
+      computedValues
+      {
+        "hoursByDay": [
+          0,  sunday
+          0,
+          0,  tuesday
+          0,
+          4,  thursday
+          0,
+          0   saturday
+        ],
+        "totalHours": 4//total hours that employee do in the week
+      }
+      
+      */
+      if (action.payload !== undefined && !Array.isArray(action.payload)) {
+        const { date, employeeId, startTime, endTime } = action.payload;
+
+        const dateObj = createDate(date);
+        const indexOfDay = dateObj.getDay();
+
+        const hoursToSubstract = computeHoursInShift(startTime, endTime);
+
+        const newValues = new Map(computedValues);
+        const employeeShifts = newValues.get(employeeId);
+        const hoursByDay = employeeShifts?.hoursByDay;
+        let totalHours = employeeShifts?.totalHours;
+        console.log("/*********************************/");
+        console.log(newValues);
+
+        console.log(action.payload);
+
+        console.log(hoursByDay);
+        console.log(totalHours);
+        console.log("/88888888888888888888888888888888888888/");
+
+        if (
+          employeeShifts &&
+          hoursByDay &&
+          totalHours &&
+          //Add conditional because loop run twice. Didn't find why
+          hoursByDay[indexOfDay] - hoursToSubstract >= 0
+        ) {
+          hoursByDay[indexOfDay] = hoursByDay[indexOfDay] - hoursToSubstract;
+
+          totalHours = totalHours - hoursToSubstract;
+          newValues.set(employeeId, {
+            hoursByDay: hoursByDay,
+            totalHours: totalHours,
+          });
+          return newValues;
+        }
+        console.log(newValues);
+
+        console.log(action.payload);
+
+        console.log(hoursByDay);
+        console.log(totalHours);
+        console.log("/*********************************/");
+      }
+      return computedValues;
     }
     default:
       return computedValues;
