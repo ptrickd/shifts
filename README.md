@@ -2,6 +2,8 @@
 
 # Shift App
 
+## URL: https://shifts-orcin.vercel.app/
+
 This a project I start to learn ruby on rails. It means to be an app to help user to make schedule for employees. Should include when finish features to add employees, add shifts on 7 days week, requests time off, total of hours for each days and total of hours by for each employees.
 
 ## License
@@ -12,9 +14,10 @@ To be added later
 
 - Ruby 3.2
 - Rails 7
-- Postgres 14
-- React 15
-- Node 18
+- Postgres 16
+- React 18
+- NextJs 14
+- Node 20
 
 ## Installation
 
