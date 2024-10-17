@@ -17,8 +17,7 @@ const deleteShiftDispatcher: (
   valuesByEmployeeDispatch
 ) => {
   // const { id, employeeId, date, startTime, endTime, weekStart } = shift;
-  console.log("in deleteShiftDispatcher");
-  console.log(shift);
+
   dispatch({
     type: SHIFTS_ACTIONS.DELETE_SHIFT,
     payload: {

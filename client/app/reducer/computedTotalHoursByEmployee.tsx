@@ -158,14 +158,7 @@ export function computedTotalHoursByEmployee(
         const hoursByDay = employeeShifts?.hoursByDay;
         let totalHours = employeeShifts?.totalHours;
 
-        if (
-          employeeShifts &&
-          hoursByDay &&
-          totalHours
-          //Add conditional because loop run twice. Didn't find why
-          // hoursByDay[indexOfDay] - hoursToSubstract >= 0
-        ) {
-          console.log("after second if");
+        if (employeeShifts && hoursByDay && totalHours) {
           hoursByDay[indexOfDay] = hoursByDay[indexOfDay] - hoursToSubstract;
 
           totalHours = totalHours - hoursToSubstract;

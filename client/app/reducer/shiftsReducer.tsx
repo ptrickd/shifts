@@ -60,9 +60,10 @@ export function shiftsReducer(
             action.payload.id !== undefined &&
             shift.id !== action.payload?.id
           )
-            newShifts.push(action.payload);
+            newShifts.push(shift);
         });
       }
+
       return newShifts;
       break;
     }
